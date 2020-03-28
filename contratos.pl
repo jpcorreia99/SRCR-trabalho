@@ -9,22 +9,63 @@
 % Factos
 %
 % Extensao do predicado adjudicante #IdAd, Nome, NIF, Morada ->{V,F,D}
-adjudicante(1,'Camara_de_barcelos',705330336,'Rua_dos_barros').
+adjudicante(1,'Camara_de_barcelos',705330336,'Rua_dos_barros Nº99').
 
 
 % Invariantes
 %
-% Invariante estrutural: não permitir a entrada repetida de conhecimento (mudar para verificar cada entrada)
-+adjudicante(Id,Nome,Nif,Morada) :: (solucoes( (Id,Nome,Nif,Morada),(adjudicante( Id,Nome,Nif,Morada )),S ),
-                  comprimento( S,N ), 
-				  N == 1  ).
+% Invariante estrutural: não permitir a entrada repetida de conhecimento, em qualquer dos campos
 
-% Invariante referencial: o nif deve conter 9 números (Compltar)
-+adjudicante(_,_,Nif,_) :: integer(Nif).
++adjudicante(Id,Nome,Nif,Morada) :: (solucoes( (Id),(adjudicante( Id,_,_,_)),S1 ),
+                                    solucoes( (Nome),(adjudicante( _,Nome,_,_)),S2 ),
+                                    solucoes( (Nif),(adjudicante( _,_,Nif,_)),S3 ),
+                                    solucoes( (Morada),(adjudicante( _,_,_,Morada)),S4 ),
+                                    comprimento( S1,N1 ), 
+                                    comprimento( S2,N2 ),
+                                    comprimento( S3,N3 ),
+                                    comprimento( S4,N4 ),
+                                    Total is N1 + N2 + N3 + N4,
+                                    Total == 4).
 
+% Invariante referencial: o dígito de controlo do id deve seguir a convenção de validação 'módulo 11'
++adjudicante(_,_,Nif,_) :: (integer(Nif), 
+                           Nif>=100000000, Nif=<999999999,
+                           Primeiros_oito_digitos is div(Nif,10), Ultimo_digito is mod(Nif,10),
+                           digito_de_controlo(Primeiros_oito_digitos,Digito),
+                           Ultimo_digito =:= Digito).
+
+% converte um código ascii no inteiro que representa.
+ascii_to_digit(Ascii_number,R) :- R is Ascii_number-48.
+
+% converte uma lista de códigos ascii na lista de dígitos que representam.
+nif_para_lista(Nif,L):-number_codes(Nif,X),
+                    maplist(ascii_to_digit,X, L).
+
+% função auxiliar da multiplica lista
+multiplicacao_decrescente([X],R,N):- R is X*N.
+multiplicacao_decrescente([H|T],R,N):- multiplicacao_decrescente(T,Res,N-1),
+                              R is Res + (H*N).
+
+%primeiro passo da validação do nif, multiplicar cada número do nif por um número que começa em nove e decresce até 2
+multiplica_lista(Nif,Digito):- nif_para_lista(Nif,Lista),
+                                multiplicacao_decrescente(Lista,Digito,9).
+
+
+digito_de_controlo(Nif,Digito):- multiplica_lista(Nif,Primeiro_digito),
+                                (0 is mod(Primeiro_digito,11); 1 is mod(Primeiro_digito,11)),
+                                Digito is 0.                                           
+
+digito_de_controlo(Nif,Digito):- multiplica_lista(Nif,Primeiro_digito),
+                                Mod_Result is mod(Primeiro_digito,11),
+                                Digito is 11-Mod_Result.                                           
+
+
+
+
+% number_codes(123456,X),format('~s',[X]).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Extens�o do predicado que permite a evolucao do conhecimento
+% Extensão do predicado que permite a evolucao do conhecimento
 
 evolucao( Termo ) :-
     solucoes( Invariante, +Termo::Invariante,Lista ),  %coloca numa lista todos os invariantes
