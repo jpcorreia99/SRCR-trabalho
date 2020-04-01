@@ -10,8 +10,8 @@ ultimo_digito_valido(Nif):-
         Ultimo_digito =:= Digito.
 
 % Extensão do predicadoque obtém o digito de controlo a partir dos primeiros 8 dígitos através da técnica módulo 11
-digito_de_controlo(Nif,Digito_de_controlo):- 
-        multiplica_lista(Nif,Ultimo_digito),
+digito_de_controlo(Primeiros_oito_digitos,Digito_de_controlo):- 
+        multiplica_lista(Primeiros_oito_digitos,Ultimo_digito),
         (0 is mod(Ultimo_digito,11); 1 is mod(Ultimo_digito,11)),
         Digito_de_controlo is 0.               
 digito_de_controlo(Nif,Digito_de_controlo):- 
