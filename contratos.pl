@@ -1,5 +1,5 @@
 % Consulta de predicados auxiliares
-:- consult('aux.pl').
+:- consult('predicados_auxiliares.pl').
 
 % Definições iniciais
 :- op(900, xfy, '::').
