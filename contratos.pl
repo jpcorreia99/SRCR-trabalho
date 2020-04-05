@@ -18,12 +18,12 @@
 % Factos
 %
 % Extensão do predicado adjudicante #IdAd, Nome, NIF, Morada ->{V,F,D}
-adjudicante(1,'Camara de Braga',705330336,'Praça do Município').
+% adjudicante(1,'Camara de Braga',705330336,'Praça do Município').
 adjudicante(2,'Município de Altode Basto', 705330336, 'Portugal, Braga,Alto de Basto').
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado adjudicataria #IdAda, Nome, Nif, Morada -> {V,F,D}
-adjudicataria(1,'Universidade do minho',502011378, 'Largo do Paço'). 
+adjudicataria(1,'Universidade do minho',502011378, 'Largo do Paço').
 adjudicataria(2,'XXX -Associados -Sociedade de Advogados, SP, RL.',702675112,'Portugal').
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
@@ -45,7 +45,7 @@ nifs:
     solucoes( (Id),(adjudicante( Id,_,_,_)),S1 ),
     solucoes( (Nome),(adjudicante( _,Nome,_,_)),S2 ),
     solucoes( (Nif),(adjudicante( _,_,Nif,_)),S3 ),
-    comprimento( S1,N1 ), 
+    comprimento( S1,N1 ),
     comprimento( S2,N2 ),
     comprimento( S3,N3 ),
     Total is N1 + N2 + N3,
@@ -69,6 +69,15 @@ nifs:
     ultimo_digito_valido(Nif)
 ).
 
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Invariante estrutural: Não deve ser possivel remover uma entidade adjudicante se esta estiver presente num contrato
+/*-adjudicante(Id,_,_,_) :: (
+    solucoes(Id, contrato(Id,_,_,_,_,_,_,_,_), S),
+    comprimento( S,N ),
+    N == 0
+).
+*/
+
 %Invariantes sobre entidades adjudicatárias
 %
 % Invariante estrutural: não permitir a entrada repetida de conhecimento, no campo do Id, nome e Nif
@@ -76,7 +85,7 @@ nifs:
     solucoes( (Id),(adjudicataria( Id,_,_,_)),S1 ),
     solucoes( (Nome),(adjudicataria( _,Nome,_,_)),S2 ),
     solucoes( (Nif),(adjudicataria( _,_,Nif,_)),S3 ),
-    comprimento( S1,N1 ), 
+    comprimento( S1,N1 ),
     comprimento( S2,N2 ),
     comprimento( S3,N3 ),
     Total is N1 + N2 + N3,
@@ -105,9 +114,17 @@ nifs:
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o dígito de controlo do id deve seguir a convenção de validação 'módulo 11'
 +adjudicataria(_,_,Nif,_) :: (
-    integer(Nif), 
+    integer(Nif),
     Nif>=100000000, Nif=<999999999,
     ultimo_digito_valido(Nif)
+).
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Invariante estrutural: Não deve ser possivel remover uma entidade adjudicataria se esta estiver presente num contrato
+-adjudicataria(Id,_,_,_) :: (
+    solucoes(Id, contrato(_,Id,_,_,_,_,_,_,_), S),
+    comprimento( S,N ),
+    N == 0
 ).
 
 % Invariantes sobre contratos
@@ -117,14 +134,14 @@ nifs:
 +contrato(IdAd,IdAda,_,_,_,_,_,_,_) :: (
     solucoes( (IdAd),(adjudicante( IdAd,_,_,_)),S1 ),
     solucoes( (IdAda),(adjudicataria( IdAda,_,_,_)),S2 ),
-    comprimento( S1,N1 ), 
+    comprimento( S1,N1 ),
     comprimento( S2,N2 ),
     Total is N1 + N2,
     Total == 2
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Invariante estrutural: verifica que os campos respeitam o tipo de dados correto 
+% Invariante estrutural: verifica que os campos respeitam o tipo de dados correto
 +contrato(IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data) :: (
     integer(IdAd),
     integer(IdAda),
@@ -136,7 +153,7 @@ nifs:
     integer(Prazo),
     integer(Local),
     data_valida(Data)
-). 
+).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o tipo de procedimento deve pertencer a um certo conjunto
@@ -165,7 +182,7 @@ nifs:
 % Predicados
 %
 % Extensao do predicado add_adjudicante: IdAd, Nome, NIF, Morada -> {V,F}
-add_adjudicante(Id,Nome,Nif,Morada) :- 
+add_adjudicante(Id,Nome,Nif,Morada) :-
     evolucao(adjudicante(Id, Nome, Nif, Morada)).
 
 
@@ -176,7 +193,7 @@ add_contrato(IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado add_adjudicataria: IdAd, Nome, NIF, Morada -> {V,F}
-add_adjudicataria(Id,Nome,Nif,Morada) :- 
+add_adjudicataria(Id,Nome,Nif,Morada) :-
     evolucao(adjudicataria(Id, Nome, Nif, Morada)).
 
 
@@ -194,10 +211,10 @@ insercao( Termo ) :-
     assert( Termo ). % o assert insere o termo na base de conhecimento
 insercao( Termo ) :-
     retract( Termo ), !,fail. % se não o consegui inserir direito, tem de o remover
-	
+
 teste( [] ).
 teste( [R|LR] ) :-  % verifica se todos os testes ao invariante são positivos
-    R,   
+    R,
     teste( LR ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
@@ -210,7 +227,7 @@ involucao( Termo ) :-
 
 remocao( Termo ) :-
     retract( Termo ).
-remocao( Termo ) :- 
+remocao( Termo ) :-
     assert( Termo ),!,fail.
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
