@@ -51,6 +51,24 @@ multiplicacao_decrescente([H|T],R,Num):-
     R is Res + (H*Num).
 
 
+%Extensão do predicado filtraDatas3Anos: Lista, DataDeReferencia,R -> {V,F}
+%Devolve o somatório dos valores dos contratos nos últimos dois anos económicos mais o atual
+%filtraDatas3Anos([(data(1,1,2010),500),(data(2,2,2020),300),(data(3,3,2011),600)],2012,R).
+somaCustosContratos([],_,0).
+
+somaCustosContratos([(data(_,_,Ano),Custo)|T],AnoDeReferencia,R):-
+    X = AnoDeReferencia-2,
+    Ano >= (X), Ano =< AnoDeReferencia,
+    somaCustosContratos(T,AnoDeReferencia,R1),
+    R is (Custo + R1).
+
+somaCustosContratos([(data(_,_,Ano),_)|T],AnoDeReferencia,R):-
+    X = AnoDeReferencia-2,
+    Ano < X, Ano > AnoDeReferencia,
+    somaCustosContratos(T,AnoDeReferencia,R1),
+    R is R1.
+
+
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado data: Dia,Mes,Ano -> {V,F}
 % Caso especial de Fevereiro em ano não bissexto

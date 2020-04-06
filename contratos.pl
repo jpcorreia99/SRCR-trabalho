@@ -13,29 +13,64 @@
 :- dynamic adjudicante/4.
 :- dynamic adjudicataria/4.
 :- dynamic contrato/9.
+:- dynamic excecao/1.
 
+:- discontiguous (-)/1.
+:- discontiguous excecao/1.
 
 % Factos
 %
 % Extensão do predicado adjudicante #IdAd, Nome, NIF, Morada ->{V,F,D}
-% adjudicante(1,'Camara de Braga',705330336,'Praça do Município').
-adjudicante(2,'Município de Altode Basto', 705330336, 'Portugal, Braga,Alto de Basto').
+adjudicante(1,'Camara de Braga',123456789,'Praça do Município').
+adjudicante(2,'Município de Alto de Basto',705330336, 'Portugal, Braga,Alto de Basto').
+excecao(adjudicante(100,'Tasquinha Bracarense',000000000,'Toda a rua dos bares lmao')).
+
+% Extensão do predicado -adjudicante #IdAd, Nome, NIF, Morada ->{V,F,D}
+-adjudicante(IdAd,Nome,NIF,Morada):- 
+    nao(adjudicante(IdAd,Nome,NIF,Morada)) , 
+    nao(excecao(adjudicante(IdAd,Nome,NIF,Morada))).
+
+-adjudicante(1000,'André Alves',111111110,'Rua dos Barros Nº45').
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado adjudicataria #IdAda, Nome, Nif, Morada -> {V,F,D}
 adjudicataria(1,'Universidade do minho',502011378, 'Largo do Paço').
 adjudicataria(2,'XXX -Associados -Sociedade de Advogados, SP, RL.',702675112,'Portugal').
+excecao(adjudicataria(100,'Tasquinha Bracarense',000000000,'Toda a rua dos bares lmao')).
+
+% Extensão do predicado -adjudicataria #IdAd, Nome, NIF, Morada ->{V,F,D}
+-adjudicataria(IdAda,Nome,NIF,Morada):- 
+    nao(adjudicataria(IdAda,Nome,NIF,Morada)) , 
+    nao(excecao(adjudicataria(IdAda,Nome,NIF,Morada))).
+
+-adjudicataria(2000,'Bruno Batista',111111110,'Rua dos Barros Nº46').
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado contrato #IdAd, #IdAda, TipoDeContrato, TipoDeProcedimento, Descrição, Valor, Prazo, Local, Data -> {V,F,D}
-contrato(2,2,'Aquisição de serviços', 'Consulta prévia','Assessoria jurídica', 13599, 547,'Alto de Basto',data(11,02,2020)).
-%contrato(1,1,'Aquisição de serviços',consulta_previa,'Assessoria jurídica', 13599, 547,'Alto de Basto',data(11,1,2020)).
+contrato(1,2,'Aquisição de serviços','Consulta prévia','Assessoria jurídica', 13599, 547,'Alto de Basto',data(11,02,2020)).
+contrato(2,2,'Aquisição de serviços','Consulta prévia','Assessoria jurídica', 13599, 547,'Alto de Basto',data(11,02,2020)).
+contrato(2,2,'Aquisição de serviços','Consulta prévia','Assessoria jurídica', 13599, 547,'Alto de Basto',data(11,02,2020)).
+%contrato(2,2,'Aquisição de serviços','Consulta prévia','Assessoria jurídica', 100000, 547,'Alto de Basto',data(11,02,2020)).
+excecao(contrato(1000,2000,'Aquisição de serviços', 'Consulta prévia','Assessoria jurídica', 13599, 547,'Alto de Basto',data(11,02,2020))).
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Extensão do predicado -contrato #IdAd, #IdAda, TipoDeContrato, TipoDeProcedimento, Descrição, Valor, Prazo, Local, Data -> {V,F,D}
+-contrato(IdAd,IdAda,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data):-
+    nao(contrato(IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data)),
+    nao(excecao(contrato(IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data))).
+
+-contrato(100,200,'Aquisição de serviços','Consulta prévia','Assessoria jurídica', 13599, 547,'Alto de Basto',data(11,02,2020)).
+
 
 /*
 nifs:
 123456789
 111111110
 200000004
+*/
+
+/*findall((Data),contrato(_,2,_,_,_,_,_,_,Data),R).
+R = [data(11, 2, 2020), data(11, 2, 2020)].
 */
 
 % Invariantes sobre entidades adjudicantes
@@ -70,13 +105,12 @@ nifs:
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Invariante estrutural: Não deve ser possivel remover uma entidade adjudicante se esta estiver presente num contrato
-/*-adjudicante(Id,_,_,_) :: (
-    solucoes(Id, contrato(Id,_,_,_,_,_,_,_,_), S),
+% Invariante referencial: Não deve ser possivel remover uma entidade adjudicante se esta estiver presente num contrato
+-adjudicante(Id,_,_,_) :: (
+    solucoes(Id, contrato(_,Id,_,_,_,_,_,_,_), S),
     comprimento( S,N ),
     N == 0
 ).
-*/
 
 %Invariantes sobre entidades adjudicatárias
 %
@@ -110,7 +144,6 @@ nifs:
     string(Morada)
 ).
 
-
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o dígito de controlo do id deve seguir a convenção de validação 'módulo 11'
 +adjudicataria(_,_,Nif,_) :: (
@@ -120,7 +153,7 @@ nifs:
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Invariante estrutural: Não deve ser possivel remover uma entidade adjudicataria se esta estiver presente num contrato
+% Invariante referencial: Não deve ser possivel remover uma entidade adjudicataria se esta estiver presente num contrato
 -adjudicataria(Id,_,_,_) :: (
     solucoes(Id, contrato(_,Id,_,_,_,_,_,_,_), S),
     comprimento( S,N ),
@@ -147,11 +180,10 @@ nifs:
     integer(IdAda),
     atom(TipoDeContrato),
     atom(TipoDeProcedimento),
-    atom(TipoDeProcedimento),
     atom(Descricao),
     integer(Valor),
     integer(Prazo),
-    integer(Local),
+    atom(Local),
     data_valida(Data)
 ).
 
@@ -169,15 +201,24 @@ nifs:
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Invariante estrutural: o valor de um contrato por ajuste direto não pode ultrapassar os 5000 euros e o seu prazo de vigência menor ou igual a um ano
-% e terá de ser de um determinado conjunto de procedimentos
+% Invariante estrutural: O valor de um contrato de ajuste direto deve ser menor ou igual a 5000
+% Deve ser de um dos seguintes tipos: Contrato de aquisição ou locação de bens móveis ou aquisição de serviços
+% Prazo de vigência até 1 ano, inclusive, a contar da decisão de adjudicação.
 +contrato(_,_,TipoDeContrato,'Ajuste direto',_,Custo,Prazo,_,_) :: (
     Custo =< 5000,
     Prazo =< 365,
     member(TipoDeContrato,['Aquisição de bens móveis','Locação de bens móveis','Aquisição de serviços'])
 ).
 
-
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Invariante estrutural: Uma entidade adjudicante não pode convidar a mesma empresa para celebrar um contrato com prestaçõesde serviço
+% do mesmo tipo ou idênticas às de contratos que já lhe foram atribuídos, no ano económico em curso e nos dois anos económicos anteriores, 
+% sempre que O preço contratual acumulado dos contratos já celebrados (não incluindo o contrato que se pretende celebrar) seja igual ou superior a 75.000 euros.
++contrato(IdAd,IdAda,'Aquisição de serviços',_,_,Valor,_,_,data(_,_,Ano)) :: (
+    solucoes((Data,Custo),contrato(IdAd,IdAda,'Aquisição de serviços',_,_,Custo,_,_,Data),ParesDataCusto), %lista de pares 
+    somaCustosContratos(ParesDataCusto,Ano,SomaCustos),
+    (SomaCustos-Valor) < 75000
+).
 
 % Predicados
 %
@@ -196,6 +237,20 @@ add_contrato(IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, 
 add_adjudicataria(Id,Nome,Nif,Morada) :-
     evolucao(adjudicataria(Id, Nome, Nif, Morada)).
 
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Extensao do predicado numeroContratosAdjudicante: IdAdjudicante,R -> {V,F}
+% Devolve em quantos contratos está envolvido
+numeroContratosAdjudicante(IdAd,R) :-
+    solucoes((IdAd),contrato(IdAd,_,_,_,_,_,_,_,_),Lista),
+    comprimento(Lista,R).
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Extensao do predicado numeroContratosAdjudicante: IdAdjudicante,R -> {V,F}
+% Devolve em quantos contratos está envolvido
+numeroContratosAdjudicataria(IdAda,R) :-
+    solucoes((IdAda),contrato(_,IdAda,_,_,_,_,_,_,_),Lista),
+    comprimento(Lista,R).
+
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado que permite a evolucao do conhecimento
@@ -203,7 +258,6 @@ add_adjudicataria(Id,Nome,Nif,Morada) :-
 evolucao( Termo ) :-
     solucoes( Invariante, +Termo::Invariante,Lista ),  %coloca numa lista todos os invariantes,
     comprimento( Lista,N ),
-    write(N),
     insercao( Termo ), %insere o termo na base de informação para ser testado a seguir
     teste( Lista ).  % testa o termo contra os invariantes, se passar fica
 
