@@ -35,8 +35,8 @@
 % Predicados
 %
 % Extensao do predicado add_adjudicante: IdAd, Nome, NIF, Morada -> {V,F}
-add_adjudicante(Id,Nome,Nif,Morada) :-
-    evolucao(adjudicante(Id, Nome, Nif, Morada)).
+add_adjudicante(IdAd,Nome,Nif,Morada) :-
+    evolucao(adjudicante(IdAd, Nome, Nif, Morada)).
 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
@@ -45,9 +45,9 @@ add_contrato(IdCont, IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao,
     evolucao(contrato(IdCont, IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data)).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Extensao do predicado add_adjudicataria: IdAd, Nome, NIF, Morada -> {V,F}
-add_adjudicataria(Id,Nome,Nif,Morada) :-
-    evolucao(adjudicataria(Id, Nome, Nif, Morada)).
+% Extensao do predicado add_adjudicataria: IdAda, Nome, NIF, Morada -> {V,F}
+add_adjudicataria(IdAda,Nome,Nif,Morada) :-
+    evolucao(adjudicataria(IdAda, Nome, Nif, Morada)).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado numeroContratosAdjudicante: IdAdjudicante,R -> {V,F}

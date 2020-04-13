@@ -3,6 +3,9 @@
 
 evolucao( Termo ) :-
     solucoes( Invariante, +Termo::Invariante,Lista ),  %coloca numa lista todos os invariantes,
+    write(Lista),
+    comprimento(Lista,R),
+    write(R),
     insercao( Termo ), %insere o termo na base de informação para ser testado a seguir
     teste( Lista ).  % testa o termo contra os invariantes, se passar fica
 
