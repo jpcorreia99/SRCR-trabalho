@@ -17,17 +17,17 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Pressuposto do Mundo Fechado
 
--adjudicante(IdAd,Nome,NIF,Morada):- 
-    nao(adjudicante(IdAd,Nome,NIF,Morada)) , 
+-adjudicante(IdAd,Nome,NIF,Morada):-
+    nao(adjudicante(IdAd,Nome,NIF,Morada)) ,
     nao(excecao(adjudicante(IdAd,Nome,NIF,Morada))).
 
--adjudicataria(IdAda,Nome,NIF,Morada):- 
-    nao(adjudicataria(IdAda,Nome,NIF,Morada)) , 
+-adjudicataria(IdAda,Nome,NIF,Morada):-
+    nao(adjudicataria(IdAda,Nome,NIF,Morada)) ,
     nao(excecao(adjudicataria(IdAda,Nome,NIF,Morada))).
 
--contrato(IdAd,IdAda,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data):-
-    nao(contrato(IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data)),
-    nao(excecao(contrato(IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data))).
+-contrato(IdCont,IdAd,IdAda,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data):-
+    nao(contrato(IdCont,IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data)),
+    nao(excecao(contrato(IdCont,IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data))).
 
 
 
@@ -85,7 +85,7 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante referencial: Não deve ser possivel remover uma entidade adjudicante se esta estiver presente num contrato
 -adjudicante(Id,_,_,_) :: (
-    solucoes(Id, contrato(_,Id,_,_,_,_,_,_,_), S),
+    solucoes(Id, contrato(_,Id,_,_,_,_,_,_,_,_), S),
     comprimento( S,N ),
     N == 0
 ).
@@ -136,7 +136,7 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante referencial: Não deve ser possivel remover uma entidade adjudicataria se esta estiver presente num contrato
 -adjudicataria(Id,_,_,_) :: (
-    solucoes(Id, contrato(_,Id,_,_,_,_,_,_,_), S),
+    solucoes(Id, contrato(_,_,Id,_,_,_,_,_,_,_), S),
     comprimento( S,N ),
     N == 0
 ).
@@ -145,7 +145,7 @@
 %
 % Invariante estrutural: verificar que os ids das entidades contratuais existem
 % condição de N1 + N2 ao ser 2 pode-se inserir é assegurada pelos invariantes de adjudicante e adjudicatária
-+contrato(IdAd,IdAda,_,_,_,_,_,_,_) :: (
++contrato(_,IdAd,IdAda,_,_,_,_,_,_,_) :: (
     solucoes( (IdAd),(adjudicante( IdAd,_,_,_)),S1 ),
     solucoes( (IdAda),(adjudicataria( IdAda,_,_,_)),S2 ),
     comprimento( S1,N1 ),
@@ -156,7 +156,8 @@
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: verifica que os campos respeitam o tipo de dados correto
-+contrato(IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data) :: (
++contrato(IdCont,IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data) :: (
+    integer(IdCont),
     integer(IdAd),
     integer(IdAda),
     atom(TipoDeContrato),
@@ -170,13 +171,13 @@
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o tipo de procedimento deve pertencer a um certo conjunto
-+contrato(_,_,_,Procedimento,_,_,_,_,_) :: (
++contrato(_,_,_,_,Procedimento,_,_,_,_,_) :: (
     member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público'])
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o custo e duração devem ser superiores a 0
-+contrato(_,_,_,_,_,Custo,Prazo,_,_) :: (
++contrato(_,_,_,_,_,_,Custo,Prazo,_,_) :: (
     Custo >= 0,
     Prazo > 0
 ).
@@ -185,7 +186,7 @@
 % Invariante estrutural: O valor de um contrato de ajuste direto deve ser menor ou igual a 5000
 % Deve ser de um dos seguintes tipos: Contrato de aquisição ou locação de bens móveis ou aquisição de serviços
 % Prazo de vigência até 1 ano, inclusive, a contar da decisão de adjudicação.
-+contrato(_,_,TipoDeContrato,'Ajuste direto',_,Custo,Prazo,_,_) :: (
++contrato(_,_,_,TipoDeContrato,'Ajuste direto',_,Custo,Prazo,_,_) :: (
     Custo =< 5000,
     Prazo =< 365,
     member(TipoDeContrato,['Aquisição de bens móveis','Locação de bens móveis','Aquisição de serviços'])
@@ -193,10 +194,10 @@
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: Uma entidade adjudicante não pode convidar a mesma empresa para celebrar um contrato com prestações de serviço
-% do mesmo tipo ou idênticas às de contratos que já lhe foram atribuídos, no ano económico em curso e nos dois anos económicos anteriores, 
+% do mesmo tipo ou idênticas às de contratos que já lhe foram atribuídos, no ano económico em curso e nos dois anos económicos anteriores,
 % sempre que O preço contratual acumulado dos contratos já celebrados (não incluindo o contrato que se pretende celebrar) seja igual ou superior a 75.000 euros.
-+contrato(IdAd,IdAda,'Aquisição de serviços',_,_,Valor,_,_,data(_,_,Ano)) :: (
-    solucoes((Data,Custo),contrato(IdAd,IdAda,'Aquisição de serviços',_,_,Custo,_,_,Data),ParesDataCusto), %lista de pares 
++contrato(_,IdAd,IdAda,'Aquisição de serviços',_,_,Valor,_,_,data(_,_,Ano)) :: (
+    solucoes((Data,Custo),contrato(_,IdAd,IdAda,'Aquisição de serviços',_,_,Custo,_,_,Data),ParesDataCusto), %lista de pares
     somaCustosContratos(ParesDataCusto,Ano,SomaCustos),
     (SomaCustos-Valor) < 75000
 ).
@@ -211,8 +212,8 @@ add_adjudicante(Id,Nome,Nif,Morada) :-
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado add_contrato: #IdAd, #IdAda, TipoDeContrato, TipoDeProcedimento, Descrição, Valor, Prazo, Local, Data -> {V,F}
-add_contrato(IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data ):-
-    evolucao(contrato(IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data)).
+add_contrato(IdCont, IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data ):-
+    evolucao(contrato(IdCont, IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data)).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado add_adjudicataria: IdAd, Nome, NIF, Morada -> {V,F}
@@ -223,14 +224,14 @@ add_adjudicataria(Id,Nome,Nif,Morada) :-
 % Extensao do predicado numeroContratosAdjudicante: IdAdjudicante,R -> {V,F}
 % Devolve em quantos uma entidade adjudicante está envolvida
 numeroContratosAdjudicante(IdAd,R) :-
-    solucoes((IdAd),contrato(IdAd,_,_,_,_,_,_,_,_),Lista),
+    solucoes((IdAd),contrato(_,IdAd,_,_,_,_,_,_,_,_),Lista),
     comprimento(Lista,R).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado numeroContratosAdjudicante: IdAdjudicante,R -> {V,F}
 % Devolve em quantos uma entidade adjudicatária está envolvida
 numeroContratosAdjudicataria(IdAda,R) :-
-    solucoes((IdAda),contrato(_,IdAda,_,_,_,_,_,_,_),Lista),
+    solucoes((IdAda),contrato(_,_,IdAda,_,_,_,_,_,_,_),Lista),
     comprimento(Lista,R).
 
 
@@ -264,6 +265,18 @@ remocao( Termo ) :-
     retract( Termo ).
 remocao( Termo ) :-
     assert( Termo ),!,fail.
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Extensao do meta-predicado demo: Questao,Resposta -> {V,F}
+%                            Resposta = { verdadeiro,falso,desconhecido }
+
+demo( Questao,verdadeiro ) :-
+    Questao.
+demo( Questao,falso ) :-
+    -Questao.
+demo( Questao,desconhecido ) :-
+    nao( Questao ),
+    nao( -Questao ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do meta-predicado nao: Questao -> {V,F}
