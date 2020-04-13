@@ -3,17 +3,7 @@
 %876543212
 
 :- multifile (-)/1.
-:- dynamic adjudicante/4.
-:- dynamic adjudicataria/4.
-:- dynamic contrato/9.
-:- dynamic excecao/1.
-:- dynamic (-)/1.
 
-:- discontiguous adjudicante/4.
-:- discontiguous adjudicataria/4.
-:- discontiguous contrato/10.
-:- discontiguous (-)/1.
-:- discontiguous excecao/1.
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado adjudicante #IdAd, Nome, NIF, Morada ->{V,F,D}
