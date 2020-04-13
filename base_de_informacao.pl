@@ -54,8 +54,8 @@ adjudicataria(2,'XXX -Associados -Sociedade de Advogados, SP, RL.',702675112,'Po
 % Conhecimento Imperfeito Incerto
 % Não se sabe o NIF
 adjudicataria(100,'Bruno Batista',nif_desconhecido,'Rua dos Barros Nº46').
-excecao(adjudicante(IdAd,Nome,_,Morada)):-
-    adjudicante(IdAd,Nome,nif_desconhecido,Morada).
+excecao(adjudicataria(IdAd,Nome,_,Morada)):-
+    adjudicataria(IdAd,Nome,nif_desconhecido,Morada).
 
 % Conhecimento Imperfeito Impreciso
 % Não se sabe qual das moradas é
@@ -78,11 +78,11 @@ contrato(2,2,2,'Aquisição de serviços','Consulta prévia','Assessoria jurídi
 
 % Conhecimento Imperfeito Incerto
 % Não se sabe o Adjudicante
-contrato(4,1,adjudicante_desconhecido,'Locação de bens móveis', 'Ajuste direto','Arrendamento de espaço', 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020)).
+contrato(4,adjudicante_desconhecido,1,'Locação de bens móveis', 'Ajuste direto','Arrendamento de espaço', 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020)).
 excecao(contrato(IdCont,_, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data)):-
     contrato(IdCont,adjudicante_desconhecido, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data).
 
 % Conhecimento Imperfeito Incerto
 % Não se sabe em que data se realizou
-contrato(5,1,1,'Aquisição de serviços','Consulta prévia','Obras num pavilhão', 100, 100,'Alto de Basto',data(1,03,2020)).
-contrato(5,1,1,'Aquisição de serviços','Consulta prévia','Obras num pavilhão', 100, 100,'Alto de Basto',data(2,03,2020)).
+excecao(contrato(5,1,1,'Aquisição de serviços','Consulta prévia','Obras num pavilhão', 100, 100,'Alto de Basto',data(1,03,2020))).
+excecao(contrato(5,1,1,'Aquisição de serviços','Consulta prévia','Obras num pavilhão', 100, 100,'Alto de Basto',data(2,03,2020))).
