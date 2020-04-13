@@ -17,7 +17,6 @@
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado adjudicante #IdAd, Nome, NIF, Morada ->{V,F,D}
-
 % Conhecimento Perfeito Positivo
 adjudicante(1,'Camara de Braga',123456789,'Praça do Município').
 adjudicante(2,'Município de Alto de Basto',705330336, 'Portugal, Braga,Alto de Basto').
