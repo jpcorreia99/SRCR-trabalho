@@ -22,19 +22,21 @@
 %
 % Invariante estrutural: verifica que os campos respeitam o tipo de dados correto
 % Aplicado a conhecimento perfeito positivo
-+adjudicante(IdAd,Nome,Nif,Morada) :: (
++adjudicante(IdAd,Nome,Nif,TipoEntidado,Morada) :: (
     integer(IdAd),
     atom(Nome),
     integer(Nif),
+    atom(TipoEntidado),
     atom(Morada)
 ).
 
 % Invariante estrutural: verifica que os campos respeitam o tipo de dados correto
 % Aplicado a conhecimento perfeito negativo
-+(-adjudicante(IdAd,Nome,Nif,Morada)) :: (
++(-adjudicante(IdAd,Nome,Nif,TipoEntidado,Morada)) :: (
     integer(IdAd),
     atom(Nome),
     integer(Nif),
+    atom(TipoEntidado),
     atom(Morada)
 ).
 
@@ -42,10 +44,10 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: não permitir a entrada repetida de conhecimento, no campo do Id, nome e Nif
 % Aplicado a conhecimento perfeito positivo
-+adjudicante(IdAd,Nome,Nif,_) :: (
-    solucoes( (IdAd),(adjudicante( IdAd,_,_,_)),S1 ),
-    solucoes( (Nome),(adjudicante( _,Nome,_,_)),S2 ),
-    solucoes( (Nif),(adjudicante( _,_,Nif,_)),S3 ),
++adjudicante(IdAd,Nome,Nif,_,_) :: (
+    solucoes( (IdAd),(adjudicante( IdAd,_,_,_,_)),S1 ),
+    solucoes( (Nome),(adjudicante( _,Nome,_,_,_)),S2 ),
+    solucoes( (Nif),(adjudicante( _,_,Nif,_,_)),S3 ),
     comprimento( S1,N1 ),
     comprimento( S2,N2 ),
     comprimento( S3,N3 ),
@@ -64,20 +66,20 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o dígito de controlo do id deve seguir a convenção de validação 'módulo 11'
 % Aplicado a conhecimento perfeito positivo
-+adjudicante(_,_,Nif,_) :: (
++adjudicante(_,_,Nif,_,_) :: (
     Nif>=100000000, Nif=<999999999,
     ultimo_digito_valido(Nif)
 ).
 
 % Aplicado a conhecimento perfeito negativo
-+(-adjudicante(_,_,Nif,_)) :: (
++(-adjudicante(_,_,Nif,_,_)) :: (
     Nif>=100000000, Nif=<999999999,
     ultimo_digito_valido(Nif)
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante referencial: Não deve ser possivel remover uma entidade adjudicante se esta estiver presente num contrato
--adjudicante(IdAd,_,_,_) :: (
+-adjudicante(IdAd,_,_,_,_) :: (
     solucoes(IdAd, contrato(_,IdAd,_,_,_,_,_,_,_,_), S),
     comprimento( S,N ),
     N == 0
@@ -206,7 +208,7 @@
 % Invariante estrutural: verificar que os ids das entidades contratuais existem
 % Aplicado a conhecimento perfeito positivo
 +contrato(_,IdAd,IdAda,_,_,_,_,_,_,_) :: (
-    solucoes( (IdAd),(adjudicante( IdAd,_,_,_)),S1 ),
+    solucoes( (IdAd),(adjudicante( IdAd,_,_,_,_)),S1 ),
     solucoes( (IdAda),(adjudicataria( IdAda,_,_,_)),S2 ),
     comprimento( S1,N1 ),
     comprimento( S2,N2 ),
@@ -217,7 +219,7 @@
 % Aplicado a conhecimento perfeito negativo
 % Não faria sentido aplicar o predicado -contratoo a entidades que não existem no sistema
 +(-contrato(_,IdAd,IdAda,_,_,_,_,_,_,_)) :: (
-    solucoes( (IdAd),(adjudicante( IdAd,_,_,_)),S1 ),
+    solucoes( (IdAd),(adjudicante( IdAd,_,_,_,_)),S1 ),
     solucoes( (IdAda),(adjudicataria( IdAda,_,_,_)),S2 ),
     comprimento( S1,N1 ),
     comprimento( S2,N2 ),
@@ -230,15 +232,14 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o tipo de procedimento deve pertencer a um certo conjunto
 % Aplicado a conhecimento perfeito positivo
-+contrato(_,_,_,_,Procedimento,_,_,_,_,_) :: (
-    write(Procedimento),
++contrato(_,_,_,_,Procedimento,_,_,_,_,_) :: (  
     member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público'])
 ).
 
 % Aplicado a conhecimento perfeito negativo
 
 +(-contrato(_,_,_,_,Procedimento,_,_,_,_,_)) :: (
-member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público'])
+    member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público'])
 ).    
 
 

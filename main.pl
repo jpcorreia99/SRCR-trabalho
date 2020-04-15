@@ -18,9 +18,9 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Pressuposto do Mundo Fechado
 
--adjudicante(IdAd,Nome,NIF,Morada):-
-    nao(adjudicante(IdAd,Nome,NIF,Morada)) ,
-    nao(excecao(adjudicante(IdAd,Nome,NIF,Morada))).
+-adjudicante(IdAd,Nome,NIF,TipoEntidade,Morada):-
+    nao(adjudicante(IdAd,Nome,NIF,TipoEntidade,Morada)) ,
+    nao(excecao(adjudicante(IdAd,Nome,NIF,TipoEntidade,Morada))).
 
 -adjudicataria(IdAda,Nome,NIF,Morada):-
     nao(adjudicataria(IdAda,Nome,NIF,Morada)) ,
@@ -35,8 +35,8 @@
 % Predicados
 %
 % Extensao do predicado add_adjudicante: IdAd, Nome, NIF, Morada -> {V,F}
-add_adjudicante(IdAd,Nome,Nif,Morada) :-
-    evolucao(adjudicante(IdAd, Nome, Nif, Morada)).
+add_adjudicante(IdAd,Nome,Nif,TipoEntidade,Morada) :-
+    evolucao(adjudicante(IdAd, Nome, Nif, TipoEntidade, Morada)).
 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
