@@ -22,9 +22,9 @@
     nao(adjudicante(IdAd,Nome,NIF,TipoEntidade,Morada)) ,
     nao(excecao(adjudicante(IdAd,Nome,NIF,TipoEntidade,Morada))).
 
--adjudicataria(IdAda,Nome,NIF,Morada):-
-    nao(adjudicataria(IdAda,Nome,NIF,Morada)) ,
-    nao(excecao(adjudicataria(IdAda,Nome,NIF,Morada))).
+-adjudicataria(IdAda,Nome,NIF,TipoEntidade,Morada):-
+    nao(adjudicataria(IdAda,Nome,NIF,TipoEntidade,Morada)) ,
+    nao(excecao(adjudicataria(IdAda,Nome,NIF,TipoEntidade,Morada))).
 
 -contrato(IdCont,IdAd,IdAda,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data):-
     nao(contrato(IdCont,IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data)),
@@ -83,4 +83,3 @@ demo( Questao,desconhecido ) :-
 nao( Questao ) :-
     Questao, !, fail.
 nao( _ ).
-

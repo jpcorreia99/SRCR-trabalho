@@ -7,13 +7,13 @@
 
 :- multifile (-)/1.
 :- dynamic adjudicante/5.
-:- dynamic adjudicataria/4.
+:- dynamic adjudicataria/5.
 :- dynamic contrato/9.
 :- dynamic excecao/1.
 :- dynamic (-)/1.
 
 :- discontiguous adjudicante/5.
-:- discontiguous adjudicataria/4.
+:- discontiguous adjudicataria/5.
 :- discontiguous contrato/10.
 :- discontiguous (-)/1.
 :- discontiguous excecao/1.
@@ -56,22 +56,22 @@ nuloInterdito(nome_interdito).
 % Extensão do predicado adjudicataria #IdAda, Nome, Nif, Morada -> {V,F,D}
 
 % Conhecimento Perfeito Positivo
-adjudicataria(1,'Universidade do minho',502011378, 'Largo do Paço').
-adjudicataria(2,'XXX -Associados -Sociedade de Advogados, SP, RL.',702675112,'Portugal').
+adjudicataria(1,'Universidade do minho',502011378, 'Pessoa Coletiva', 'Largo do Paço').
+adjudicataria(2,'XXX -Associados -Sociedade de Advogados, SP, RL.',702675112, 'Pessoa Coletiva', 'Portugal').
 
 % Conhecimento Perfeito Negativo
--adjudicataria(1000,'Rodrigo Guedes LDA',876543212,'Rua 25 de Abril').
+-adjudicataria(1000,'Rodrigo Guedes LDA',876543212, 'Pessoa Coletiva','Rua 25 de Abril').
 
 % Conhecimento Imperfeito Incerto
 % Não se sabe o NIF
-adjudicataria(100,'Bruno Batista',nif_desconhecido,'Rua dos Barros Nº46').
-excecao(adjudicataria(IdAd,Nome,_,Morada)):-
-    adjudicataria(IdAd,Nome,nif_desconhecido,Morada).
+adjudicataria(100,'Bruno Batista',nif_desconhecido,'Pessoa Coletiva','Rua dos Barros Nº46').
+excecao(adjudicataria(IdAd,Nome,_,TipoEntidade,Morada)):-
+    adjudicataria(IdAd,Nome,nif_desconhecido,TipoEntidade,Morada).
 
 % Conhecimento Imperfeito Impreciso
 % Não se sabe qual das moradas é
-excecao(adjudicataria(200,'Salvador Eletrecista LDA',222222220,'Rua José Alves')).
-excecao(adjudicataria(200,'Salvador Eletrecista LDA',333333330,'Rua André Gomes')).
+excecao(adjudicataria(200,'Salvador Eletrecista LDA',222222220, 'Pessoa Coletiva','Rua José Alves')).
+excecao(adjudicataria(200,'Salvador Eletrecista LDA',333333330,'Pessoa Coletiva','Rua André Gomes')).
 
 
 

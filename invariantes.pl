@@ -85,6 +85,10 @@
     N == 0
 ).
 
+% Invariante que impede a inserção de conhecimento perfeito positivo relativo
+% a um adjudicante com nome interdito
++adjudicante(IdAd,N,Ni,T,M) :: (solucoes((IdAd,Nome_interdito,Ni,T,M), (adjudicante(IdAd,Nome_interdito,Ni,T,M), nulo(Nome_interdito)), R),
+                        comprimento(R,0)).
 
 
 
@@ -94,28 +98,30 @@
 
 % Invariante estrutural: verifica que os campos respeitam o tipo de dados correto
 % Aplicado a conhecimento perfeito positivo
-+adjudicataria(IdAda,Nome,Nif,Morada) :: (
++adjudicataria(IdAda,Nome,Nif,TipoEntidade,Morada) :: (
     integer(IdAda),
     atom(Nome),
     integer(Nif),
-    atom(Morada)
+    atom(Morada),
+    atom(TipoEntidade)
 ).
 
 % Aplicado a conhecimento perfeito negativo
-+(-adjudicataria(IdAda,Nome,Nif,Morada)) :: (
++(-adjudicataria(IdAda,Nome,Nif,TipoEntidade,Morada)) :: (
     integer(IdAda),
     atom(Nome),
     integer(Nif),
-    atom(Morada)
+    atom(Morada),
+    atom(TipoEntidade)
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: não permitir a entrada repetida de conhecimento, no campo do Id, nome e Nif
 % Aplicado a conhecimento perfeito positivo
-+adjudicataria(IdAda,Nome,Nif,_) :: (
-    solucoes( (IdAda),(adjudicataria(IdAda,_,_,_)),S1 ),
-    solucoes( (Nome),(adjudicataria( _,Nome,_,_)),S2 ),
-    solucoes( (Nif),(adjudicataria( _,_,Nif,_)),S3 ),
++adjudicataria(IdAda,Nome,Nif,_,_) :: (
+    solucoes( (IdAda),(adjudicataria(IdAda,_,_,_,_)),S1 ),
+    solucoes( (Nome),(adjudicataria( _,Nome,_,_,_)),S2 ),
+    solucoes( (Nif),(adjudicataria( _,_,Nif,_,_)),S3 ),
     comprimento( S1,N1 ),
     comprimento( S2,N2 ),
     comprimento( S3,N3 ),
@@ -135,14 +141,14 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o dígito de controlo do id deve seguir a convenção de validação 'módulo 11'
 % Aplicado a conhecimento perfeito positivo
-+adjudicataria(_,_,Nif,_) :: (
++adjudicataria(_,_,Nif,_,_) :: (
     integer(Nif),
     Nif>=100000000, Nif=<999999999,
     ultimo_digito_valido(Nif)
 ).
 
 % Aplicado a conhecimento perfeito negativo
-+(-adjudicataria(_,_,Nif,_)) :: (
++(-adjudicataria(_,_,Nif,_,_)) :: (
     integer(Nif),
     Nif>=100000000, Nif=<999999999,
     ultimo_digito_valido(Nif)
@@ -150,12 +156,16 @@
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante referencial: Não deve ser possivel remover uma entidade adjudicataria se esta estiver presente num contrato
--adjudicataria(IdAda,_,_,_) :: (
+-adjudicataria(IdAda,_,_,_,_) :: (
     solucoes(IdAda, contrato(_,_,IdAda,_,_,_,_,_,_,_), S),
     comprimento( S,N ),
     N == 0
 ).
 
+% Invariante que impede a inserção de conhecimento perfeito positivo relativo
+% a um adjudicante com nome interdito
++adjudicataria(IdAd,N,Ni,T,M) :: (solucoes((IdAd,Nome_interdito,Ni,T,M), (adjudicataria(Id,Nome_interdito,Ni,T,M), nulo(Nome_interdito)), R),
+                        comprimento(R,0)).
 
 % Invariantes sobre contratos
 %
@@ -212,7 +222,7 @@
     solucoes( (IdAda),(adjudicataria( IdAda,_,_,_)),S2 ),
     comprimento( S1,N1 ),
     comprimento( S2,N2 ),
-    N1 == 1, 
+    N1 == 1,
     N2 ==1
 ).
 
@@ -223,7 +233,7 @@
     solucoes( (IdAda),(adjudicataria( IdAda,_,_,_)),S2 ),
     comprimento( S1,N1 ),
     comprimento( S2,N2 ),
-    N1 == 1, 
+    N1 == 1,
     N2 ==1
 ).
 
@@ -232,7 +242,7 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o tipo de procedimento deve pertencer a um certo conjunto
 % Aplicado a conhecimento perfeito positivo
-+contrato(_,_,_,_,Procedimento,_,_,_,_,_) :: (  
++contrato(_,_,_,_,Procedimento,_,_,_,_,_) :: (
     member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público'])
 ).
 
@@ -240,7 +250,7 @@
 
 +(-contrato(_,_,_,_,Procedimento,_,_,_,_,_)) :: (
     member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público'])
-).    
+).
 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
