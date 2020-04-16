@@ -1,4 +1,5 @@
 :- op(900, xfy, '::').
+:- style_check(-singleton).
 % Invariantes sobre qualquer termo
 %
 %Invariante estrutural: Não permitir  a inserção de conhecimento contraditório
@@ -57,11 +58,11 @@
 
 % Invariante estrutural: não permitir a entrada repetida de conhecimento, no campo do Id
 %  Aplicado a conhecimento perfeito negativo
-/*+(-adjudicante(IdAd,_,_,_)) :: (
++(-adjudicante(IdAd,_,_,_)) :: (
     solucoes( (IdAd),(-adjudicante( IdAd,_,_,_)),S1 ),
     comprimento(S1,R1),
     R1==1
-).*/
+).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o dígito de controlo do id deve seguir a convenção de validação 'módulo 11'
@@ -87,8 +88,11 @@
 
 % Invariante que impede a inserção de conhecimento perfeito positivo relativo
 % a um adjudicante com nome interdito
-+adjudicante(IdAd,N,Ni,T,M) :: (solucoes((IdAd,Nome_interdito,Ni,T,M), (adjudicante(IdAd,Nome_interdito,Ni,T,M), nulo(Nome_interdito)), R),
-                        comprimento(R,0)).
++adjudicante(IdAd,_,Ni,T,M) :: (
+    solucoes((IdAd,Nome_interdito,Ni,T,M), 
+    (adjudicante(IdAd,Nome_interdito,Ni,T,M), nulo(Nome_interdito)), R),
+    comprimento(R,0)
+).
 
 
 
@@ -131,12 +135,12 @@
 
 % Invariante estrutural: não permitir a entrada repetida de conhecimento, no campo do Id
 %  Aplicado a conhecimento perfeito negativo
-/*+(-adjudicataria(IdAda,_,_,_)) :: (
++(-adjudicataria(IdAda,_,_,_)) :: (
     solucoes( (IdAda),(-adjudicante( IdAda,_,_,_)),S1 ),
     comprimento(S1,R1),
     R1==1
 ).
-*/
+
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o dígito de controlo do id deve seguir a convenção de validação 'módulo 11'

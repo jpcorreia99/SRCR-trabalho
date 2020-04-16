@@ -1,11 +1,12 @@
 :- set_prolog_flag( discontiguous_warnings,off ).
 :- set_prolog_flag( single_var_warnings,off ).
-:- set_prolog_flag( unknown,fail ).
+/*:- set_prolog_flag( unknown,fail ).*/
 
+:- style_check(-singleton).
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado que permite a evolucao do conhecimento
 
-evolucao( Termo ) :-
+evolucao_original( Termo ) :-
     solucoes( Invariante, +Termo::Invariante,Lista ),  %coloca numa lista todos os invariantes,
     write(Lista),
     comprimento(Lista,R),

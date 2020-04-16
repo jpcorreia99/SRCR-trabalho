@@ -46,7 +46,7 @@ excecao(adjudicante(200,'António Reparações LDA','Pessoa Coletiva',333333330,
 adjudicante(300,nome_interdito,876543212,'Pessoa Coletiva','Rua Nova').
 excecao(adjudicante(IdAd,_,NIF,TipoEntidade,Morada)):-
     adjudicante(IdAd,nome_interdito,NIF,TipoEntidade,Morada).
-nuloInterdito(nome_interdito).
+nulo(nome_interdito).
 
 /*+utente(Id,N,I,G,M) ::
     (solucoes((Id,N,I,G,M), (utente(15,'Tobias',50,'M',morada_impossivel), nao(nulointerdito(morada_impossivel))), R),

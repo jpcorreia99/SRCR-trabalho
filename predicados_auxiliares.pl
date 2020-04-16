@@ -15,8 +15,9 @@ digito_de_controlo(Primeiros_oito_digitos,Digito_de_controlo):-
     multiplica_lista(Primeiros_oito_digitos,Ultimo_digito),
     (0 is mod(Ultimo_digito,11); 1 is mod(Ultimo_digito,11)),
     Digito_de_controlo is 0.
-digito_de_controlo(Nif,Digito_de_controlo):-
-    multiplica_lista(Nif,Ultimo_digito),
+
+digito_de_controlo(Primeiros_oito_digitos,Digito_de_controlo):-
+    multiplica_lista(Primeiros_oito_digitos,Ultimo_digito),
     Mod_Result is mod(Ultimo_digito,11),
     Digito_de_controlo is 11-Mod_Result.
 
