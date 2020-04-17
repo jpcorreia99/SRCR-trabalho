@@ -2,6 +2,7 @@
 
 % Predicados auxiliares
 %
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado ultimo_digito_valido: Nif ->{V,F}
 % Validação do último bit através da técnica módulo 11
 ultimo_digito_valido(Nif):-
@@ -33,14 +34,6 @@ nif_para_lista(Nif,L):-
     number_codes(Nif,X),
     maplist(ascii_to_digit,X, L).
 
-%Extensao do predicado que aplica uma função a todos os elementos de uma lista
-/*mapear(Pred, Xs, Ys) :-
-	(foreach(X,Xs),
-	 foreach(Y,Ys),
-   param(Pred)
-   do  call(Pred, X, Y)
-  ).*/
-
 % Extensão do predicado converte um código ascii para o número correspondente ascii_to_digit
 ascii_to_digit(Ascii_number,R) :- R is Ascii_number-48.
 
@@ -51,7 +44,7 @@ multiplicacao_decrescente([H|T],R,Num):-
     multiplicacao_decrescente(T,Res,Num-1),
     R is Res + (H*Num).
 
-
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Extensão do predicado filtraDatas3Anos: Lista, DataDeReferencia,R -> {V,F}
 %Devolve o somatório dos valores dos contratos nos últimos dois anos económicos mais o atual
 %filtraDatas3Anos([(data(1,1,2010),500),(data(2,2,2020),300),(data(3,3,2011),600)],2012,R).
@@ -69,6 +62,30 @@ somaCustosContratos([(data(_,_,Ano),_)|T],AnoDeReferencia,R):-
     somaCustosContratos(T,AnoDeReferencia,R1),
     R is R1.
 
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+%Extensão do predicado NifCorrespondeTipoEntidade: NifLista, TipoEntidade -> {V,F}
+nifCorrespondeTipoEntidade([Primeiro_digito|_],'Pessoa singular'):- 
+    Primeiro_digito>= 1, 
+    Primeiro_digito =< 3.
+
+nifCorrespondeTipoEntidade([4,5|_],'Pessoa singular não residente').
+
+nifCorrespondeTipoEntidade([5|_],'Pessoa coletiva').
+
+nifCorrespondeTipoEntidade([6|_],'Organismo de administração pública').
+
+nifCorrespondeTipoEntidade([7,1|_],'Pessoa coletiva não residente').
+
+nifCorrespondeTipoEntidade([7,2|_],'Fundo de investimento').
+
+nifCorrespondeTipoEntidade([7,3|_],'Sujeito passivo'). %são os reformados
+
+nifCorrespondeTipoEntidade([Primeiro_digito,Segundo_digito|_],'Condomínio'):-
+    Primeiro_digito == 9 , 
+    (Segundo_digito ==0 ; Segundo_digito == 1).
+
+nifCorrespondeTipoEntidade([9,9|_],'Sociedade civil').
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado data: Dia,Mes,Ano -> {V,F}

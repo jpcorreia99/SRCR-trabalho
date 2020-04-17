@@ -1,14 +1,28 @@
 
 %Nifs usáveis
 %876543212
+
+
+%pessoa singulas
 %211111112
 %222222220
 %233333339
 
+% Pessoa coletiva
+%512345678
+%543212343
+%598765433
+
+
+%
+%organiusmo de administração publica
+%644444444
+%655555552
+
 :- multifile (-)/1.
 :- dynamic adjudicante/5.
 :- dynamic adjudicataria/5.
-:- dynamic contrato/9.
+:- dynamic contrato/10.
 :- dynamic excecao/1.
 :- dynamic (-)/1.
 
@@ -21,29 +35,29 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado adjudicante #IdAd, Nome, NIF,TipoEntidade, Morada ->{V,F,D}
 % Conhecimento Perfeito Positivo
-adjudicante(1,'Camara de Braga',123456789,'Organismo de Administração Pública','Praça do Município').
-adjudicante(2,'Município de Alto de Basto','Organismo de Administração Pública',705330336, 'Portugal, Braga,Alto de Basto').
+adjudicante(1,'Camara de Braga',622222228,'Organismo de administração pública','Praça do Município').
+adjudicante(2,'Município de Alto de Basto',600000001,'Organismo de administração pública', 'Portugal, Braga,Alto de Basto').
 
 
 % Conhecimento Perfeito Negativo
--adjudicante(1000,'André Alves',111111110,'Pessoa Singular','Rua dos Barros Nº45').
+-adjudicante(1000,'André Alves',111111110,'Pessoa singular','Rua dos Barros Nº45').
 
 % Conhecimento Imperfeito Incerto
 % Não se sabe o NIF
-adjudicante(100,'Tasquinha Bracarense',nif_desconhecido,'Pessoa Coletiva','Rua Nova de Santa Cruz').
+adjudicante(100,'Tasquinha Bracarense',nif_desconhecido,'Pessoa coletiva','Rua Nova de Santa Cruz').
 excecao(adjudicante(IdAd,Nome,_,TipoEntidade,Morada)):-
     adjudicante(IdAd,Nome,nif_desconhecido,TipoEntidade,Morada).
 
 
 % Conhecimento Imperfeito Impreciso
 % Não se sabe qual das moradas é
-excecao(adjudicante(200,'António Reparações LDA','Pessoa Coletiva',222222220,'Rua da Nascente')).
-excecao(adjudicante(200,'António Reparações LDA','Pessoa Coletiva',333333330,'Rua da Nascente')).
+excecao(adjudicante(200,'António Reparações LDA',500000000,'Pessoa coletiva','Rua da Nascente')).
+excecao(adjudicante(200,'António Reparações LDA',500000000,'Pessoa coletiva',,'Rua da Nascente')).
 
 
 % Conhecimento Imperfeito Interdito
 % Interdito saber o nome do adjudicante
-adjudicante(300,nome_interdito,876543212,'Pessoa Coletiva','Rua Nova').
+adjudicante(300,nome_interdito,511111118,'Pessoa coletiva','Rua Nova').
 excecao(adjudicante(IdAd,_,NIF,TipoEntidade,Morada)):-
     adjudicante(IdAd,nome_interdito,NIF,TipoEntidade,Morada).
 nulo(nome_interdito).
@@ -56,22 +70,23 @@ nulo(nome_interdito).
 % Extensão do predicado adjudicataria #IdAda, Nome, Nif, Morada -> {V,F,D}
 
 % Conhecimento Perfeito Positivo
-adjudicataria(1,'Universidade do minho',502011378, 'Pessoa Coletiva', 'Largo do Paço').
-adjudicataria(2,'XXX -Associados -Sociedade de Advogados, SP, RL.',702675112, 'Pessoa Coletiva', 'Portugal').
+adjudicataria(1,'Universidade do minho',633333336, 'Pessoa coletiva', 'Largo do Paço').
+adjudicataria(2,'XXX -Associados -Sociedade de Advogados, SPa, RL.',512345678, 'Pessoa coletiva', 'Portugal').
+adjudicataria(3,'Camara de Braga',622222228,'Organismo de administração pública','Praça do Município').
 
 % Conhecimento Perfeito Negativo
--adjudicataria(1000,'Rodrigo Guedes LDA',876543212, 'Pessoa Coletiva','Rua 25 de Abril').
+-adjudicataria(1000,'Rodrigo Guedes LDA',876543212, 'Pessoa coletiva','Rua 25 de Abril').
 
 % Conhecimento Imperfeito Incerto
 % Não se sabe o NIF
-adjudicataria(100,'Bruno Batista',nif_desconhecido,'Pessoa Coletiva','Rua dos Barros Nº46').
+adjudicataria(100,'Bruno Batista',nif_desconhecido,'Pessoa coletiva','Rua dos Barros Nº46').
 excecao(adjudicataria(IdAd,Nome,_,TipoEntidade,Morada)):-
     adjudicataria(IdAd,Nome,nif_desconhecido,TipoEntidade,Morada).
 
 % Conhecimento Imperfeito Impreciso
 % Não se sabe qual das moradas é
-excecao(adjudicataria(200,'Salvador Eletrecista LDA',222222220, 'Pessoa Coletiva','Rua José Alves')).
-excecao(adjudicataria(200,'Salvador Eletrecista LDA',333333330,'Pessoa Coletiva','Rua André Gomes')).
+excecao(adjudicataria(200,'Salvador Eletrecista LDA',222222220, 'Pessoa coletiva','Rua José Alves')).
+excecao(adjudicataria(200,'Salvador Eletrecista LDA',333333330,'Pessoa coletiva','Rua André Gomes')).
 
 
 
