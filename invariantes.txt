@@ -1,0 +1,29 @@
+Este documento serve para caracterizar a lista de invariantes para ser mais fácil verificar se é possível inserir algo
+
+Geral
+1- não deixa inserir conhecimento se -Termo já existir
+2- Se se estiver a tentar inserir -Termo não deixa inserir se Termo já existir
+
++Adjudicante
+1. Os campos do Adjudicante devem ser do tipo indicado
+2. Só pode haver um adjudicante com um certo nome, Id e Nif
+3. o nif deve ser válido pela validação módulo 11
+4. o primeiro [e segundo] dígito do nif deve corresponder ao correto tipo de Entidade (ver predicado nifCorrespondeTipoEntidade nos predicados_auliares)
+5. Não se pode inseir conhecimento perfeito quando o nome é interdito
+6. Se se inserir um nif que já existe no predidaco adjudicatária, deve ter o mesmo nome associado
+
+-adjudicante
+1. Não remover se estiver envolvido em algum contrado
+
+adjudicatária:
+mesma coisa que o adjudicante invertendo o 5
+
++Contrato
+1. os tipos dos campos devem ser obedecidos
+2. O custo e o prazo devem ser > 0
+3. os ids da entidade adjudicante e adjudicatária devem existir
+4. Um contrato não pode ter a mesma entidade como adjudicante e adjudicatária
+5. O procedimento deve ser dos tipos 'Ajuste direto','Consulta prévia','Concurso público'
+[6]. Se for de adjustr direto o cursto deve ser <5000 e o prazo <365, pertencendo ao tipoDeContrato 'Aquisição de bens móveis','Locação de bens móveis','Aquisição de serviços' 
+7.Uma entidade adjudicante não pode convidar a mesma empresa para celebrar um contrato com prestações de serviço do mesmo tipo ou idênticas às de contratos que já lhe foram atribuídos, no ano económico em curso e nos dois anos económicos anteriores, sempre que O preço contratual acumulado dos contratos já celebrados (não incluindo o contrato que se pretende celebrar) seja igual ou superior a 75.000 euros.
+

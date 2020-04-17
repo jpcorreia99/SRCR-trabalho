@@ -164,7 +164,7 @@
     comprimento( S3,N3 ),
     Total is N1 + N2 + N3,
     Total == 3
-).W
+).
 
 % Invariante estrutural: não permitir a entrada repetida de conhecimento, no campo do Id
 %  Aplicado a conhecimento perfeito negativo

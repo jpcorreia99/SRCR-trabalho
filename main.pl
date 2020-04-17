@@ -63,6 +63,20 @@ numeroContratosAdjudicataria(IdAda,R) :-
     solucoes((IdAda),contrato(_,_,IdAda,_,_,_,_,_,_,_),Lista),
     comprimento(Lista,R).
 
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Extensao do predicado valorContratosAdjudicante: IdAdjudicante,R -> {V,F}
+% Devolve a soma do valor dos contratos em que uma entidade adjudicante está envolvida
+valorContratosAdjudicante(IdAd,R) :-
+    solucoes((Valores),contrato(_,IdAd,_,_,_,_,Valores,_,_,_),Lista),
+    sum_list(Lista,R).
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Extensao do predicado valorContratosAdjudicante: IdAdjudicante,R -> {V,F}
+% Devolve a soma do valor dos contratos em que uma entidade adjudicante está envolvida
+valorContratosAdjudidicataria(IdAda,R) :-
+    solucoes((Valores),contrato(_,_,IdAda,_,_,_,Valores,_,_,_),Lista),
+    sum_list(Lista,R).
+
 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
