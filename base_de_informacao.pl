@@ -52,7 +52,7 @@ excecao(adjudicante(IdAd,Nome,_,TipoEntidade,Morada)):-
 % Conhecimento Imperfeito Impreciso
 % Não se sabe qual das moradas é
 excecao(adjudicante(200,'António Reparações LDA',500000000,'Pessoa coletiva','Rua da Nascente')).
-excecao(adjudicante(200,'António Reparações LDA',500000000,'Pessoa coletiva',,'Rua da Nascente')).
+excecao(adjudicante(200,'António Reparações LDA',500000000,'Pessoa coletiva','Rua da Nascente')).
 
 
 % Conhecimento Imperfeito Interdito

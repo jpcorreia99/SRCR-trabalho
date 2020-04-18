@@ -112,7 +112,7 @@
 % Invariante que impede a inserção de conhecimento perfeito positivo relativo
 % a um adjudicante com nome interdito
 +adjudicante(IdAd,_,Ni,T,M) :: (
-    solucoes((IdAd,Nome_interdito,Ni,T,M), 
+    solucoes((IdAd,Nome_interdito,Ni,T,M),
     (adjudicante(IdAd,Nome_interdito,Ni,T,M), nulo(Nome_interdito)), R),
     comprimento(R,0)
 ).
@@ -290,7 +290,7 @@
     comprimento( S1,N1 ),
     comprimento( S2,N2 ),
     N1 == 1,
-    N2 ==1
+    N2 == 1
 ).
 
 % Aplicado a conhecimento perfeito negativo
@@ -301,7 +301,7 @@
     comprimento( S1,N1 ),
     comprimento( S2,N2 ),
     N1 == 1,
-    N2 ==1
+    N2 == 1
 ).
 
 
@@ -311,7 +311,7 @@
 +contrato(_,IdAd, IdAda,_,_,_,_,_,_,_) :: (
     solucoes((NifAd), (adjudicante( IdAd,NifAd,_,_,_)),S1 ),
     solucoes((NifAda), (adjudicataria( IdAda,NifAda,_,_,_)),S2),
-    S1 \= S2,
+    S1 \= S2
 ).
 
 
@@ -360,4 +360,3 @@
     somaCustosContratos(ParesDataCusto,Ano,SomaCustos),
     (SomaCustos-Valor) < 75000
 ).
-
