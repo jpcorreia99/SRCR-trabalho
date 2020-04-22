@@ -37,7 +37,7 @@
 % Conhecimento Perfeito Positivo
 adjudicante(1,'Camara de Braga',622222228,'Organismo de administração pública','Praça do Município').
 adjudicante(2,'Município de Alto de Basto',600000001,'Organismo de administração pública', 'Portugal, Braga,Alto de Basto').
-
+% adjudicante(3,'XXX -Associados -Sociedade de Advogados, SPa, RL.',512345678, 'Pessoa coletiva', 'Portugal').
 
 % Conhecimento Perfeito Negativo
 -adjudicante(1000,'André Alves',111111110,'Pessoa singular','Rua dos Barros Nº45').
@@ -100,16 +100,17 @@ excecao(adjudicataria(200,'Salvador Eletrecista LDA',333333330,'Pessoa coletiva'
 contrato(0,1,2,'Aquisição de serviços','Consulta prévia','Assessoria jurídica', 400, 50,'Alto de Basto',data(14,02,2020)).
 contrato(1,2,1,'Aquisição de serviços','Consulta prévia','Assessoria jurídica', 500, 60,'Alto de Basto',data(15,02,2020)).
 contrato(2,2,2,'Aquisição de serviços','Consulta prévia','Assessoria jurídica', 600, 70,'Alto de Basto',data(16,02,2020)).
+contrato(3,1,3,'Aquisição de serviços','Consulta prévia','Assessoria jurídica', 700, 80,'Alto de Basto',data(17,02,2020)).
 
 % Conhecimento Perfeito Negativo
--contrato(3,1,2,'Locação de bens móveis', 'Ajuste direto','Arrendamento de espaço', 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020)).
+-contrato(4,1,2,'Locação de bens móveis', 'Ajuste direto','Arrendamento de espaço', 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020)).
 
 % Conhecimento Imperfeito Incerto
 % Não se sabe o Adjudicante
-contrato(4,adjudicante_desconhecido,1,'Locação de bens móveis', 'Ajuste direto','Arrendamento de espaço', 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020)).
+contrato(5,adjudicante_desconhecido,1,'Locação de bens móveis', 'Ajuste direto','Arrendamento de espaço', 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020)).
 excecao(contrato(_,adjudicante_desconhecido, _, _, _, _, _, _, _, _)).
 
 % Conhecimento Imperfeito Impreciso
 % Não se sabe em que data se realizou
-excecao(contrato(5,1,1,'Aquisição de serviços','Consulta prévia','Obras num pavilhão', 100, 100,'Alto de Basto',data(1,03,2020))).
-excecao(contrato(5,1,1,'Aquisição de serviços','Consulta prévia','Obras num pavilhão', 100, 100,'Alto de Basto',data(2,03,2020))).
+excecao(contrato(6,1,1,'Aquisição de serviços','Consulta prévia','Obras num pavilhão', 100, 100,'Alto de Basto',data(1,03,2020))).
+excecao(contrato(6,1,1,'Aquisição de serviços','Consulta prévia','Obras num pavilhão', 100, 100,'Alto de Basto',data(2,03,2020))).

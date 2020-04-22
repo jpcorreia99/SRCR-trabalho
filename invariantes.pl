@@ -58,7 +58,7 @@
 
 % Invariante estrutural: não permitir a entrada repetida de conhecimento, no campo do Id
 %  Aplicado a conhecimento perfeito negativo
-+(-adjudicante(IdAd,_,_,_)) :: (
++(-adjudicante(IdAd,_,_,_,_)) :: (
     solucoes( (IdAd),(-adjudicante( IdAd,_,_,_)),S1 ),
     comprimento(S1,R1),
     R1==1
@@ -97,13 +97,10 @@
 +adjudicante(_,Nome,Nif,_,_) :: (
     solucoes((Nomes),adjudicataria(_,Nomes,Nif,_,_),S1),
     comprimento(S1,N1),
-    write(S1),
     (N1 == 0; % Se o comprimento for 0 indica que o nif não está registado para nenhuma entidade adjudicataria
-    (nth0(0, S1,NomeAdjudicataria),  % Se o comprimento não for 0, sua-se o predicado nth para aceder ao elemento da lista pois o predicado soluções só devolve listas
-    write(NomeAdjudicataria),
-    write(Nome),
-    NomeAdjudicataria == Nome   % e verifica-se que se existir um nome de adjudicante associado ao nif tem de ser o mesmo nome do nif que estamos a inserir
-    )
+     (nth0(0, S1,NomeAdjudicataria),  % Se o comprimento não for 0, sua-se o predicado nth para aceder ao elemento da lista pois o predicado soluções só devolve listas
+     write(NomeAdjudicataria),
+     NomeAdjudicataria == Nome)   % e verifica-se que se existir um nome de adjudicante associado ao nif tem de ser o mesmo nome do nif que estamos a inserir
     )
 ).
 

@@ -33,23 +33,6 @@
 
 
 % Predicados
-%
-% Extensao do predicado add_adjudicante: IdAd, Nome, NIF, Morada -> {V,F}
-add_adjudicante(IdAd,Nome,Nif,TipoEntidade,Morada) :-
-    evolucao(adjudicante(IdAd, Nome, Nif, TipoEntidade, Morada)).
-
-
-%--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Extensão do predicado add_contrato: #IdAd, #IdAda, TipoDeContrato, TipoDeProcedimento, Descrição, Valor, Prazo, Local, Data -> {V,F}
-add_contrato(IdCont, IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data ):-
-    evolucao(contrato(IdCont, IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data)).
-
-%--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Extensao do predicado add_adjudicataria: IdAda, Nome, NIF, Morada -> {V,F}
-add_adjudicataria(IdAda,Nome,Nif,Morada) :-
-    evolucao(adjudicataria(IdAda, Nome, Nif, Morada)).
-
-%--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado numeroContratosAdjudicante: IdAdjudicante,R -> {V,F}
 % Devolve em quantos uma entidade adjudicante está envolvida
 numeroContratosAdjudicante(IdAd,R) :-
@@ -62,6 +45,7 @@ numeroContratosAdjudicante(IdAd,R) :-
 numeroContratosAdjudicataria(IdAda,R) :-
     solucoes((IdAda),contrato(_,_,IdAda,_,_,_,_,_,_,_),Lista),
     comprimento(Lista,R).
+
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado valorContratosAdjudicante: IdAdjudicante,R -> {V,F}
@@ -76,6 +60,27 @@ valorContratosAdjudicante(IdAd,R) :-
 valorContratosAdjudidicataria(IdAda,R) :-
     solucoes((Valores),contrato(_,_,IdAda,_,_,_,Valores,_,_,_),Lista),
     sum_list(Lista,R).
+
+
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Extensao do predicado listaAdjudicatariasAdjudicante: IdAdjudicante,R -> {V,F}
+% Devolve a lista de ids de entidades adjudicataria com que a dada entidade adjudicante esteve envolvida em contratos
+listaAdjudicatariasAdjudicante(IdAd,R) :-
+    solucoes((IdsAdjudicatarias),contrato(_,IdAd,IdsAdjudicatarias,_,_,_,_,_,_,_),R).
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Extensao do predicado listaAdjudicantesAdjudicataria: IdAdjudicataria,R -> {V,F}
+% Devolve a lista de ids de entidades adjudicantes com que a dada entidade adjudicataria esteve envolvida em contratos
+listaAdjudicantesAdjudicataria(IdAda,R) :-
+    solucoes((IdsAdjudicantes),contrato(_,IdsAdjudicantes,IdAda,_,_,_,_,_,_,_),R).
+
+
+
+
+
+
+
 
 
 
