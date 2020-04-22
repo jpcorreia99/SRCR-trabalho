@@ -65,27 +65,31 @@ somaCustosContratos([(data(_,_,Ano),_)|T],AnoDeReferencia,R):-
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Extensão do predicado NifCorrespondeTipoEntidade: NifLista, TipoEntidade -> {V,F}
-nifCorrespondeTipoEntidade([Primeiro_digito|_],'Pessoa singular'):- 
-    Primeiro_digito>= 1, 
-    Primeiro_digito =< 3.
+% Apenas permite que certos tipos de entidades sejam entidadade adjudicantes 
+% artigo 2.º n.º 2, alíneas a), b) e d).
+% e artigo 7.º n.º 1.º
 
-nifCorrespondeTipoEntidade([4,5|_],'Pessoa singular não residente').
+nifCorrespondeTipoEntidadeAdjudicante([Primeiro_digito|_],'Pessoa singular'):-
+    Primeiro_digito >= 1, Primeiro_digito =< 3.
 
-nifCorrespondeTipoEntidade([5|_],'Pessoa coletiva').
+nifCorrespondeTipoEntidadeAdjudicante([5|_],'Pessoa coletiva').
 
-nifCorrespondeTipoEntidade([6|_],'Organismo de administração pública').
+nifCorrespondeTipoEntidadeAdjudicante([6|_],'Organismo de administração pública').
 
-nifCorrespondeTipoEntidade([7,1|_],'Pessoa coletiva não residente').
 
-nifCorrespondeTipoEntidade([7,2|_],'Fundo de investimento').
 
-nifCorrespondeTipoEntidade([7,3|_],'Sujeito passivo'). %são os reformados
 
-nifCorrespondeTipoEntidade([Primeiro_digito,Segundo_digito|_],'Condomínio'):-
-    Primeiro_digito == 9 , 
-    (Segundo_digito ==0 ; Segundo_digito == 1).
 
-nifCorrespondeTipoEntidade([9,9|_],'Sociedade civil').
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+%Extensão do predicado NifCorrespondeTipoEntidadeAdjudicatária: NifLista, TipoEntidade -> {V,F}
+% Apenas permite que certos tipos de entidades emitam contratos, no caso dos contratos públicos têm de ser Organismos de administração pública
+% Estas entidades por vezes estão representadas como pessoas coletivas como é o caso das camaras municipais
+%Decreto-Lei n.º 4/2015, Artigo 20.º
+nifCorrespondeTipoEntidadeAdjudicataria([5|_],'Pessoa coletiva').
+
+nifCorrespondeTipoEntidadeAdjudicataria([6|_],'Organismo de administração pública').
+
+
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado data: Dia,Mes,Ano -> {V,F}
@@ -114,3 +118,9 @@ data(Dia,Mes,_):-
 % Extensao do predicado data_valida: Dia,Mes,Ano -> {V,F}
 data_valida(data(Dia,Mes,Ano)):- data(Dia,Mes,Ano).
 
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Extensao do predicado current_year: Year -> {V,F}
+current_year(Year) :-
+    get_time(Stamp),
+    stamp_date_time(Stamp, DateTime, local),
+    date_time_value(year, DateTime, Year).

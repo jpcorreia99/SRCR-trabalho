@@ -1,5 +1,5 @@
 :- op(900, xfy, '::').
-:- style_check(-singleton).
+%:- style_check(-singleton).
 % Invariantes sobre qualquer termo
 %
 %Invariante estrutural: Não permitir  a inserção de conhecimento contraditório
@@ -61,7 +61,7 @@
 +(-adjudicante(IdAd,_,_,_,_)) :: (
     solucoes( (IdAd),(-adjudicante( IdAd,_,_,_)),S1 ),
     comprimento(S1,R1),
-    R1==1
+    R1==2 % pois há sempre uma por negação por falha
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
@@ -79,17 +79,19 @@
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Invariante estrutural: Os digitos iniciais do nif devem corresponder ao tipo de entidade correta
+% Invariante estrutural: Os digitos iniciais do nif devem corresponder a uma categoria de entidade que seja permitida ser entidade adjudicatária
+% Estas entidades estão explicitadas no artigo 2.º n.º 2, alíneas a), b) e d) e no artigo 7.º n.º 1.º do CCP
+% Aplicado a conhecimento perfeito positivo
 % Aplicado a conhecimento perfeito positivo
 +adjudicante(_,_,Nif,TipoEntidade,_) :: (
     nif_para_lista(Nif,NifLista),
-    nifCorrespondeTipoEntidade(NifLista,TipoEntidade)
+    nifCorrespondeTipoEntidadeAdjudicante(NifLista,TipoEntidade)
 ).
 
 % Aplicado a conhecimento perfeito positivo
 +(-adjudicante(_,_,Nif,TipoEntidade,_)) :: (
     nif_para_lista(Nif,NifLista),
-    nifCorrespondeTipoEntidade(NifLista,TipoEntidade)
+    nifCorrespondeTipoEntidadeAdjudicante(NifLista,TipoEntidade)
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
@@ -99,7 +101,6 @@
     comprimento(S1,N1),
     (N1 == 0; % Se o comprimento for 0 indica que o nif não está registado para nenhuma entidade adjudicataria
      (nth0(0, S1,NomeAdjudicataria),  % Se o comprimento não for 0, sua-se o predicado nth para aceder ao elemento da lista pois o predicado soluções só devolve listas
-     write(NomeAdjudicataria),
      NomeAdjudicataria == Nome)   % e verifica-se que se existir um nome de adjudicante associado ao nif tem de ser o mesmo nome do nif que estamos a inserir
     )
 ).
@@ -168,7 +169,7 @@
 +(-adjudicataria(IdAda,_,_,_)) :: (
     solucoes( (IdAda),(-adjudicante( IdAda,_,_,_)),S1 ),
     comprimento(S1,R1),
-    R1==1
+    R1==2
 ).
 
 
@@ -189,28 +190,26 @@
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Invariante estrutural: Os digitos iniciais do nif devem corresponder ao tipo de entidade correta
+% Invariante estrutural: Os digitos iniciais do nif devem corresponder a uma categoria de entidade que seja permitida ser entidade adjudicatária
+% Apenas entidades de administração pública podem ser entidades adjudicatárias
 % Aplicado a conhecimento perfeito positivo
 +adjudicataria(_,_,Nif,TipoEntidade,_) :: (
     nif_para_lista(Nif,NifLista),
-    nifCorrespondeTipoEntidade(NifLista,TipoEntidade)
+    nifCorrespondeTipoEntidadeAdjudicataria(NifLista,TipoEntidade)
 ).
 
 % Aplicado a conhecimento perfeito positivo
 +(-adjudicataria(_,_,Nif,TipoEntidade,_)) :: (
     nif_para_lista(Nif,NifLista),
-    nifCorrespondeTipoEntidade(NifLista,TipoEntidade)
+    nifCorrespondeTipoEntidadeAdjudicataria(NifLista,TipoEntidade)
 ).
 
 % Invariante referencial: Impede a inserção de um nif associado a um nome se esse nif estiver associado a outro nome no predicado adjudicante
 +adjudicataria(_,Nome,Nif,_,_) :: (
     solucoes((Nomes),adjudicante(_,Nomes,Nif,_,_),S1),
     comprimento(S1,N1),
-    write(S1),
     (N1 == 0; % Se o comprimento for 0 indica que o nif não está registado para nenhuma entidade adjudicataria
     (nth0(0, S1,NomeAdjudicataria),  % Se o comprimento não for 0, sua-se o predicado nth para aceder ao elemento da lista pois o predicado soluções só devolve listas
-    write(NomeAdjudicataria),
-    write(Nome),
     NomeAdjudicataria == Nome   % e verifica-se que se existir um nome de adjudicante associado ao nif tem de ser o mesmo nome do nif que estamos a inserir
     )
     )
@@ -226,8 +225,8 @@
 
 % Invariante que impede a inserção de conhecimento perfeito positivo relativo
 % a um adjudicante com nome interdito
-+adjudicataria(IdAd,N,Ni,T,M) :: (
-    solucoes((IdAd,Nome_interdito,Ni,T,M), (adjudicataria(Id,Nome_interdito,Ni,T,M), nulo(Nome_interdito)), R),
++adjudicataria(IdAd,_,Ni,T,M) :: (
+    solucoes((IdAd,Nome_interdito,Ni,T,M), (adjudicataria(IdAd,Nome_interdito,Ni,T,M), nulo(Nome_interdito)), R),
     comprimento(R,0)
 ).
 
@@ -354,6 +353,6 @@
 % sempre que O preço contratual acumulado dos contratos já celebrados (não incluindo o contrato que se pretende celebrar) seja igual ou superior a 75.000 euros.
 +contrato(_,IdAd,IdAda,'Aquisição de serviços',_,_,Valor,_,_,data(_,_,Ano)) :: (
     solucoes((Data,Custo),contrato(_,IdAd,IdAda,'Aquisição de serviços',_,_,Custo,_,_,Data),ParesDataCusto), %lista de pares
-    somaCustosContratos(ParesDataCusto,Ano,SomaCustos),
+    somaCustosContratos(ParesDataCusto,Ano,SomaCustos), % somará os valores dos contratos no ano de assinatura do contrato assim como nos dois anos anteriores
     (SomaCustos-Valor) < 75000
 ).

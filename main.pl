@@ -71,14 +71,9 @@ listaAdjudicatariasAdjudicante(IdAd,R) :-
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado listaAdjudicantesAdjudicataria: IdAdjudicataria,R -> {V,F}
-% Devolve a lista de ids de entidades adjudicantes com que a dada entidade adjudicataria esteve envolvida em contratos
+% Devolve a lista de nomes de entidades adjudicantes com que a dada entidade adjudicataria esteve envolvida em contratos
 listaAdjudicantesAdjudicataria(IdAda,R) :-
     solucoes((IdsAdjudicantes),contrato(_,IdsAdjudicantes,IdAda,_,_,_,_,_,_,_),R).
-
-
-
-
-
 
 
 

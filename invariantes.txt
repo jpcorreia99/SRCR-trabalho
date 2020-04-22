@@ -27,3 +27,30 @@ mesma coisa que o adjudicante invertendo o 5
 [6]. Se for de adjustr direto o cursto deve ser <5000 e o prazo <365, pertencendo ao tipoDeContrato 'Aquisição de bens móveis','Locação de bens móveis','Aquisição de serviços' 
 7.Uma entidade adjudicante não pode convidar a mesma empresa para celebrar um contrato com prestações de serviço do mesmo tipo ou idênticas às de contratos que já lhe foram atribuídos, no ano económico em curso e nos dois anos económicos anteriores, sempre que O preço contratual acumulado dos contratos já celebrados (não incluindo o contrato que se pretende celebrar) seja igual ou superior a 75.000 euros.
 
+
+
+Notas:
+Apenas entidades de administração pública podem ser entidades adjudicatárias
+
+Entidades adjudicantes
+% CCP artigo 2.º n.º 2, alíneas a), b) e d).
+%  artigo 7.º n.º 1.º
+a) Estado;
+
+b) Regiões Autónomas;
+
+c) Autarquias Locais;
+
+d) Institutos Públicos;
+
+e) As entidades administrativas independentes;
+
+f) Banco de Portugal;
+
+g) As fundações públicas;
+
+h) As associações públicas;
+
++
+
+Ainda Pessoas coletivas 

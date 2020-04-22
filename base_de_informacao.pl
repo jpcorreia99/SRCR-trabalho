@@ -3,7 +3,7 @@
 %876543212
 
 
-%pessoa singulas
+%pessoa singular
 %211111112
 %222222220
 %233333339
@@ -35,9 +35,10 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado adjudicante #IdAd, Nome, NIF,TipoEntidade, Morada ->{V,F,D}
 % Conhecimento Perfeito Positivo
-adjudicante(1,'Camara de Braga',622222228,'Organismo de administração pública','Praça do Município').
-adjudicante(2,'Município de Alto de Basto',600000001,'Organismo de administração pública', 'Portugal, Braga,Alto de Basto').
-% adjudicante(3,'XXX -Associados -Sociedade de Advogados, SPa, RL.',512345678, 'Pessoa coletiva', 'Portugal').
+adjudicante(1,'Município do Porto','Organismo de administração pública',501306099 ,'Pessoa coletiva', 'R. Clube dos Fenianos 5, 4000-407 Porto').
+adjudicante(2,'SERVIÇOS DE AÇÃO SOCIAL DA UNIVERSIDADE DO MINHO',680047360 , 'Pessoa coletiva', 'Largo do Paço, 4704-553 Braga').
+adjudicante(3,'Município de Braga',506901173,'Organismo de administração pública','Praça do Município  4700-435 Braga').
+% adjudicante(4,'XXX -Associados -Sociedade de Advogados, SPa, RL.',512345678, 'Pessoa coletiva', 'Portugal').
 
 % Conhecimento Perfeito Negativo
 -adjudicante(1000,'André Alves',111111110,'Pessoa singular','Rua dos Barros Nº45').
@@ -70,12 +71,14 @@ nulo(nome_interdito).
 % Extensão do predicado adjudicataria #IdAda, Nome, Nif, Morada -> {V,F,D}
 
 % Conhecimento Perfeito Positivo
-adjudicataria(1,'Universidade do minho',633333336, 'Pessoa coletiva', 'Largo do Paço').
-adjudicataria(2,'XXX -Associados -Sociedade de Advogados, SPa, RL.',512345678, 'Pessoa coletiva', 'Portugal').
-adjudicataria(3,'Camara de Braga',622222228,'Organismo de administração pública','Praça do Município').
+adjudicataria(1,'Município do Porto','Organismo de administração pública',501306099 ,'Pessoa coletiva', 'R. Clube dos Fenianos 5, 4000-407 Porto').
+adjudicataria(2,'SERVIÇOS DE AÇÃO SOCIAL DA UNIVERSIDADE DO MINHO',680047360 , 'Pessoa coletiva', 'Largo do Paço, 4704-553 Braga').
+adjudicataria(3,'Município de Braga',506901173,'Organismo de administração pública','Praça do Município,  4700-435 Braga').
+%adjudicataria(4,'Município de Lisboa',500051070,'Pessoa coletiva','Paços do Concelho 1100-038 Lisboa').
 
 % Conhecimento Perfeito Negativo
 -adjudicataria(1000,'Rodrigo Guedes LDA',876543212, 'Pessoa coletiva','Rua 25 de Abril').
+
 
 % Conhecimento Imperfeito Incerto
 % Não se sabe o NIF
