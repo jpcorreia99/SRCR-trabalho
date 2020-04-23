@@ -1,4 +1,4 @@
-
+q
 %Nifs usáveis
 %876543212
 
@@ -41,7 +41,7 @@ adjudicante(3,'Município de Braga',506901173,'Organismo de administração púb
 % adjudicante(4,'XXX -Associados -Sociedade de Advogados, SPa, RL.',512345678, 'Pessoa coletiva', 'Portugal').
 
 % Conhecimento Perfeito Negativo
--adjudicante(1000,'André Alves',111111110,'Pessoa singular','Rua dos Barros Nº45').
+-adjudicante(1000,'André Alves',111111110,'Pessoa singular','Rua dos Barros Nº45')
 
 % Conhecimento Imperfeito Incerto
 % Não se sabe o NIF
@@ -117,3 +117,10 @@ excecao(contrato(_,adjudicante_desconhecido, _, _, _, _, _, _, _, _)).
 % Não se sabe em que data se realizou
 excecao(contrato(6,1,1,'Aquisição de serviços','Consulta prévia','Obras num pavilhão', 100, 100,'Alto de Basto',data(1,03,2020))).
 excecao(contrato(6,1,1,'Aquisição de serviços','Consulta prévia','Obras num pavilhão', 100, 100,'Alto de Basto',data(2,03,2020))).
+
+
+
+% ||||||||||||||||||||||||||||||||| TO DO |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+% Sinalizar conhecimento perfeito/imperfeito, para usar nos invariantes.
+% Invariantes conhecimento imperfeito.
+% Remover imperfeito ao inserir perfeito.
