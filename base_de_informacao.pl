@@ -1,4 +1,4 @@
-
+q
 %Nifs usáveis
 %876543212
 
@@ -117,3 +117,10 @@ excecao(contrato(_,adjudicante_desconhecido, _, _, _, _, _, _, _, _, _)).
 % Não se sabe em que data se realizou
 excecao(contrato(6,1,1,'Aquisição de serviços','Consulta prévia','Obras num pavilhão', 100, 100,'Alto de Basto',data(1,03,2020),false)).
 excecao(contrato(6,1,1,'Aquisição de serviços','Consulta prévia','Obras num pavilhão', 100, 100,'Alto de Basto',data(2,03,2020),false)).
+
+
+
+% ||||||||||||||||||||||||||||||||| TO DO |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+% Sinalizar conhecimento perfeito/imperfeito, para usar nos invariantes.
+% Invariantes conhecimento imperfeito.
+% Remover imperfeito ao inserir perfeito.
