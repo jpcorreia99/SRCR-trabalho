@@ -119,7 +119,7 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante referencial: Não deve ser possivel remover uma entidade adjudicante se esta estiver presente num contrato
 -adjudicante(IdAd,_,_,_,_) :: (
-    solucoes(IdAd, contrato(_,IdAd,_,_,_,_,_,_,_,_), S),
+    solucoes(IdAd, contrato(_,IdAd,_,_,_,_,_,_,_,_,_), S),
     comprimento( S,N ),
     N == 0
 ).
@@ -218,7 +218,7 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante referencial: Não deve ser possivel remover uma entidade adjudicataria se esta estiver presente num contrato
 -adjudicataria(IdAda,_,_,_,_) :: (
-    solucoes(IdAda, contrato(_,_,IdAda,_,_,_,_,_,_,_), S),
+    solucoes(IdAda, contrato(_,_,IdAda,_,_,_,_,_,_,_,_), S),
     comprimento( S,N ),
     N == 0
 ).
@@ -235,7 +235,7 @@
 
 % Invariante estrutural: verifica que os campos respeitam o tipo de dados correto
 % Aplicado a conhecimento perfeito positivo
-+contrato(IdCont,IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data) :: (
++contrato(IdCont,IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data, Subsidiado) :: (
     integer(IdCont),
     integer(IdAd),
     integer(IdAda),
@@ -245,11 +245,12 @@
     integer(Valor),
     integer(Prazo),
     atom(Local),
-    data_valida(Data)
+    data_valida(Data),
+    member(Subsidiado,[true,false])
 ).
 
 % Aplicado a conhecimento perfeito negativo
-+(-contrato(IdCont,IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data)) :: (
++(-contrato(IdCont,IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data, Subsidiado)) :: (
     integer(IdCont),
     integer(IdAd),
     integer(IdAda),
@@ -259,19 +260,20 @@
     integer(Valor),
     integer(Prazo),
     atom(Local),
-    data_valida(Data)
+    data_valida(Data),
+    member(Subsidiado,[true,false])
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o custo e duração devem ser superi ores a 0
 % Aplicado a conhecimento perfeito positivo
-+contrato(_,_,_,_,_,_,Custo,Prazo,_,_) :: (
++contrato(_,_,_,_,_,_,Custo,Prazo,_,_,_) :: (
     Custo >= 0,
     Prazo > 0
 ).
 
 % Aplicado a conhecimento perfeito negativo
-+(-contrato(_,_,_,_,_,_,Custo,Prazo,_,_)) :: (
++(-contrato(_,_,_,_,_,_,Custo,Prazo,_,_,_)) :: (
     Custo >= 0,
     Prazo > 0
 ).
@@ -280,18 +282,19 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: verificar que os ids das entidades contratuais existem
 % Aplicado a conhecimento perfeito positivo
-+contrato(_,IdAd,IdAda,_,_,_,_,_,_,_) :: (
++contrato(_,IdAd,IdAda,_,_,_,_,_,_,_,_) :: (
     solucoes( (IdAd),(adjudicante( IdAd,_,_,_,_)),S1 ),
     solucoes( (IdAda),(adjudicataria( IdAda,_,_,_,_)),S2 ),
     comprimento( S1,N1 ),
     comprimento( S2,N2 ),
+
     N1 == 1,
     N2 == 1
 ).
 
 % Aplicado a conhecimento perfeito negativo
 % Não faria sentido aplicar o predicado -contrato a entidades que não existem no sistema
-+(-contrato(_,IdAd,IdAda,_,_,_,_,_,_,_)) :: (
++(-contrato(_,IdAd,IdAda,_,_,_,_,_,_,_,_)) :: (
     solucoes( (IdAd),(adjudicante( IdAd,_,_,_,_)),S1 ),
     solucoes( (IdAda),(adjudicataria( IdAda,_,_,_,_)),S2 ),
     comprimento( S1,N1 ),
@@ -304,7 +307,7 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante referencial: Um contrato não pode ter o mesmo adjudicante e adjudicatario
 % isto será verificado pelos nifs associados aos ids
-+contrato(_,IdAd, IdAda,_,_,_,_,_,_,_) :: (
++contrato(_,IdAd, IdAda,_,_,_,_,_,_,_,_) :: (
     solucoes((NifAd), (adjudicante( IdAd,NifAd,_,_,_)),S1 ),
     solucoes((NifAda), (adjudicataria( IdAda,NifAda,_,_,_)),S2),
     S1 \= S2
@@ -317,13 +320,13 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o tipo de procedimento deve pertencer a um certo conjunto
 % Aplicado a conhecimento perfeito positivo
-+contrato(_,_,_,_,Procedimento,_,_,_,_,_) :: (
++contrato(_,_,_,_,Procedimento,_,_,_,_,_,_) :: (
     member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público'])
 ).
 
 % Aplicado a conhecimento perfeito negativo
 
-+(-contrato(_,_,_,_,Procedimento,_,_,_,_,_)) :: (
++(-contrato(_,_,_,_,Procedimento,_,_,_,_,_,_)) :: (
     member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público'])
 ).
 
@@ -333,14 +336,14 @@
 % Deve ser de um dos seguintes tipos: Contrato de aquisição ou locação de bens móveis ou aquisição de serviços
 % Prazo de vigência até 1 ano, inclusive, a contar da decisão de adjudicação.
 % Aplicado a conhecimento perfeito positivo
-+contrato(_,_,_,TipoDeContrato,'Ajuste direto',_,Custo,Prazo,_,_) :: (
++contrato(_,_,_,TipoDeContrato,'Ajuste direto',_,Custo,Prazo,_,_,_) :: (
     Custo =< 5000,
     Prazo =< 365,
     member(TipoDeContrato,['Aquisição de bens móveis','Locação de bens móveis','Aquisição de serviços'])
 ).
 
 % Aplicado a conhecimento perfeito negativo
-+(-contrato(_,_,_,TipoDeContrato,'Ajuste direto',_,Custo,Prazo,_,_)) :: (
++(-contrato(_,_,_,TipoDeContrato,'Ajuste direto',_,Custo,Prazo,_,_,_)) :: (
     Custo =< 5000,
     Prazo =< 365,
     member(TipoDeContrato,['Aquisição de bens móveis','Locação de bens móveis','Aquisição de serviços'])
@@ -351,8 +354,8 @@
 % Invariante referencial: Uma entidade adjudicante não pode convidar a mesma empresa para celebrar um contrato com prestações de serviço
 % do mesmo tipo ou idênticas às de contratos que já lhe foram atribuídos, no ano económico em curso e nos dois anos económicos anteriores,
 % sempre que O preço contratual acumulado dos contratos já celebrados (não incluindo o contrato que se pretende celebrar) seja igual ou superior a 75.000 euros.
-+contrato(_,IdAd,IdAda,'Aquisição de serviços',_,_,Valor,_,_,data(_,_,Ano)) :: (
-    solucoes((Data,Custo),contrato(_,IdAd,IdAda,'Aquisição de serviços',_,_,Custo,_,_,Data),ParesDataCusto), %lista de pares
++contrato(_,IdAd,IdAda,'Aquisição de serviços',_,_,Valor,_,_,data(_,_,Ano),_) :: (
+    solucoes((Data,Custo),contrato(_,IdAd,IdAda,'Aquisição de serviços',_,_,Custo,_,_,Data,_),ParesDataCusto), %lista de pares
     somaCustosContratos(ParesDataCusto,Ano,SomaCustos), % somará os valores dos contratos no ano de assinatura do contrato assim como nos dois anos anteriores
     (SomaCustos-Valor) < 75000
 ).

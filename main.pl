@@ -19,16 +19,16 @@
 % Pressuposto do Mundo Fechado
 
 -adjudicante(IdAd,Nome,NIF,TipoEntidade,Morada):-
-    nao(adjudicante(IdAd,Nome,NIF,TipoEntidade,Morada)) ,
+    nao(adjudicante(IdAd,Nome,NIF,TipoEntidade,Morada)),
     nao(excecao(adjudicante(IdAd,Nome,NIF,TipoEntidade,Morada))).
 
 -adjudicataria(IdAda,Nome,NIF,TipoEntidade,Morada):-
     nao(adjudicataria(IdAda,Nome,NIF,TipoEntidade,Morada)) ,
     nao(excecao(adjudicataria(IdAda,Nome,NIF,TipoEntidade,Morada))).
 
--contrato(IdCont,IdAd,IdAda,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data):-
-    nao(contrato(IdCont,IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data)),
-    nao(excecao(contrato(IdCont,IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data))).
+-contrato(IdCont,IdAd,IdAda,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado):-
+    nao(contrato(IdCont,IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data, Subsidiado)),
+    nao(excecao(contrato(IdCont,IdAd, IdAda, TipoDeContrato, TipoDeProcedimento, Descricao, Valor, Prazo, Local, Data, Subsidiado))).
 
 
 
@@ -36,14 +36,14 @@
 % Extensao do predicado numeroContratosAdjudicante: IdAdjudicante,R -> {V,F}
 % Devolve em quantos uma entidade adjudicante está envolvida
 numeroContratosAdjudicante(IdAd,R) :-
-    solucoes((IdAd),contrato(_,IdAd,_,_,_,_,_,_,_,_),Lista),
+    solucoes((IdAd),contrato(_,IdAd,_,_,_,_,_,_,_,_,_),Lista),
     comprimento(Lista,R).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado numeroContratosAdjudicante: IdAdjudicante,R -> {V,F}
 % Devolve em quantos uma entidade adjudicatária está envolvida
 numeroContratosAdjudicataria(IdAda,R) :-
-    solucoes((IdAda),contrato(_,_,IdAda,_,_,_,_,_,_,_),Lista),
+    solucoes((IdAda),contrato(_,_,IdAda,_,_,_,_,_,_,_,_),Lista),
     comprimento(Lista,R).
 
 
@@ -51,14 +51,14 @@ numeroContratosAdjudicataria(IdAda,R) :-
 % Extensao do predicado valorContratosAdjudicante: IdAdjudicante,R -> {V,F}
 % Devolve a soma do valor dos contratos em que uma entidade adjudicante está envolvida
 valorContratosAdjudicante(IdAd,R) :-
-    solucoes((Valores),contrato(_,IdAd,_,_,_,_,Valores,_,_,_),Lista),
+    solucoes((Valores),contrato(_,IdAd,_,_,_,_,Valores,_,_,_,_),Lista),
     sum_list(Lista,R).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado valorContratosAdjudicante: IdAdjudicante,R -> {V,F}
 % Devolve a soma do valor dos contratos em que uma entidade adjudicante está envolvida
 valorContratosAdjudidicataria(IdAda,R) :-
-    solucoes((Valores),contrato(_,_,IdAda,_,_,_,Valores,_,_,_),Lista),
+    solucoes((Valores),contrato(_,_,IdAda,_,_,_,Valores,_,_,_,_),Lista),
     sum_list(Lista,R).
 
 
@@ -67,13 +67,13 @@ valorContratosAdjudidicataria(IdAda,R) :-
 % Extensao do predicado listaAdjudicatariasAdjudicante: IdAdjudicante,R -> {V,F}
 % Devolve a lista de ids de entidades adjudicataria com que a dada entidade adjudicante esteve envolvida em contratos
 listaAdjudicatariasAdjudicante(IdAd,R) :-
-    solucoes((IdsAdjudicatarias),contrato(_,IdAd,IdsAdjudicatarias,_,_,_,_,_,_,_),R).
+    solucoes((IdsAdjudicatarias),contrato(_,IdAd,IdsAdjudicatarias,_,_,_,_,_,_,_,_),R).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado listaAdjudicantesAdjudicataria: IdAdjudicataria,R -> {V,F}
 % Devolve a lista de nomes de entidades adjudicantes com que a dada entidade adjudicataria esteve envolvida em contratos
 listaAdjudicantesAdjudicataria(IdAda,R) :-
-    solucoes((IdsAdjudicantes),contrato(_,IdsAdjudicantes,IdAda,_,_,_,_,_,_,_),R).
+    solucoes((IdsAdjudicantes),contrato(_,IdsAdjudicantes,IdAda,_,_,_,_,_,_,_,_),R).
 
 
 
