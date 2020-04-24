@@ -68,16 +68,27 @@ somaCustosContratos([(data(_,_,Ano),_)|T],AnoDeReferencia,R):-
 % Apenas permite que certos tipos de entidades sejam entidadade adjudicantes 
 % artigo 2.º n.º 2, alíneas a), b) e d).
 % e artigo 7.º n.º 1.º
+nifCorrespondeTipoEntidade([Primeiro_digito|_],'Pessoa singular'):- 
+    Primeiro_digito>= 1, 
+    Primeiro_digito =< 3.
 
-nifCorrespondeTipoEntidadeAdjudicante([Primeiro_digito|_],'Pessoa singular'):-
-    Primeiro_digito >= 1, Primeiro_digito =< 3.
+nifCorrespondeTipoEntidadeAdjudicante([4,5|_],'Pessoa singular não residente').
 
 nifCorrespondeTipoEntidadeAdjudicante([5|_],'Pessoa coletiva').
 
 nifCorrespondeTipoEntidadeAdjudicante([6|_],'Organismo de administração pública').
 
+nifCorrespondeTipoEntidadeAdjudicante([7,1|_],'Pessoa coletiva não residente').
 
+nifCorrespondeTipoEntidadeAdjudicante([7,2|_],'Fundo de investimento').
 
+nifCorrespondeTipoEntidadeAdjudicante([7,3|_],'Sujeito passivo'). %são os reformados
+
+nifCorrespondeTipoEntidadeAdjudicante([Primeiro_digito,Segundo_digito|_],'Condomínio'):-
+    Primeiro_digito == 9 , 
+    (Segundo_digito ==0 ; Segundo_digito == 1).
+
+nifCorrespondeTipoEntidadeAdjudicante([9,9|_],'Sociedade civil').
 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
