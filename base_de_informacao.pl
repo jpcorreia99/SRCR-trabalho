@@ -1,4 +1,3 @@
-q
 %Nifs usáveis
 %876543212
 
@@ -38,7 +37,8 @@ q
 adjudicante(1,'Município do Porto',501306099 ,'Pessoa coletiva', 'R. Clube dos Fenianos 5, 4000-407 Porto').
 adjudicante(2,'SERVIÇOS DE AÇÃO SOCIAL DA UNIVERSIDADE DO MINHO',680047360 , 'Pessoa coletiva', 'Largo do Paço, 4704-553 Braga').
 adjudicante(3,'Município de Braga',506901173,'Organismo de administração pública','Praça do Município  4700-435 Braga').
-% adjudicante(4,'XXX -Associados -Sociedade de Advogados, SPa, RL.',512345678, 'Pessoa coletiva', 'Portugal').
+adjudicante(4,'Ola John',211111112,'Pessoa singular','Av. São Gonçalo 1028, Guimarães').
+% adjudicante(5,'XXX -Associados -Sociedade de Advogados, SPa, RL.',512345678, 'Pessoa coletiva', 'Portugal').
 
 % Conhecimento Perfeito Negativo
 -adjudicante(1000,'André Alves',111111110,'Pessoa singular','Rua dos Barros Nº45').

@@ -95,7 +95,7 @@
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Invariante referencial: Impede a inserção de um nif associado a um nome se esse nif estiver associado a outro nome no predicado adjudicataria
+% Invariante referencial: Impede a inserção de um nif associado a um nome se esse nif estiver associado a um nome diferente no predicado adjudicataria
 +adjudicante(_,Nome,Nif,_,_) :: (
     solucoes((Nomes),adjudicataria(_,Nomes,Nif,_,_),S1),
     comprimento(S1,N1),
@@ -330,8 +330,17 @@
     member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público'])
 ).
 
-
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Invariante referencial: se o contrato não for subsidiado, apenas permitir um conjunto de tipos de entidade adjudicante
+% Aplicado a conhecimento perfeito positivo
++contrato(_,IdAd,_,_,_,_,_,_,_,_,false) :: (
+    solucoes((Tipo),adjudicante(IdAd,_,_,Tipo,_),ListaTipo), % devido aos outros invariantes sabemos que esta lista terá comprimento 1
+    nth0(0, ListaTipo, TipoAdjudicante), %acedemos então ao tipo do adjudicante que é o único habitante da lista
+    member(TipoAdjudicante,['Pessoa coletiva','Organismo de administração pública']) %CCP artigo 2.º n.º 2, alíneas a), b) e d), %  artigo 7.º n.º 1.º
+).
+
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   
 % Invariante estrutural: O valor de um contrato de ajuste direto deve ser menor ou igual a 5000
 % Deve ser de um dos seguintes tipos: Contrato de aquisição ou locação de bens móveis ou aquisição de serviços
 % Prazo de vigência até 1 ano, inclusive, a contar da decisão de adjudicação.

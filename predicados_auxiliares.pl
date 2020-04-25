@@ -64,11 +64,11 @@ somaCustosContratos([(data(_,_,Ano),_)|T],AnoDeReferencia,R):-
 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
-%Extensão do predicado NifCorrespondeTipoEntidade: NifLista, TipoEntidade -> {V,F}
+%Extensão do predicado NifCorrespondeTipoEntidadeAdjudicante: NifLista, TipoEntidade -> {V,F}
 % Apenas permite que certos tipos de entidades sejam entidadade adjudicantes 
 % artigo 2.º n.º 2, alíneas a), b) e d).
 % e artigo 7.º n.º 1.º
-nifCorrespondeTipoEntidade([Primeiro_digito|_],'Pessoa singular'):- 
+nifCorrespondeTipoEntidadeAdjudicante([Primeiro_digito|_],'Pessoa singular'):- 
     Primeiro_digito>= 1, 
     Primeiro_digito =< 3.
 
