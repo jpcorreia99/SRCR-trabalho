@@ -2,7 +2,7 @@
 :- set_prolog_flag( single_var_warnings,off ).
 /*:- set_prolog_flag( unknown,fail ).*/
 
-:- style_check(-singleton).
+%:- style_check(-singleton).
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado que permite a evolucao do conhecimento
 
