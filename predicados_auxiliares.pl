@@ -47,7 +47,7 @@ multiplicacao_decrescente([H|T],R,Num):-
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Extensão do predicado somaCustosContratos: Lista, DataDeReferencia,R -> {V,F}
 %Devolve o somatório dos valores dos contratos nos últimos dois anos económicos mais o atual
-%filtraDatas3Anos([(data(1,1,2010),500),(data(2,2,2020),300),(data(3,3,2011),600)],2012,R).
+%somaCustosContratos([(data(1,1,2010),500),(data(2,2,2020),300),(data(3,3,2011),600)],2012,R).
 somaCustosContratos([],_,0).
 
 somaCustosContratos([(data(_,_,Ano),Custo)|T],AnoDeReferencia,R):-
@@ -129,9 +129,71 @@ data(Dia,Mes,_):-
 % Extensao do predicado data_valida: Dia,Mes,Ano -> {V,F}
 data_valida(data(Dia,Mes,Ano)):- data(Dia,Mes,Ano).
 
+
+%% Predicados acerca de procesamento de diferença de datas
+
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Extensao do predicado current_year: Year -> {V,F}
-current_year(Year) :-
-    get_time(Stamp),
-    stamp_date_time(Stamp, DateTime, local),
-    date_time_value(year, DateTime, Year).
+% Extensão do predicado diferenca_entre_datas: Data1,Data2,R -> {V,F}
+% Devolve a diferença enre duas datas em dias
+diferenca_entre_datas(Data1,Data2,R):-
+    numero_dias(Data1,NumeroDiasData1),
+    numero_dias(Data2,NumeroDiasData2),
+    R is NumeroDiasData2-NumeroDiasData1.
+
+
+% Coloca em R o número de dias Desde o Ano 0 até à data data
+numero_dias(data(Dia,Mes,Ano),R):-
+    AnoEDia is (Ano*365 + Dia),
+    MesAnterior is (Mes-1), % pois os dias deste mês já estão contados
+    soma_meses(MesAnterior,SomaMeses),
+    contaAnosBissextos(data(Dia,Mes,Ano),NumeroDiasBissextos),
+    R is (AnoEDia+SomaMeses+NumeroDiasBissextos).
+
+
+%Devolve o nº de dias que já passaram no dado ano, a partir do mês atual
+soma_meses(0,0).
+soma_meses(Mes,R):-
+    Meses = [31,28,31,30,31,30,31,31,30,31,30,31],
+    Indice is (Mes - 1), % os meses e o indice do array estão desfasados de 1 devido à natureza de indexação dos arrays
+    (nth0(Indice,Meses,NumeroDeDias)),
+    soma_meses(Indice,SomaMesesAnteriores), % aproveita-se que Indice já é MEs -1
+    R is (SomaMesesAnteriores + NumeroDeDias).
+
+
+% Predicado que conta o número de anos bissextos desde o ano 0 até ao ano dado
+contaAnosBissextos(data(_,Mes,Ano),R):-
+    Mes =< 2,
+    NovoAno is Ano-1,
+    R is (NovoAno//4 - NovoAno//100 + NovoAno//400).
+
+contaAnosBissextos(data(_,Mes,Ano),R):-
+    Mes > 2,
+    R is (Ano//4 - Ano//100 + Ano//400).
+
+
+
+
+% Predicado auxiliar do predicado listaContratosAtivosAdjudicante no ficheiro amin.pl
+% Dada uma lista de triplos, filtra os triplos em que o contrato ainda está ativo na data de referência 
+%e cria uma lista de ids de contratos que satisfazem essa condição
+
+filtraListaTriplosIdPrazoData([],_,[]).
+
+filtraListaTriplosIdPrazoData([(IdContrato,PrazoContrato,DataContrato)|T] ,DataReferencia,R):-
+    diferenca_entre_datas(DataContrato,DataReferencia,DiferencaEmDias),
+    DiferencaEmDias >= 0,
+    DiferencaEmDias =< PrazoContrato,
+    filtraListaTriplosIdPrazoData(T,DataReferencia,R1),
+    prepend(IdContrato,R1,R).
+
+filtraListaTriplosIdPrazoData([_|T],DataReferencia,R):-
+    filtraListaTriplosIdPrazoData(T,DataReferencia,R).
+
+
+
+%predicado que coloca um elemento na cabeça da lista
+prepend(Head, Tail, [Head| Tail]).
+
+
+
+
