@@ -18,6 +18,9 @@
 %644444444
 %655555552
 
+:- set_prolog_flag( discontiguous_warnings,off ).
+:- set_prolog_flag( single_var_warnings,off ).
+
 :- multifile (-)/1.
 :- dynamic adjudicante/5.
 :- dynamic adjudicataria/5.
