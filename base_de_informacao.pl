@@ -147,5 +147,4 @@ impreciso(contrato(6)).
 
 % ||||||||||||||||||||||||||||||||| TO DO |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 % ADICIONAR MORADA IMPRECISA
-% ADICIONAR ARGUMENTO EXTRA A CONTRATOS
 % TRATAR INVOLUÇÃO
