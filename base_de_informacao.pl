@@ -27,12 +27,23 @@
 :- dynamic contrato/11.
 :- dynamic excecao/1.
 :- dynamic (-)/1.
+:- dynamic excecao/1.
+:- dynamic perfeito/1.
+:- dynamic incerto/1.
+:- dynamic impreciso/1.
+:- dynamic interdito/1.
 
 :- discontiguous adjudicante/5.
 :- discontiguous adjudicataria/5.
 :- discontiguous contrato/11.
 :- discontiguous (-)/1.
+
 :- discontiguous excecao/1.
+:- discontiguous perfeito/1.
+:- discontiguous incerto/1.
+:- discontiguous impreciso/1.
+:- discontiguous interdito/1.
+
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado adjudicante #IdAd, Nome, NIF,TipoEntidade, Morada ->{V,F,D}
@@ -135,6 +146,6 @@ impreciso(contrato(6)).
 
 
 % ||||||||||||||||||||||||||||||||| TO DO |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-% Sinalizar conhecimento perfeito/imperfeito, para usar nos invariantes.
-% Invariantes conhecimento imperfeito.
-% Remover imperfeito ao inserir perfeito.
+% ADICIONAR MORADA IMPRECISA
+% ADICIONAR ARGUMENTO EXTRA A CONTRATOS
+% TRATAR INVOLUÇÃO

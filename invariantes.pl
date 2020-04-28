@@ -1,5 +1,11 @@
+% Invariantes regular
 :- op(900, xfy, '::').
-%:- style_check(-singleton).
+% Invariantes impreciso
+:- op(900,xfy,:~:).
+% Invariantes incerto/interdito
+:- op(900,xfy,:-:).
+
+:- style_check(-singleton).
 % Invariantes sobre qualquer termo
 %
 %Invariante estrutural: Não permitir  a inserção de conhecimento contraditório
@@ -340,7 +346,7 @@
 ).
 
 
-%--------------------------------- - - - - - - - - - -  -  -  -  -   
+%--------------------------------- - - - - - - - - - -  -  -  -  -
 % Invariante estrutural: O valor de um contrato de ajuste direto deve ser menor ou igual a 5000
 % Deve ser de um dos seguintes tipos: Contrato de aquisição ou locação de bens móveis ou aquisição de serviços
 % Prazo de vigência até 1 ano, inclusive, a contar da decisão de adjudicação.
@@ -367,4 +373,54 @@
     solucoes((Data,Custo),contrato(_,IdAd,IdAda,'Aquisição de serviços',_,_,Custo,_,_,Data,_),ParesDataCusto), %lista de pares
     somaCustosContratos(ParesDataCusto,Ano,SomaCustos), % somará os valores dos contratos no ano de assinatura do contrato assim como nos dois anos anteriores
     (SomaCustos-Valor) < 75000
+).
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Invariantes referentes a conhecimento imperfeito
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Invariante que nao permite a insercao de conhecimento
+% incerto/interdito se ja exisitir conhecimento.
+
+% Adjudicante incerto/interdito
++adjudicante(IdAd, Nome, NIF, TipoEntidade, Morada) :-: (
+	nao(perfeito(adjudicante(IdAd))),
+	nao(impreciso(adjudicante(IdAd))),
+	nao(incerto(adjudicante(IdAd)))
+).
+
+% Adjudicataria incerto/interdito
++adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada) :-: (
+	nao(perfeito(adjudicataria(IdAda))),
+	nao(impreciso(adjudicataria(IdAda))),
+	nao(incerto(adjudicataria(IdAda)))
+).
+
+% Contrato incerto/interdito
++contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local) :-: (
+	nao(perfeito(contrato(IdContrato))),
+	nao(impreciso(contrato(IdContrato))),
+	nao(incerto(contrato(IdContrato)))
+).
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Invariante que nao permite a insercao de conhecimento
+% impreciso se ja exisitir conhecimento.
+
+% Adjudicante impreciso
++adjudicante(IdAd, Nome, NIF, TipoEntidade, Morada) :~: (
+	nao(perfeito(adjudicante(IdAd))),
+	nao(impreciso(adjudicante(IdAd)))
+).
+
+% Adjudicataria impreciso
++adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada) :~: (
+	nao(perfeito(adjudicataria(IdAda))),
+	nao(impreciso(adjudicataria(IdAda)))
+).
+
+% Contrato impreciso
++contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local) :~: (
+	nao(perfeito(contrato(IdContrato))),
+	nao(impreciso(contrato(IdContrato)))
 ).

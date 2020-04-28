@@ -3,6 +3,7 @@
 - adicionar invariantes para os -termos
 - adicionar predicados de remoção
 - trocar os predicados de inserção por predicados de inserção de informação completa e imcompleta
+
 */
 
 % Consulta de predicados auxiliares
