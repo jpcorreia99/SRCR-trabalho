@@ -2,7 +2,7 @@
 :- set_prolog_flag( single_var_warnings,off ).
 /*:- set_prolog_flag( unknown,fail ).*/
 
-%:- style_check(-singleton).
+:- style_check(-singleton).
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado que permite a evolucao do conhecimento
 
@@ -69,7 +69,7 @@ remove_imperfeito_ad(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
 evolucao_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
     remove_imperfeito_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)),
     evolucao(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)),
-    insercao(perfeito(adjudicataria(Id))),
+    insercao(perfeito(adjudicataria(Id))).
 
 %Inserir conhecimento perfeito negativo: adjudicataria
 evolucao_ada(-adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
@@ -95,6 +95,7 @@ remove_incerto_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
       adjudicataria(IdE, NomeE, NifE, TipoE, Morada_desconhecido))),
       write(3),
     remocao(adjudicataria(Id,_,_,_,_)),
+    retract(incertoMorada(adjudicataria(Id), _)),
     write('fim').
 
 remove_incerto_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
@@ -189,14 +190,14 @@ evolucao_ada_interdito(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Mora
 %Adjudicante
 %Remover conhecimento perfeito: adjudicante
 involucao_ad(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
-    involucao(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)).
+    involucao(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)),
     remocao(perfeito(Id)).
 
 
 %Adjudicataria
 %Remover conhecimento perfeito: adjudicataria
 involucao_ad(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
-    involucao(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
+    involucao(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)),
     remocao(perfeito(Id)).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -

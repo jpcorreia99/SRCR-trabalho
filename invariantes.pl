@@ -4,8 +4,7 @@
 :- op(900,xfy,:~:).
 % Invariantes incerto/interdito
 :- op(900,xfy,:-:).
-
-%:- style_check(-singleton).
+:- style_check(-singleton).
 % Invariantes sobre qualquer termo
 %
 %Invariante estrutural: Não permitir  a inserção de conhecimento contraditório
