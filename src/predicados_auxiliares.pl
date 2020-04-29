@@ -68,37 +68,37 @@ somaCustosContratos([(data(_,_,Ano),_)|T],AnoDeReferencia,R):-
 % Apenas permite que certos tipos de entidades sejam entidadade adjudicantes 
 % artigo 2.º n.º 2, alíneas a), b) e d).
 % e artigo 7.º n.º 1.º
-nifCorrespondeTipoEntidadeAdjudicante([Primeiro_digito|_],'Pessoa singular'):- 
-    Primeiro_digito>= 1, 
-    Primeiro_digito =< 3.
-
-nifCorrespondeTipoEntidadeAdjudicante([4,5|_],'Pessoa singular não residente').
 
 nifCorrespondeTipoEntidadeAdjudicante([5|_],'Pessoa coletiva').
 
 nifCorrespondeTipoEntidadeAdjudicante([6|_],'Organismo de administração pública').
-
-nifCorrespondeTipoEntidadeAdjudicante([7,1|_],'Pessoa coletiva não residente').
-
-nifCorrespondeTipoEntidadeAdjudicante([7,2|_],'Fundo de investimento').
-
-nifCorrespondeTipoEntidadeAdjudicante([7,3|_],'Sujeito passivo'). %são os reformados
-
-nifCorrespondeTipoEntidadeAdjudicante([Primeiro_digito,Segundo_digito|_],'Condomínio'):-
-    Primeiro_digito == 9 , 
-    (Segundo_digito ==0 ; Segundo_digito == 1).
 
 nifCorrespondeTipoEntidadeAdjudicante([9,9|_],'Sociedade civil').
 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Extensão do predicado NifCorrespondeTipoEntidadeAdjudicatária: NifLista, TipoEntidade -> {V,F}
-% Apenas permite que certos tipos de entidades emitam contratos, no caso dos contratos públicos têm de ser Organismos de administração pública
-% Estas entidades por vezes estão representadas como pessoas coletivas como é o caso das camaras municipais
+% Um conjunto maior de entidades poderão ser entidades adjudicatárias do que adjudicantes 
 %Decreto-Lei n.º 4/2015, Artigo 20.º
+
+nifCorrespondeTipoEntidadeAdjudicataria([Primeiro_digito|_],'Pessoa singular'):- 
+    Primeiro_digito>= 1, 
+    Primeiro_digito =< 3.
+
+
 nifCorrespondeTipoEntidadeAdjudicataria([5|_],'Pessoa coletiva').
 
 nifCorrespondeTipoEntidadeAdjudicataria([6|_],'Organismo de administração pública').
+
+nifCorrespondeTipoEntidadeAdjudicataria([7,2|_],'Fundo de investimento').
+
+nifCorrespondeTipoEntidadeAdjudicataria([7,7|_],'Sujeito passivo'). %são os reformados
+
+nifCorrespondeTipoEntidadeAdjudicataria([Primeiro_digito,Segundo_digito|_],'Condomínio'):-
+    Primeiro_digito == 9 , 
+    (Segundo_digito ==0 ; Segundo_digito == 1).
+
+nifCorrespondeTipoEntidadeAdjudicataria([9,9|_],'Sociedade civil').
 
 
 
