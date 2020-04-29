@@ -4,7 +4,6 @@
 :- op(900,xfy,:~:).
 % Invariantes incerto/interdito
 :- op(900,xfy,:-:).
-
 :- style_check(-singleton).
 % Invariantes sobre qualquer termo
 %
