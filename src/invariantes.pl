@@ -293,7 +293,6 @@
     solucoes( (IdAda),(adjudicataria( IdAda,_,_,_,_)),S2 ),
     comprimento( S1,N1 ),
     comprimento( S2,N2 ),
-
     N1 == 1,
     N2 == 1
 ).

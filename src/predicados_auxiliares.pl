@@ -78,7 +78,7 @@ nifCorrespondeTipoEntidadeAdjudicante([9,9|_],'Sociedade civil').
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Extensão do predicado NifCorrespondeTipoEntidadeAdjudicatária: NifLista, TipoEntidade -> {V,F}
-% Um conjunto maior de entidades poderão ser entidades adjudicatárias do que adjudicantes 
+% Um conjunto maior de entidades poderão ser entidades adjudicatária
 
 nifCorrespondeTipoEntidadeAdjudicataria([Primeiro_digito|_],'Pessoa singular'):- 
     Primeiro_digito>= 1, 
