@@ -11,7 +11,7 @@ ultimo_digito_valido(Nif):-
     digito_de_controlo(Primeiros_oito_digitos,Digito),
     Ultimo_digito =:= Digito.
 
-% Extensão do predicadoque obtém o digito de controlo a partir dos primeiros 8 dígitos através da técnica módulo 11
+% Extensão do predicado que obtém o digito de controlo a partir dos primeiros 8 dígitos através da técnica módulo 11
 digito_de_controlo(Primeiros_oito_digitos,Digito_de_controlo):-
     multiplica_lista(Primeiros_oito_digitos,Ultimo_digito),
     (0 is mod(Ultimo_digito,11); 1 is mod(Ultimo_digito,11)),
@@ -23,7 +23,7 @@ digito_de_controlo(Primeiros_oito_digitos,Digito_de_controlo):-
     Digito_de_controlo is 11-Mod_Result.
 
 
-% Extensão do predicado que obtém o número a ser operado com
+% Extensão do predicado que, dado um nif, o transforma numa lista de dígitos e obtém o dígito de validação
 multiplica_lista(Nif,Ultimo_digito):-
     nif_para_lista(Nif,Lista),
     multiplicacao_decrescente(Lista,Ultimo_digito,9).
@@ -34,7 +34,7 @@ nif_para_lista(Nif,L):-
     number_codes(Nif,X),
     maplist(ascii_to_digit,X, L).
 
-% Extensão do predicado converte um código ascii para o número correspondente ascii_to_digit
+% Extensão do predicado que converte um dígito código ascii para o número correspondente ascii_to_digit
 ascii_to_digit(Ascii_number,R) :- R is Ascii_number-48.
 
 
