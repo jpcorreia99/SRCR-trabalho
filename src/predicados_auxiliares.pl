@@ -79,12 +79,10 @@ nifCorrespondeTipoEntidadeAdjudicante([9,9|_],'Sociedade civil').
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Extensão do predicado NifCorrespondeTipoEntidadeAdjudicatária: NifLista, TipoEntidade -> {V,F}
 % Um conjunto maior de entidades poderão ser entidades adjudicatárias do que adjudicantes 
-%Decreto-Lei n.º 4/2015, Artigo 20.º
 
 nifCorrespondeTipoEntidadeAdjudicataria([Primeiro_digito|_],'Pessoa singular'):- 
     Primeiro_digito>= 1, 
     Primeiro_digito =< 3.
-
 
 nifCorrespondeTipoEntidadeAdjudicataria([5|_],'Pessoa coletiva').
 
@@ -92,7 +90,7 @@ nifCorrespondeTipoEntidadeAdjudicataria([6|_],'Organismo de administração púb
 
 nifCorrespondeTipoEntidadeAdjudicataria([7,2|_],'Fundo de investimento').
 
-nifCorrespondeTipoEntidadeAdjudicataria([7,7|_],'Sujeito passivo'). %são os reformados
+nifCorrespondeTipoEntidadeAdjudicataria([7,7|_],'Sujeito passivo').
 
 nifCorrespondeTipoEntidadeAdjudicataria([Primeiro_digito,Segundo_digito|_],'Condomínio'):-
     Primeiro_digito == 9 , 
