@@ -115,9 +115,9 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante que impede a inserção de conhecimento perfeito positivo relativo
 % a um adjudicante com nome interdito
-+adjudicante(IdAd,_,Ni,T,M) :: (
-    solucoes((IdAd,Nome_interdito,Ni,T,M),
-    (adjudicante(IdAd,Nome_interdito,Ni,T,M), nulo(Nome_interdito)), R),
++adjudicante(IdAd,_,Nif,TipoEntidade,Morada) :: (
+    solucoes((IdAd,Nome_interdito,Nif,TipoEntidade,Morada),
+    (adjudicante(IdAd,Nome_interdito,Nif,TipoEntidade,Morada), nulo(Nome_interdito)), R),
     comprimento(R,0)
 ).
 
@@ -231,8 +231,8 @@
 
 % Invariante que impede a inserção de conhecimento perfeito positivo relativo
 % a um adjudicante com nome interdito
-+adjudicataria(IdAd,_,Ni,T,M) :: (
-    solucoes((IdAd,Nome_interdito,Ni,T,M), (adjudicataria(IdAd,Nome_interdito,Ni,T,M), nulo(Nome_interdito)), R),
++adjudicataria(IdAd,_,Nif,TipoEntidade,Morada) :: (
+    solucoes((IdAd,Nome_interdito,Nif,TipoEntidade,Morada), (adjudicataria(IdAd,Nome_interdito,Nif,TipoEntidade,Morada), nulo(Nome_interdito)), R),
     comprimento(R,0)
 ).
 
