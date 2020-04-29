@@ -59,7 +59,7 @@
     comprimento( S3,N3 ),
     N1 = 1,
     N2 = 1,
-    N2 = 1
+    N3 = 1
 ).
 
 % Invariante estrutural: não permitir a entrada repetida de conhecimento, no campo do Id
