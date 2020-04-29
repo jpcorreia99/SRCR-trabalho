@@ -214,9 +214,9 @@
 +adjudicataria(_,Nome,Nif,_,_) :: (
     solucoes((Nomes),adjudicante(_,Nomes,Nif,_,_),S1),
     comprimento(S1,N1),
-    (N1 == 0; % Se o comprimento for 0 indica que o nif não está registado para nenhuma entidade adjudicataria
-    (nth0(0, S1,NomeAdjudicataria),  % Se o comprimento não for 0, sua-se o predicado nth para aceder ao elemento da lista pois o predicado soluções só devolve listas
-    NomeAdjudicataria == Nome   % e verifica-se que se existir um nome de adjudicante associado ao nif tem de ser o mesmo nome do nif que estamos a inserir
+    (N1 == 0;% Se o comprimento for 0 indica que o nif não está registado para nenhuma entidade adjudicataria
+    (nth0(0, S1,NomeAdjudicataria),%Caso contrário, acede-se ao elemento na lista
+    NomeAdjudicataria == Nome %verifica-se que o nome é o mesmo
     )
     )
 ).

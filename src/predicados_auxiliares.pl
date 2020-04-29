@@ -4,7 +4,7 @@
 %
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado ultimo_digito_valido: Nif ->{V,F}
-% Validação do último bit através da técnica módulo 11
+% Validação do último dígito através da técnica módulo 11
 ultimo_digito_valido(Nif):-
     Primeiros_oito_digitos is div(Nif,10),
     Ultimo_digito is mod(Nif,10),
