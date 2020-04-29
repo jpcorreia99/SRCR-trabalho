@@ -58,8 +58,9 @@
     comprimento( S1,N1 ),
     comprimento( S2,N2 ),
     comprimento( S3,N3 ),
-    Total is N1 + N2 + N3,
-    Total == 3
+    N1 = 1,
+    N2 = 1,
+    N2 = 1
 ).
 
 % Invariante estrutural: não permitir a entrada repetida de conhecimento, no campo do Id
