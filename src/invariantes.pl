@@ -4,7 +4,7 @@
 :- op(900,xfy,:~:).
 % Invariantes incerto/interdito
 :- op(900,xfy,:-:).
-%:- style_check(-singleton).
+:- style_check(-singleton).
 % Invariantes sobre qualquer termo
 %
 %Invariante estrutural: Não permitir  a inserção de conhecimento contraditório
@@ -277,6 +277,7 @@
 +contrato(IDC,_,_,_,_,_,_,_,_,_,_) :: (
     solucoes( (IDC),(contrato(IDC,_,_,_,_,_,_,_,_,_,_)),S1 ),
     comprimento(S1,R1),
+    write('COMPRIMENTO:'), write(R1),
     R1==1
 ).
 
@@ -425,7 +426,7 @@
 +contrato(IdContrato,_,_,_,_,_,_,_,_,_,_) :-: (
 	nao(perfeito(contrato(IdContrato))),
 	nao(impreciso(contrato(IdContrato))),
-	nao(incertoDescricao(contrato(IdContrato)))
+	nao(incertoDescricao(contrato(IdContrato),_))
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
@@ -435,17 +436,17 @@
 % Adjudicante impreciso
 +adjudicante(IdAd,_,_,_,_) :~: (
 	nao(perfeito(adjudicante(IdAd))),
-	nao(impreciso(adjudicante(IdAd)))
+  nao(incertoMorada(adjudicante(IdAd),_))
 ).
 
 % Adjudicataria impreciso
 +adjudicataria(IdAda,_,_,_,_) :~: (
 	nao(perfeito(adjudicataria(IdAda))),
-	nao(impreciso(adjudicataria(IdAda)))
+  nao(incertoMorada(adjudicataria(IdAda),_))
 ).
 
 % Contrato impreciso
 +contrato(IdContrato,_,_,_,_,_,_,_,_,_,_) :~: (
 	nao(perfeito(contrato(IdContrato))),
-	nao(impreciso(contrato(IdContrato)))
+  nao(incertoDescricao(contrato(IdContrato),_))
 ).

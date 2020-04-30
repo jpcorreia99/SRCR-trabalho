@@ -137,9 +137,9 @@ perfeito(contrato(4)).
 
 % Conhecimento Imperfeito Incerto
 % Não se sabe o Adjudicante
-contrato(5,adjudicante_desconhecido,1,'Locação de bens móveis', 'Ajuste direto','Arrendamento de espaço', 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020),false).
-excecao(contrato(_,adjudicante_desconhecido, _, _, _, _, _, _, _, _, _)).
-incerto(contrato(5)).
+contrato(5,1,1,'Locação de bens móveis', 'Ajuste direto',desc, 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020),false).
+excecao(contrato(_, _, _, _, _, desc, _, _, _, _, _)).
+incertoDescricao(contrato(5),desc).
 
 % Conhecimento Imperfeito Impreciso
 % Não se sabe em que data se realizou
@@ -150,6 +150,5 @@ impreciso(contrato(6)).
 
 
 % ||||||||||||||||||||||||||||||||| TO DO |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-% ADICIONAR INVOLUCAO IMPRECISA
-% TESTAR INVOLUÇÃO
 % RETIRAR ACENTOS
+% Retirar incerto ao inserir impreciso
