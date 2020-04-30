@@ -4,7 +4,7 @@
 :- op(900,xfy,:~:).
 % Invariantes incerto/interdito
 :- op(900,xfy,:-:).
-:- style_check(-singleton).
+%:- style_check(-singleton).
 % Invariantes sobre qualquer termo
 %
 %Invariante estrutural: Não permitir  a inserção de conhecimento contraditório
@@ -408,21 +408,21 @@
 % incerto/interdito se ja exisitir conhecimento.
 
 % Adjudicante incerto/interdito
-+adjudicante(IdAd, Nome, NIF, TipoEntidade, Morada) :-: (
++adjudicante(IdAd,_,_,_,_) :-: (
 	nao(perfeito(adjudicante(IdAd))),
 	nao(impreciso(adjudicante(IdAd))),
 	nao(incerto(adjudicante(IdAd)))
 ).
 
 % Adjudicataria incerto/interdito
-+adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada) :-: (
++adjudicataria(IdAda,_,_,_,_) :-: (
 	nao(perfeito(adjudicataria(IdAda))),
 	nao(impreciso(adjudicataria(IdAda))),
 	nao(incerto(adjudicataria(IdAda)))
 ).
 
 % Contrato incerto/interdito
-+contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local) :-: (
++contrato(IdContrato,_,_,_,_,_,_,_,_,_,_) :-: (
 	nao(perfeito(contrato(IdContrato))),
 	nao(impreciso(contrato(IdContrato))),
 	nao(incerto(contrato(IdContrato)))
@@ -433,19 +433,19 @@
 % impreciso se ja exisitir conhecimento.
 
 % Adjudicante impreciso
-+adjudicante(IdAd, Nome, NIF, TipoEntidade, Morada) :~: (
++adjudicante(IdAd,_,_,_,_) :~: (
 	nao(perfeito(adjudicante(IdAd))),
 	nao(impreciso(adjudicante(IdAd)))
 ).
 
 % Adjudicataria impreciso
-+adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada) :~: (
++adjudicataria(IdAda,_,_,_,_) :~: (
 	nao(perfeito(adjudicataria(IdAda))),
 	nao(impreciso(adjudicataria(IdAda)))
 ).
 
 % Contrato impreciso
-+contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local) :~: (
++contrato(IdContrato,_,_,_,_,_,_,_,_,_,_) :~: (
 	nao(perfeito(contrato(IdContrato))),
 	nao(impreciso(contrato(IdContrato)))
 ).

@@ -1,7 +1,7 @@
 :- set_prolog_flag( discontiguous_warnings,off ).
 :- set_prolog_flag( single_var_warnings,off ).
 
-%:- style_check(-singleton).
+:- style_check(-singleton).
 
 :- discontiguous remove_incerto/1.
 :- discontiguous remove_imperfeito/1.
