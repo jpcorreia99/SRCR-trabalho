@@ -202,8 +202,6 @@ evolucao_impreciso_morada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
   insercao(impreciso(adjudicataria(Id))),
   evolucao_impreciso(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
 
-%/////////////////////////// ADICIONAR /////////////////////////////////////////////
-
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Evolução de conhecimento imperfeito interdito
 

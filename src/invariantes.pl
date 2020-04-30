@@ -277,14 +277,14 @@
 +contrato(IDC,_,_,_,_,_,_,_,_,_,_) :: (
     solucoes( (IDC),(contrato(IDC,_,_,_,_,_,_,_,_,_,_)),S1 ),
     comprimento(S1,R1),
-    R1==1 
+    R1==1
 ).
 
 
 +(-contrato(IDC,_,_,_,_,_,_,_,_,_,_)) :: (
     solucoes( (IDC),(contrato(IDC,_,_,_,_,_,_,_,_,_,_)),S1 ),
     comprimento(S1,R1),
-    R1==1 
+    R1==1
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
@@ -396,7 +396,7 @@
       ParesDataCusto
     ), %lista de pares data de assinatura x custo do contrato
     %valores dos contratos no ano de assinatura do contrato + nos dois anos anteriores
-    somaCustosContratos(ParesDataCusto,Ano,SomaCustos), 
+    somaCustosContratos(ParesDataCusto,Ano,SomaCustos),
     (SomaCustos-Valor) < 75000
 ).
 
@@ -411,21 +411,21 @@
 +adjudicante(IdAd,_,_,_,_) :-: (
 	nao(perfeito(adjudicante(IdAd))),
 	nao(impreciso(adjudicante(IdAd))),
-	nao(incerto(adjudicante(IdAd)))
+	nao(incertoMorada(adjudicante(IdAd)))
 ).
 
 % Adjudicataria incerto/interdito
 +adjudicataria(IdAda,_,_,_,_) :-: (
 	nao(perfeito(adjudicataria(IdAda))),
 	nao(impreciso(adjudicataria(IdAda))),
-	nao(incerto(adjudicataria(IdAda)))
+	nao(incertoMorada(adjudicataria(IdAda)))
 ).
 
 % Contrato incerto/interdito
 +contrato(IdContrato,_,_,_,_,_,_,_,_,_,_) :-: (
 	nao(perfeito(contrato(IdContrato))),
 	nao(impreciso(contrato(IdContrato))),
-	nao(incerto(contrato(IdContrato)))
+	nao(incertoDescricao(contrato(IdContrato)))
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -

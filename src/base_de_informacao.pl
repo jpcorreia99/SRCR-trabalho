@@ -154,6 +154,6 @@ impreciso(contrato(6)).
 
 
 % ||||||||||||||||||||||||||||||||| TO DO |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-% ADICIONAR MORADA IMPRECISA
-% TRATAR INVOLUÇÃO
-% EVOLUCAO DE CONTRATOS PERFEITOS
+% ADICIONAR INVOLUCAO IMPRECISA
+% TESTAR INVOLUÇÃO
+% RETIRAR ACENTOS
