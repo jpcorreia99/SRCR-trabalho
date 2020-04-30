@@ -1,8 +1,13 @@
 :- set_prolog_flag( discontiguous_warnings,off ).
 :- set_prolog_flag( single_var_warnings,off ).
-/*:- set_prolog_flag( unknown,fail ).*/
 
 :- style_check(-singleton).
+
+:- discontiguous remove_incerto/1.
+:- discontiguous remove_imperfeito/1.
+:- discontiguous evolucao_perfeito/1.
+:- discontiguous evolucao_incerto/1.
+
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado que permite a evolucao do conhecimento
 
@@ -24,7 +29,7 @@ evolucao(-Termo) :-
     solucoes(Invariante, +(-Termo)::Invariante, Lista),
     teste(Lista).
 
-evolucaoImperfeito(Termo) :-
+evolucao_imperfeito(Termo) :-
     solucoes(Invariante, +Termo::Invariante, Lista),
     solucoes(Invariante, +Termo:-:Invariante, ListaImperfeito),
     insercao(Termo),
@@ -44,50 +49,65 @@ teste( [R|LR] ) :- % verifica se todos os testes ao invariante são positivos
 % Evolução de conhecimento perfeito positivo/negativo
 
 %Inserir conhecimento perfeito: adjudicante
-evolucao_ad(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
-    remove_imperfeito_ad(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)),
+evolucao_perfeito(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
+    remove_imperfeito(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)),
     evolucao(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)),
     insercao(perfeito(adjudicante(Id))).
 
 %Inserir conhecimento perfeito negativo: adjudicante
-evolucao_ad(-adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
+evolucao_perfeito(-adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
     evolucao(-adjudicante(Id, Nome, NIF, TipoEntidade, Morada)),
     insercao(perfeito(adjudicante(Id))).
 
 %Remoção de conhecimento relativo a adjudicante imperfeito
-remove_imperfeito_ad(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
+remove_imperfeito(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
     retract(excecao(adjudicante(Id,_,_,_,_))),
+    remove_imperfeito(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)).
+
+remove_imperfeito(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
     retract(impreciso(adjudicante(Id))),
-    incertoMorada(Id, Morada_desconhecido),
-    retract((excecao(adjudicante(IdE, NomeE,NifE,TipoE,MoradaE)) :-
+    remove_imperfeito(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)).
+
+remove_imperfeito(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
+    remove_incerto(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)).
+
+remove_incerto(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
+    write(1),
+    incertoMorada(adjudicante(Id), Morada_desconhecido),
+    write(2),
+    remocao((excecao(adjudicante(IdE, NomeE,NifE,TipoE,MoradaE)) :-
       adjudicante(IdE, NomeE, NifE, TipoE, Morada_desconhecido))),
-    retract(adjudicante(Id,_,_,_,_)),
-    retract(incertoMorada(adjudicante(Id, _))).
+      write(3),
+    remocao(adjudicante(Id,_,_,_,_)),
+    retract(incertoMorada(adjudicante(Id), _)),
+    write('fim').
+
+remove_incerto(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)).
 
 
 %Inserir conhecimento perfeito: adjudicataria
-evolucao_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
-    remove_imperfeito_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)),
+evolucao_perfeito(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
+    remove_imperfeito(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)),
     evolucao(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)),
     insercao(perfeito(adjudicataria(Id))).
 
 %Inserir conhecimento perfeito negativo: adjudicataria
-evolucao_ada(-adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
+evolucao_perfeito(-adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
     evolucao(-adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)),
     insercao(perfeito(adjudicataria(Id))).
 
-remove_imperfeito_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
+remove_imperfeito(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
     retract(excecao(adjudicataria(Id,_,_,_,_))),
-    remove_imperfeito_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
+    remove_imperfeito(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
 
-remove_imperfeito_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
+remove_imperfeito(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
     retract(impreciso(adjudicataria(Id))),
-    remove_imperfeito_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
+    remove_imperfeito(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
 
-remove_imperfeito_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
-    remove_incerto_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
+remove_imperfeito(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
+    remove_incerto(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
 
-remove_incerto_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
+remove_incerto(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
     write(1),
     incertoMorada(adjudicataria(Id), Morada_desconhecido),
     write(2),
@@ -98,15 +118,15 @@ remove_incerto_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
     retract(incertoMorada(adjudicataria(Id), _)),
     write('fim').
 
-remove_incerto_ada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
+remove_incerto(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
 
 %Inserir conhecimento perfeito: contrato
-evolucao_cont(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)) :-
+evolucao_perfeito(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)) :-
     evolucao(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)),
     insercao(perfeito(contrato(IdContrato))).
 
 %Inserir conhecimento perfeito negativo: contrato
-evolucao_cont(-contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)) :-
+evolucao_perfeito(-contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)) :-
     evolucao(-contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)),
     insercao(perfeito(contrato(IdContrato))).
 
@@ -116,8 +136,8 @@ evolucao_cont(-contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato
 %Adjudicante
 
 %Inserir conhecimento imperfeito na base de conhecimento: Morada desconhecida
-evolucao_ad_incerto(adjudicante(Id, Nome, NIF, TipoEntidade, Morada_desconhecido), morada) :-
-    evolucaoImperfeito(adjudicante(Id, Nome, NIF, TipoEntidade, Morada_desconhecido)),
+evolucao_incerto(adjudicante(Id, Nome, NIF, TipoEntidade, Morada_desconhecido), morada) :-
+    evolucao_imperfeito(adjudicante(Id, Nome, NIF, TipoEntidade, Morada_desconhecido)),
     insercao(incertoMorada(adjudicante(Id)), Morada_desconhecido),
     insercao((excecao(adjudicante(IdAdj, N, Ni, T, M)) :-
             adjudicante(IdAdj, N, Ni, T, Morada_desconhecido))).
@@ -126,8 +146,8 @@ evolucao_ad_incerto(adjudicante(Id, Nome, NIF, TipoEntidade, Morada_desconhecido
 %adjudicataria
 
 %Inserir conhecimento imperfeito na base de conhecimento: Morada desconhecida
-evolucao_ada_incerto(adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada_desconhecido), morada) :-
-    evolucaoImperfeito(adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada_desconhecido)),
+evolucao_incerto(adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada_desconhecido), morada) :-
+    evolucao_imperfeito(adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada_desconhecido)),
     insercao(incertoMorada(adjudicataria(IdAda), Morada_desconhecido)),
     insercao((excecao(adjudicataria(IdAdj, N, Ni, T, M)) :-
             adjudicataria(IdAdj, N, Ni, T, Morada_desconhecido))).
@@ -137,8 +157,8 @@ evolucao_ada_incerto(adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada_descon
 
 
 %Inserir conhecimento imperfeito na base de conhecimento: descricao desconhecido
-evolucao_cont_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado), descricao) :-
-    evolucaoImperfeito(contrato(IdContrato,IdAdjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)),
+evolucao_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado), descricao) :-
+    evolucao_imperfeito(contrato(IdContrato,IdAdjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)),
     insercao(incertoDescricao(contrato(IdContrato), Descricao_desconhecida)),
     insercao((excecao(contrato(IdC,IdAd,IdAda,TipoC,TipoP,Desc,Val,Praz,Loc, Sub)) :-
                     contrato(IdC,IdAd,IdAda,TipoC,TipoP,Descricao_desconhecida,Val,Praz,Loc,Sub))).
@@ -147,19 +167,9 @@ evolucao_cont_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeC
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Evolução de conhecimento imperfeito impreciso
 
-%Contrato
+% Morada
 
-%Inserir conhecimento imperfeito na base de conhecimento: valor impreciso
-evolucao_cont_impreciso(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor_impreciso,Prazo,Local,Subsidiado), valor, LimInf, LimSup) :-
-    solucoes(Invariante, +(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor_impreciso,Prazo,Local,Subsidiado))::Invariante, Lista),
-    solucoes(Invariante, +(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor_impreciso,Prazo,Local,Subsidiado)):~:Invariante, ListaImpreciso),
-    insercao((excecao(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor_impreciso,Prazo,Local,Subsidiado)) :-
-              Valor_impreciso >= LimInf, Valor_impreciso =< LimSup)),
-    insercao(impreciso(contrato(IdContrato))),
-    teste(Lista),
-    teste(ListaImpreciso).
-
-
+%/////////////////////////// ADICIONAR /////////////////////////////////////////////
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Evolução de conhecimento imperfeito interdito
@@ -167,8 +177,8 @@ evolucao_cont_impreciso(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoD
 %Adjudicante
 
 %Inserir conhecimento imperfeito na base de conhecimento: nome interdito
-evolucao_ad_interdito(adjudicante(Id, Nome_interdito, NIF, TipoEntidade, Morada), nome) :-
-    evolucaoImperfeito(adjudicante(Id, Nome_interdito, NIF, TipoEntidade, Morada)),
+evolucao_interdito(adjudicante(Id, Nome_interdito, NIF, TipoEntidade, Morada), nome) :-
+    evolucao_imperfeito(adjudicante(Id, Nome_interdito, NIF, TipoEntidade, Morada)),
     insercao((excecao(adjudicante(IdAd, N, Ni, T, M)) :-
         adjudicante(IdAd, Nome_interdito, Ni, T, M))),
     insercao((nulo(Nome_interdito))),
@@ -177,8 +187,8 @@ evolucao_ad_interdito(adjudicante(Id, Nome_interdito, NIF, TipoEntidade, Morada)
 %Adjudicataria
 
 %Inserir conhecimento imperfeito na base de conhecimento: nome interdito
-evolucao_ada_interdito(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Morada), nome) :-
-    evolucaoImperfeito(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Morada)),
+evolucao_interdito(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Morada), nome) :-
+    evolucao_imperfeito(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Morada)),
     insercao((excecao(adjudicataria(IdAd, N, Ni, T, M)) :-
         adjudicante(IdAd, Nome_interdito, Ni, T, M))),
     insercao((nulo(Nome_interdito))),
@@ -189,14 +199,14 @@ evolucao_ada_interdito(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Mora
 
 %Adjudicante
 %Remover conhecimento perfeito: adjudicante
-involucao_ad(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
+involucao_perfeito(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
     involucao(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)),
     remocao(perfeito(Id)).
 
 
 %Adjudicataria
 %Remover conhecimento perfeito: adjudicataria
-involucao_ad(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
+involucao_perfeito(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
     involucao(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)),
     remocao(perfeito(Id)).
 
@@ -206,7 +216,7 @@ involucao_ad(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
 %Adjudicante
 
 %Remover conhecimento imperfeito na base de conhecimento: Morada desconhecida
-involucao_ad_incerto(adjudicante(Id, Nome, NIF, TipoEntidade, Morada_desconhecido), morada) :-
+involucao_incerto(adjudicante(Id, Nome, NIF, TipoEntidade, Morada_desconhecido), morada) :-
     involucao(adjudicante(Id, Nome, NIF, TipoEntidade, Morada_desconhecido)),
     remocao((excecao(adjudicante(IdAdj, N, Ni, T, M)) :-
             adjudicante(IdAdj, Nome, Ni, T, Morada_desconhecido))),
@@ -216,7 +226,7 @@ involucao_ad_incerto(adjudicante(Id, Nome, NIF, TipoEntidade, Morada_desconhecid
 %adjudicataria
 
 %Remover conhecimento imperfeito na base de conhecimento: Morada desconhecida
-involucao_ada_incerto(adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada_desconhecido), morada) :-
+involucao_incerto(adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada_desconhecido), morada) :-
     involucao(adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada_desconhecido)),
     remocao((excecao(adjudicataria(IdAd, N, Ni, T, M)) :-
             adjudicataria(IdAdj, Nome, Ni, T, Morada_desconhecido))),
@@ -226,7 +236,7 @@ involucao_ada_incerto(adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada_desco
 %Contrato
 
 %Remover conhecimento imperfeito na base de conhecimento: descricao desconhecido
-involucao_cont_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado), descricao) :-
+involucao_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado), descricao) :-
     involucao(contrato(IdContrato,IdAdjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)),
     remocao((excecao(contrato(IdC,IdAd,IdAda,TipoC,TipoP,Desc,Val,Praz,Loc,Sub)) :-
                     contrato(IdC,IdAd,IdAda,TipoC,TipoP,Descricao_desconhecida,Val,Praz,Loc,Sub))),
@@ -244,7 +254,7 @@ involucao_cont_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDe
 %Adjudicante
 
 %Remover conhecimento imperfeito na base de conhecimento: nome interdito
-involucao_ad_interdito(adjudicante(Id, Nome_interdito, NIF, TipoEntidade, Morada), nome) :-
+involucao_interdito(adjudicante(Id, Nome_interdito, NIF, TipoEntidade, Morada), nome) :-
     involucao(adjudicante(Id, Nome_interdito, NIF, TipoEntidade, Morada)),
     remocao((excecao(adjudicante(IdAd, N, Ni, T, M)) :-
         adjudicante(IdAd, Nome_interdito, Ni, T, M))),
@@ -254,7 +264,7 @@ involucao_ad_interdito(adjudicante(Id, Nome_interdito, NIF, TipoEntidade, Morada
 %Adjudicataria
 
 %Remover conhecimento imperfeito na base de conhecimento: nome interdito
-involucao_ada_interdito(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Morada), nome) :-
+involucao_interdito(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Morada), nome) :-
     involucao(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Morada)),
     remocao((excecao(adjudicataria(IdAd, N, Ni, T, M)) :-
         adjudicante(IdAd, Nome_interdito, Ni, T, M))),
