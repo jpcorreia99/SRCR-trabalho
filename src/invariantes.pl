@@ -326,13 +326,17 @@
 % Invariante estrutural: o tipo de procedimento deve pertencer a um certo conjunto
 % Aplicado a conhecimento perfeito positivo
 +contrato(_,_,_,_,Procedimento,_,_,_,_,_,_) :: (
-    member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público'])
+    member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público',
+        'Concurso limitado por prévia qualificação','Procedimento de negociação',
+        'Diálogo concorrencial','Parceria para a inovação'])
 ).
 
 % Aplicado a conhecimento perfeito negativo
 
 +(-contrato(_,_,_,_,Procedimento,_,_,_,_,_,_)) :: (
-    member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público'])
+    member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público',
+        'Concurso limitado por prévia qualificação','Procedimento de negociação',
+        'Diálogo concorrencial','Parceria para a inovação'])
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
