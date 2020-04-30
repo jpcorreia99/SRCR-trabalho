@@ -1,7 +1,7 @@
 :- set_prolog_flag( discontiguous_warnings,off ).
 :- set_prolog_flag( single_var_warnings,off ).
 
-:- style_check(-singleton).
+%:- style_check(-singleton).
 
 :- discontiguous remove_incerto/1.
 :- discontiguous remove_imperfeito/1.
@@ -35,6 +35,13 @@ evolucao_imperfeito(Termo) :-
     insercao(Termo),
     teste(Lista),
     teste(ListaImperfeito).
+
+evolucao_impreciso(Termo) :-
+  solucoes(Invariante, +Termo::Invariante, Lista),
+  solucoes(Invariante, +Termo:~:Invariante, ListaImpreciso),
+  insercao(excecao(Termo)),
+  teste(Lista),
+  teste(ListaImpreciso).
 
 insercao( Termo ) :-
     assert( Termo ). % o assert insere o termo na base de conhecimento
@@ -120,15 +127,36 @@ remove_incerto(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
 
 remove_incerto(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
 
+%Remoção de conhecimento relativo a contrato imperfeito
+
+
 %Inserir conhecimento perfeito: contrato
-evolucao_perfeito(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)) :-
-    evolucao(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)),
+evolucao_perfeito(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)) :-
+    remove_imperfeito(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)),
+    evolucao(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)),
     insercao(perfeito(contrato(IdContrato))).
 
 %Inserir conhecimento perfeito negativo: contrato
-evolucao_perfeito(-contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)) :-
-    evolucao(-contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)),
+evolucao_perfeito(-contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)) :-
+    evolucao(-contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)),
     insercao(perfeito(contrato(IdContrato))).
+
+remove_imperfeito(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)) :-
+    retract(excecao(contrato(IdContrato,_,_,_,_,_,_,_,_,_,_))),
+    remove_imperfeito(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)).
+
+remove_imperfeito(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)) :-
+    remove_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)).
+
+remove_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)) :-
+    incertoDescricao(contrato(IdContrato), Descricao_desconhecida),
+    remocao((excecao(contrato(IdC,Id_Adj,IdAd,TPC,TDP,Desc,V,P,L,D,S)) :-
+      adjudicante(IdC, Id_Adj, IdAd, TPC, TDP, Descricao_desconhecida, V, P, L, D, S))),
+    remocao(contrato(IdContrato,_,_,_,_,_,_,_,_,_,_)),
+    retract(incertoDescricao(contrato(IdContrato), _)),
+    write('fim').
+
+remove_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Evolução de conhecimento imperfeito incerto
@@ -138,7 +166,7 @@ evolucao_perfeito(-contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeCont
 %Inserir conhecimento imperfeito na base de conhecimento: Morada desconhecida
 evolucao_incerto(adjudicante(Id, Nome, NIF, TipoEntidade, Morada_desconhecido), morada) :-
     evolucao_imperfeito(adjudicante(Id, Nome, NIF, TipoEntidade, Morada_desconhecido)),
-    insercao(incertoMorada(adjudicante(Id)), Morada_desconhecido),
+    insercao(incertoMorada(adjudicante(Id), Morada_desconhecido)),
     insercao((excecao(adjudicante(IdAdj, N, Ni, T, M)) :-
             adjudicante(IdAdj, N, Ni, T, Morada_desconhecido))).
 
@@ -157,17 +185,25 @@ evolucao_incerto(adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada_desconheci
 
 
 %Inserir conhecimento imperfeito na base de conhecimento: descricao desconhecido
-evolucao_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado), descricao) :-
-    evolucao_imperfeito(contrato(IdContrato,IdAdjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)),
+evolucao_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Data,Subsidiado), descricao) :-
+    evolucao_imperfeito(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Data,Subsidiado)),
     insercao(incertoDescricao(contrato(IdContrato), Descricao_desconhecida)),
-    insercao((excecao(contrato(IdC,IdAd,IdAda,TipoC,TipoP,Desc,Val,Praz,Loc, Sub)) :-
-                    contrato(IdC,IdAd,IdAda,TipoC,TipoP,Descricao_desconhecida,Val,Praz,Loc,Sub))).
+    insercao((excecao(contrato(IdC,IdAd,IdAda,TipoC,TipoP,Desc,Val,Praz,Loc,D, Sub)) :-
+                    contrato(IdC,IdAd,IdAda,TipoC,TipoP,Descricao_desconhecida,Val,Praz,Loc,D,Sub))).
 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Evolução de conhecimento imperfeito impreciso
 
-% Morada
+% Inserir conhecimento imperfeito na base de conhecimento: morada imprecisa
+evolucao_impreciso_morada(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
+  insercao(impreciso(adjudicante(Id))),
+  evolucao_impreciso(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)).
+
+% Inserir conhecimento imperfeito na base de conhecimento: morada imprecisa
+evolucao_impreciso_morada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
+  insercao(impreciso(adjudicataria(Id))),
+  evolucao_impreciso(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
 
 %/////////////////////////// ADICIONAR /////////////////////////////////////////////
 
@@ -201,14 +237,13 @@ evolucao_interdito(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Morada),
 %Remover conhecimento perfeito: adjudicante
 involucao_perfeito(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
     involucao(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)),
-    remocao(perfeito(Id)).
-
+    remocao(perfeito(adjudicante(Id))).
 
 %Adjudicataria
 %Remover conhecimento perfeito: adjudicataria
 involucao_perfeito(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
     involucao(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)),
-    remocao(perfeito(Id)).
+    remocao(perfeito(adjudicataria(Id))).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Involução de conhecimento imperfeito incerto
@@ -236,10 +271,10 @@ involucao_incerto(adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada_desconhec
 %Contrato
 
 %Remover conhecimento imperfeito na base de conhecimento: descricao desconhecido
-involucao_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado), descricao) :-
-    involucao(contrato(IdContrato,IdAdjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Subsidiado)),
-    remocao((excecao(contrato(IdC,IdAd,IdAda,TipoC,TipoP,Desc,Val,Praz,Loc,Sub)) :-
-                    contrato(IdC,IdAd,IdAda,TipoC,TipoP,Descricao_desconhecida,Val,Praz,Loc,Sub))),
+involucao_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Data,Subsidiado), descricao) :-
+    involucao(contrato(IdContrato,IdAdjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Data,Subsidiado)),
+    remocao((excecao(contrato(IdC,IdAd,IdAda,TipoC,TipoP,Desc,Val,Praz,Loc,D,Sub)) :-
+                    contrato(IdC,IdAd,IdAda,TipoC,TipoP,Descricao_desconhecida,Val,Praz,Loc,D,Sub))),
     remocao(incerto(contrato(IdContrato))).
 
 
