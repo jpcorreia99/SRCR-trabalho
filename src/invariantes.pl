@@ -325,6 +325,7 @@
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o tipo de procedimento deve pertencer a um certo conjunto
 % Aplicado a conhecimento perfeito positivo
+%artigo 16.º n.º 1 do CCP
 +contrato(_,_,_,_,Procedimento,_,_,_,_,_,_) :: (
     member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público',
         'Concurso limitado por prévia qualificação','Procedimento de negociação',
@@ -343,9 +344,9 @@
 % Invariante referencial: se o contrato não for subsidiado, apenas permitir um conjunto de tipos de entidade adjudicante
 % Aplicado a conhecimento perfeito positivo
 +contrato(_,IdAd,_,_,_,_,_,_,_,_,false) :: (
-    solucoes((Tipo),adjudicante(IdAd,_,_,Tipo,_),ListaTipo), % devido aos outros invariantes sabemos que esta lista terá comprimento 1
-    nth0(0, ListaTipo, TipoAdjudicante), %acedemos então ao tipo do adjudicante que é o único habitante da lista
-    member(TipoAdjudicante,['Pessoa coletiva','Organismo de administração pública']) %CCP artigo 2.º n.º 2, alíneas a), b) e d), %  artigo 7.º n.º 1.º
+    solucoes((Tipo),adjudicante(IdAd,_,_,Tipo,_),ListaTipo), %ista terá comprimento 1
+    nth0(0, ListaTipo, TipoAdjudicante), %acedemos então ao tipo do adjudicante
+    member(TipoAdjudicante,['Pessoa coletiva','Organismo de administração pública']) %CCP
 ).
 
 
