@@ -175,17 +175,37 @@ contaAnosBissextos(data(_,Mes,Ano),R):-
 % Dada uma lista de triplos, filtra os triplos em que o contrato ainda está ativo na data de referência 
 %e cria uma lista de ids de contratos que satisfazem essa condição
 
-filtraListaTriplosIdPrazoData([],_,[]).
+filtraListaTriplosIdPrazoDataAtivo([],_,[]).
 
-filtraListaTriplosIdPrazoData([(IdContrato,PrazoContrato,DataContrato)|T] ,DataReferencia,R):-
+filtraListaTriplosIdPrazoDataAtivo([(IdContrato,PrazoContrato,DataContrato)|T] ,DataReferencia,R):-
     diferenca_entre_datas(DataContrato,DataReferencia,DiferencaEmDias),
     DiferencaEmDias >= 0,
     DiferencaEmDias =< PrazoContrato,
-    filtraListaTriplosIdPrazoData(T,DataReferencia,R1),
+    filtraListaTriplosIdPrazoDataAtivo(T,DataReferencia,R1),
     prepend(IdContrato,R1,R).
 
-filtraListaTriplosIdPrazoData([_|T],DataReferencia,R):-
-    filtraListaTriplosIdPrazoData(T,DataReferencia,R).
+filtraListaTriplosIdPrazoDataAtivo([_|T],DataReferencia,R):-
+    filtraListaTriplosIdPrazoDataAtivo(T,DataReferencia,R).
+
+
+
+% Predicado auxiliar do predicado listaContratosAcabadosAdjudicante no ficheiro amin.pl
+% Dada uma lista de triplos, filtra os triplos em que o contrato ainda está ativo na data de referência 
+%e cria uma lista de ids de contratos que satisfazem essa condição
+
+filtraListaTriplosIdPrazoDataAcabado([],_,[]).
+
+filtraListaTriplosIdPrazoDataAcabado([(IdContrato,PrazoContrato,DataContrato)|T] ,DataReferencia,R):-
+    diferenca_entre_datas(DataContrato,DataReferencia,DiferencaEmDias),
+    DiferencaEmDias >= 0,
+    DiferencaEmDias >= PrazoContrato,
+    filtraListaTriplosIdPrazoDataAcabado(T,DataReferencia,R1),
+    prepend(IdContrato,R1,R).
+
+filtraListaTriplosIdPrazoDataAcabado([_|T],DataReferencia,R):-
+    filtraListaTriplosIdPrazoDataAcabado(T,DataReferencia,R).
+
+
 
 
 

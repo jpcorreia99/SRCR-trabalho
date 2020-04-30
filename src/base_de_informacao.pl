@@ -131,6 +131,8 @@ contrato(2,2,2,'Aquisição de serviços','Consulta prévia','Assessoria jurídi
 perfeito(contrato(2)).
 contrato(3,1,3,'Aquisição de serviços','Consulta prévia','Assessoria jurídica', 700, 80,'Alto de Basto',data(17,02,2020),false).
 perfeito(contrato(3)).
+contrato(4,1,3,'Aquisição de serviços','Procedimento de negociação','Concerto', 800, 90,'Alto de Basto',data(18,02,2020),false).
+
 
 % Conhecimento Perfeito Negativo
 -contrato(4,1,2,'Locação de bens móveis', 'Ajuste direto','Arrendamento de espaço', 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020),false).
