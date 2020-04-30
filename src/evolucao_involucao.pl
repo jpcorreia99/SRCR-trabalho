@@ -127,9 +127,6 @@ remove_incerto(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
 
 remove_incerto(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
 
-%Remoção de conhecimento relativo a contrato imperfeito
-
-
 %Inserir conhecimento perfeito: contrato
 evolucao_perfeito(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)) :-
     remove_imperfeito(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)),
@@ -141,6 +138,7 @@ evolucao_perfeito(-contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeCont
     evolucao(-contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)),
     insercao(perfeito(contrato(IdContrato))).
 
+%Remoção de conhecimento relativo a contrato imperfeito
 remove_imperfeito(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)) :-
     retract(excecao(contrato(IdContrato,_,_,_,_,_,_,_,_,_,_))),
     remove_imperfeito(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao,Valor,Prazo,Local,Data,Subsidiado)).
@@ -182,7 +180,6 @@ evolucao_incerto(adjudicataria(IdAda, Nome, NIF, TipoEntidade, Morada_desconheci
 
 
 %Contrato
-
 
 %Inserir conhecimento imperfeito na base de conhecimento: descricao desconhecido
 evolucao_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContrato,TipoDeProcedimento,Descricao_desconhecida,Valor,Prazo,Local,Data,Subsidiado), descricao) :-

@@ -32,6 +32,7 @@
 :- dynamic impreciso/1.
 :- dynamic interdito/1.
 :- dynamic incertoMorada/2.
+:- dynamic incertoDescricao/2.
 
 :- discontiguous adjudicante/5.
 :- discontiguous adjudicataria/5.
