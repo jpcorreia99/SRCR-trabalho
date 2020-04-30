@@ -391,8 +391,12 @@
 % do mesmo tipo ou idênticas às de contratos que já lhe foram atribuídos, no ano económico em curso e nos dois anos económicos anteriores,
 % sempre que O preço contratual acumulado dos contratos já celebrados (não incluindo o contrato que se pretende celebrar) seja igual ou superior a 75.000 euros.
 +contrato(_,IdAd,IdAda,'Aquisição de serviços',_,_,Valor,_,_,data(_,_,Ano),_) :: (
-    solucoes((Data,Custo),contrato(_,IdAd,IdAda,'Aquisição de serviços',_,_,Custo,_,_,Data,_),ParesDataCusto), %lista de pares
-    somaCustosContratos(ParesDataCusto,Ano,SomaCustos), % somará os valores dos contratos no ano de assinatura do contrato assim como nos dois anos anteriores
+    solucoes((Data,Custo),
+      contrato(_,IdAd,IdAda,'Aquisição de serviços',_,_,Custo,_,_,Data,_),
+      ParesDataCusto
+    ), %lista de pares data de assinatura x custo do contrato
+    %valores dos contratos no ano de assinatura do contrato + nos dois anos anteriores
+    somaCustosContratos(ParesDataCusto,Ano,SomaCustos), 
     (SomaCustos-Valor) < 75000
 ).
 
