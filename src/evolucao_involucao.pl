@@ -5,7 +5,7 @@
 
 :- discontiguous remove_incerto/1.
 :- discontiguous remove_imperfeito/1.
-:- discontiguous evolucao/1.
+:- discontiguous evolucao_perfeito/1.
 :- discontiguous evolucao_incerto/1.
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
@@ -49,13 +49,13 @@ teste( [R|LR] ) :- % verifica se todos os testes ao invariante são positivos
 % Evolução de conhecimento perfeito positivo/negativo
 
 %Inserir conhecimento perfeito: adjudicante
-evolucao(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
+evolucao_perfeito(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
     remove_imperfeito(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)),
     evolucao(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)),
     insercao(perfeito(adjudicante(Id))).
 
 %Inserir conhecimento perfeito negativo: adjudicante
-evolucao(-adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
+evolucao_perfeito(-adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
     evolucao(-adjudicante(Id, Nome, NIF, TipoEntidade, Morada)),
     insercao(perfeito(adjudicante(Id))).
 
