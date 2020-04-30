@@ -270,6 +270,21 @@
     member(Subsidiado,[true,false])
 ).
 
+%%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Invariante estrutural: o ID não deve existir já
++contrato(IDC,_,_,_,_,_,_,_,_,_,_) :: (
+    solucoes( (IDC),(contrato(IDC,_,_,_,_,_,_,_,_,_,_)),S1 ),
+    comprimento(S1,R1),
+    R1==1 
+).
+
+
++(-contrato(IDC,_,_,_,_,_,_,_,_,_,_)) :: (
+    solucoes( (IDC),(contrato(IDC,_,_,_,_,_,_,_,_,_,_)),S1 ),
+    comprimento(S1,R1),
+    R1==1 
+).
+
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Invariante estrutural: o custo e duração devem ser superi ores a 0
 % Aplicado a conhecimento perfeito positivo
