@@ -76,10 +76,6 @@ excecao(adjudicante(200,'Salvador Eletrecista LDA',598765433, 'Pessoa coletiva',
 excecao(adjudicante(200,'Salvador Eletrecista LDA',598765433,'Pessoa coletiva','Rua André Gomes')).
 impreciso(adjudicante(200)).
 
-
-
-
-
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado adjudicante #IdAd, Nome, NIF,TipoEntidade, Morada ->{V,F,D}
 % Conhecimento Perfeito Positivo
@@ -91,7 +87,7 @@ adjudicataria(3,'Município de Braga',506901173,'Organismo de administração p�
 perfeito(adjudicataria(3)).
 adjudicataria(4,'Ola John',211111112,'Pessoa singular','Av. São Gonçalo 1028, Guimarães').
 perfeito(adjudicataria(4)).
-% adjudicante(5,'XXX -Associados -Sociedade de Advogados, SPa, RL.',512345678, 'Pessoa coletiva', 'Portugal').
+%
 
 % Conhecimento Perfeito Negativo
 -adjudicataria(1000,'André Alves',111111110,'Pessoa singular','Rua dos Barros Nº45').
