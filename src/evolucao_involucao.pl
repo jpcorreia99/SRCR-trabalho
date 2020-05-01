@@ -41,8 +41,6 @@ insercao( Termo ) :-
 
 teste( [] ).
 teste( [R|LR] ) :- % verifica se todos os testes ao invariante são positivos
-    write(R),
-    write('\n\n'),
     R,
     teste( LR ).
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -

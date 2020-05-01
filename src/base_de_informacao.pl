@@ -33,6 +33,7 @@
 :- dynamic interdito/1.
 :- dynamic incertoMorada/2.
 :- dynamic incertoDescricao/2.
+:- dynamic nulo/1.
 
 :- discontiguous adjudicante/5.
 :- discontiguous adjudicataria/5.
@@ -79,8 +80,8 @@ impreciso(adjudicante(200)).
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado adjudicante #IdAd, Nome, NIF,TipoEntidade, Morada ->{V,F,D}
 % Conhecimento Perfeito Positivo
-%adjudicataria(1,'Municipio do Porto',501306099 ,'Pessoa coletiva','R. Clube dos Fenianos 5, 4000-407 Porto').
-%perfeito(adjudicataria(1)).
+adjudicataria(1,'Municipio do Porto',501306099 ,'Pessoa coletiva','R. Clube dos Fenianos 5, 4000-407 Porto').
+perfeito(adjudicataria(1)).
 adjudicataria(2,'SERVICOS DE ACAO SOCIAL DA UNIVERSIDADE DO MINHO',680047360,'Pessoa coletiva','Largo do Paco, 4704-553 Braga').
 perfeito(adjudicataria(2)).
 adjudicataria(3,'Municipio de Braga',506901173,'Organismo de administracao publica','Praça do Municipio  4700-435 Braga').

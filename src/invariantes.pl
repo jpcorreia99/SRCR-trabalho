@@ -412,14 +412,14 @@
 +adjudicante(IdAd,_,_,_,_) :-: (
 	nao(perfeito(adjudicante(IdAd))),
 	nao(impreciso(adjudicante(IdAd))),
-	nao(incertoMorada(adjudicante(IdAd)))
-).
+	nao(incertoMorada(adjudicante(IdAd),_))
 
+).
 % Adjudicataria incerto/interdito
 +adjudicataria(IdAda,_,_,_,_) :-: (
 	nao(perfeito(adjudicataria(IdAda))),
 	nao(impreciso(adjudicataria(IdAda))),
-	nao(incertoMorada(adjudicataria(IdAda)))
+	nao(incertoMorada(adjudicataria(IdAda),_))
 ).
 
 % Contrato incerto/interdito
