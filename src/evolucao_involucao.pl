@@ -1,7 +1,7 @@
 :- set_prolog_flag( discontiguous_warnings,off ).
 :- set_prolog_flag( single_var_warnings,off ).
 
-:- style_check(-singleton).
+%:- style_check(-singleton).
 
 :- discontiguous remove_incerto/1.
 :- discontiguous remove_imperfeito/1.
@@ -180,11 +180,13 @@ evolucao_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContra
 
 % Inserir conhecimento imperfeito na base de conhecimento: morada imprecisa
 evolucao_impreciso_morada(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)) :-
+  remove_incerto(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)),
   insercao(impreciso(adjudicante(Id))),
   evolucao_impreciso(adjudicante(Id, Nome, NIF, TipoEntidade, Morada)).
 
 % Inserir conhecimento imperfeito na base de conhecimento: morada imprecisa
 evolucao_impreciso_morada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
+  remove_incerto(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)),
   insercao(impreciso(adjudicataria(Id))),
   evolucao_impreciso(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
 

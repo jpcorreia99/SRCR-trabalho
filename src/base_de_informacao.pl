@@ -51,13 +51,13 @@
 % Extensão do predicado adjudicante #IdAda, Nome, Nif, Morada -> {V,F,D}
 
 % Conhecimento Perfeito Positivo
-adjudicante(1,'Município do Porto',501306099 ,'Pessoa coletiva', 'R. Clube dos Fenianos 5, 4000-407 Porto').
+adjudicante(1,'Municipio do Porto',501306099 ,'Pessoa coletiva', 'R. Clube dos Fenianos 5, 4000-407 Porto').
 perfeito(adjudicante(1)).
 adjudicante(2,'SERVICOS DE ACAO SOCIAL DA UNIVERSIDADE DO MINHO',680047360 , 'Pessoa coletiva', 'Largo do Paco, 4704-553 Braga').
 perfeito(adjudicante(2)).
-adjudicante(3,'Município de Braga',506901173,'Organismo de administração pública','Praça do Município,  4700-435 Braga').
+adjudicante(3,'Municipio de Braga',506901173,'Organismo de administracao publica','Praça do Município,  4700-435 Braga').
 perfeito(adjudicante(3)).
-adjudicataria(4,'Município de Lisboa',500051070,'Pessoa coletiva','Paços do Concelho 1100-038 Lisboa').
+adjudicataria(4,'Municipio de Lisboa',500051070,'Pessoa coletiva','Paços do Concelho 1100-038 Lisboa').
 
 % Conhecimento Perfeito Negativo
 -adjudicante(1000,'Rodrigo Guedes LDA',876543212, 'Pessoa coletiva','Rua 25 de Abril').
@@ -72,25 +72,25 @@ incerto(adjudicante(100)).
 
 % Conhecimento Imperfeito Impreciso
 % Não se sabe qual das moradas é
-excecao(adjudicante(200,'Salvador Eletrecista LDA',598765433, 'Pessoa coletiva','Rua José Alves')).
-excecao(adjudicante(200,'Salvador Eletrecista LDA',598765433,'Pessoa coletiva','Rua André Gomes')).
+excecao(adjudicante(200,'Salvador Eletrecista LDA',598765433, 'Pessoa coletiva','Rua Jose Alves')).
+excecao(adjudicante(200,'Salvador Eletrecista LDA',598765433,'Pessoa coletiva','Rua Andre Gomes')).
 impreciso(adjudicante(200)).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensão do predicado adjudicante #IdAd, Nome, NIF,TipoEntidade, Morada ->{V,F,D}
 % Conhecimento Perfeito Positivo
-adjudicataria(1,'Município do Porto',501306099 ,'Pessoa coletiva','R. Clube dos Fenianos 5, 4000-407 Porto').
-perfeito(adjudicataria(1)).
+%adjudicataria(1,'Municipio do Porto',501306099 ,'Pessoa coletiva','R. Clube dos Fenianos 5, 4000-407 Porto').
+%perfeito(adjudicataria(1)).
 adjudicataria(2,'SERVICOS DE ACAO SOCIAL DA UNIVERSIDADE DO MINHO',680047360,'Pessoa coletiva','Largo do Paco, 4704-553 Braga').
 perfeito(adjudicataria(2)).
-adjudicataria(3,'Município de Braga',506901173,'Organismo de administração pública','Praça do Município  4700-435 Braga').
+adjudicataria(3,'Municipio de Braga',506901173,'Organismo de administracao publica','Praça do Municipio  4700-435 Braga').
 perfeito(adjudicataria(3)).
-adjudicataria(4,'Ola John',211111112,'Pessoa singular','Av. São Gonçalo 1028, Guimarães').
+adjudicataria(4,'Ola John',211111112,'Pessoa singular','Av. Sao Goncalo 1028, Guimaraes').
 perfeito(adjudicataria(4)).
 %
 
 % Conhecimento Perfeito Negativo
--adjudicataria(1000,'André Alves',111111110,'Pessoa singular','Rua dos Barros Nº45').
+-adjudicataria(1000,'Andre Alves',111111110,'Pessoa singular','Rua dos Barros Nº45').
 perfeito(adjudicante(1000)).
 % Conhecimento Imperfeito Incerto
 % Não se sabe o NIF
@@ -102,8 +102,8 @@ incerto(adjudicataria(100)).
 
 % Conhecimento Imperfeito Impreciso
 % Não se sabe qual das moradas é
-excecao(adjudicataria(200,'António Reparações LDA',500000000,'Pessoa coletiva','Rua do Crescente')).
-excecao(adjudicataria(200,'António Reparações LDA',500000000,'Pessoa coletiva','Rua da Nascente')).
+excecao(adjudicataria(200,'Antonio Reparações LDA',500000000,'Pessoa coletiva','Rua do Crescente')).
+excecao(adjudicataria(200,'Antonio Reparações LDA',500000000,'Pessoa coletiva','Rua da Nascente')).
 impreciso(adjudicataria(200)).
 % Conhecimento Imperfeito Interdito
 % Interdito saber o nome do adjudicante
@@ -120,31 +120,31 @@ interdito(adjudicataria(300)).
 % Extensão do predicado contrato #IdAd, #IdAda, TipoDeContrato, TipoDeProcedimento, Descrição, Valor, Prazo, Local, Data -> {V,F,D}
 
 % Conhecimento Perfeito Positivo
-contrato(0,1,2,'Aquisição de serviços','Consulta prévia','Assessoria jurídica', 400, 50,'Alto de Basto',data(14,02,2020),false).
+contrato(0,1,2,'Aquisicão de serviços','Consulta previa','Assessoria jurdica', 400, 50,'Alto de Basto',data(14,02,2020),false).
 perfeito(contrato(0)).
-contrato(1,2,1,'Aquisição de serviços','Consulta prévia','Assessoria jurídica', 500, 60,'Alto de Basto',data(15,02,2020),false).
+contrato(1,2,1,'Aquisicão de serviços','Consulta previa','Assessoria juridica', 500, 60,'Alto de Basto',data(15,02,2020),false).
 perfeito(contrato(1)).
-contrato(2,2,2,'Aquisição de serviços','Consulta prévia','Assessoria jurídica', 600, 70,'Alto de Basto',data(16,02,2020),false).
+contrato(2,2,2,'Aquisição de serviços','Consulta previa','Assessoria juridica', 600, 70,'Alto de Basto',data(16,02,2020),false).
 perfeito(contrato(2)).
-contrato(3,1,3,'Aquisição de serviços','Consulta prévia','Assessoria jurídica', 700, 80,'Alto de Basto',data(17,02,2020),false).
+contrato(3,1,3,'Aquisição de serviços','Consulta prévia','Assessoria juridica', 700, 80,'Alto de Basto',data(17,02,2020),false).
 perfeito(contrato(3)).
-contrato(4,1,3,'Aquisição de serviços','Procedimento de negociação','Concerto', 800, 90,'Alto de Basto',data(18,02,2020),false).
+contrato(4,1,3,'Aquisicao de serviços','Procedimento de negociacao','Concerto', 800, 90,'Alto de Basto',data(18,02,2020),false).
 perfeito(contrato(4)).
 
 % Conhecimento Perfeito Negativo
--contrato(4,1,2,'Locação de bens móveis', 'Ajuste direto','Arrendamento de espaço', 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020),false).
+-contrato(4,1,2,'Locacao de bens moveis', 'Ajuste direto','Arrendamento de espaço', 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020),false).
 perfeito(contrato(4)).
 
 % Conhecimento Imperfeito Incerto
 % Não se sabe o Adjudicante
-contrato(5,1,1,'Locação de bens móveis', 'Ajuste direto',desc, 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020),false).
+contrato(5,1,1,'Locacao de bens moveis', 'Ajuste direto',desc, 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020),false).
 excecao(contrato(_, _, _, _, _, desc, _, _, _, _, _)).
 incertoDescricao(contrato(5),desc).
 
 % Conhecimento Imperfeito Impreciso
 % Não se sabe em que data se realizou
-excecao(contrato(6,1,1,'Aquisição de serviços','Consulta prévia','Obras num pavilhão', 100, 100,'Alto de Basto',data(1,03,2020),false)).
-excecao(contrato(6,1,1,'Aquisição de serviços','Consulta prévia','Obras num pavilhão', 100, 100,'Alto de Basto',data(2,03,2020),false)).
+excecao(contrato(6,1,1,'Aquisicao de servicos','Consulta previa','Obras num pavilhao', 100, 100,'Alto de Basto',data(1,03,2020),false)).
+excecao(contrato(6,1,1,'Aquisicao de servicos','Consulta previa','Obras num pavilhao', 100, 100,'Alto de Basto',data(2,03,2020),false)).
 impreciso(contrato(6)).
 
 

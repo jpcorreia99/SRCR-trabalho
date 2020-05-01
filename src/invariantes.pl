@@ -4,7 +4,7 @@
 :- op(900,xfy,:~:).
 % Invariantes incerto/interdito
 :- op(900,xfy,:-:).
-:- style_check(-singleton).
+%:- style_check(-singleton).
 % Invariantes sobre qualquer termo
 %
 %Invariante estrutural: Não permitir  a inserção de conhecimento contraditório
@@ -345,17 +345,17 @@
 % Aplicado a conhecimento perfeito positivo
 %artigo 16.º n.º 1 do CCP
 +contrato(_,_,_,_,Procedimento,_,_,_,_,_,_) :: (
-    member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público',
-        'Concurso limitado por prévia qualificação','Procedimento de negociação',
-        'Diálogo concorrencial','Parceria para a inovação'])
+    member(Procedimento,['Ajuste direto','Consulta previa','Concurso publico',
+        'Concurso limitado por previa qualificacao','Procedimento de negociacao',
+        'Dialogo concorrencial','Parceria para a inovacao'])
 ).
 
 % Aplicado a conhecimento perfeito negativo
 
 +(-contrato(_,_,_,_,Procedimento,_,_,_,_,_,_)) :: (
-    member(Procedimento,['Ajuste direto','Consulta prévia','Concurso público',
-        'Concurso limitado por prévia qualificação','Procedimento de negociação',
-        'Diálogo concorrencial','Parceria para a inovação'])
+    member(Procedimento,['Ajuste direto','Consulta previa','Concurso publico',
+        'Concurso limitado por previa qualificacao','Procedimento de negociacao',
+        'Dialogo concorrencial','Parceria para a inovacao'])
 ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
@@ -364,7 +364,7 @@
 +contrato(_,IdAd,_,_,_,_,_,_,_,_,false) :: (
     solucoes((Tipo),adjudicante(IdAd,_,_,Tipo,_),ListaTipo), %ista terá comprimento 1
     nth0(0, ListaTipo, TipoAdjudicante), %acedemos então ao tipo do adjudicante
-    member(TipoAdjudicante,['Pessoa coletiva','Organismo de administração pública']) %CCP
+    member(TipoAdjudicante,['Pessoa coletiva','Organismo de administração publica']) %CCP
 ).
 
 
@@ -376,14 +376,14 @@
 +contrato(_,_,_,TipoDeContrato,'Ajuste direto',_,Custo,Prazo,_,_,_) :: (
     Custo =< 5000,
     Prazo =< 365,
-    member(TipoDeContrato,['Aquisição de bens móveis','Locação de bens móveis','Aquisição de serviços'])
+    member(TipoDeContrato,['Aquisicao de bens moveis','Locacao de bens moveis','Aquisicao de servicos'])
 ).
 
 % Aplicado a conhecimento perfeito negativo
 +(-contrato(_,_,_,TipoDeContrato,'Ajuste direto',_,Custo,Prazo,_,_,_)) :: (
     Custo =< 5000,
     Prazo =< 365,
-    member(TipoDeContrato,['Aquisição de bens móveis','Locação de bens móveis','Aquisição de serviços'])
+    member(TipoDeContrato,['Aquisicao de bens moveis','Locacao de bens moveis','Aquisicao de servicos'])
 ).
 
 
@@ -391,9 +391,9 @@
 % Invariante referencial: Uma entidade adjudicante não pode convidar a mesma empresa para celebrar um contrato com prestações de serviço
 % do mesmo tipo ou idênticas às de contratos que já lhe foram atribuídos, no ano económico em curso e nos dois anos económicos anteriores,
 % sempre que O preço contratual acumulado dos contratos já celebrados (não incluindo o contrato que se pretende celebrar) seja igual ou superior a 75.000 euros.
-+contrato(_,IdAd,IdAda,'Aquisição de serviços',_,_,Valor,_,_,data(_,_,Ano),_) :: (
++contrato(_,IdAd,IdAda,'Aquisicao de servicos',_,_,Valor,_,_,data(_,_,Ano),_) :: (
     solucoes((Data,Custo),
-      contrato(_,IdAd,IdAda,'Aquisição de serviços',_,_,Custo,_,_,Data,_),
+      contrato(_,IdAd,IdAda,'Aquisicao de servicos',_,_,Custo,_,_,Data,_),
       ParesDataCusto
     ), %lista de pares data de assinatura x custo do contrato
     %valores dos contratos no ano de assinatura do contrato + nos dois anos anteriores
