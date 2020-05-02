@@ -116,7 +116,7 @@ listaContratosAtivosAdjudicataria(IdAda,DataReferencia,R):-
 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Extensao do predicado listaContratosAtivosAdjudicante: IdAdjudicante,data(Dia,Mes,Ano), R -> {V,F}
+% Extensao do predicado listaContratosAcabadosAdjudicante: IdAdjudicante,data(Dia,Mes,Ano), R -> {V,F}
 % Devolve a lista de ids dos contratos que já terminaram a uma dada data relativos a uma entidade adjudicante
 % O predicado é cauteloso em não escolher tabmbém contratos que ainda não começaram
 listaContratosAcabadosAdjudicante(IdAd,DataReferencia,R):-
@@ -127,7 +127,7 @@ listaContratosAcabadosAdjudicante(IdAd,DataReferencia,R):-
 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Extensao do predicado listaContratosAtivosAdjudicataria IdAdjudicante,data(Dia,Mes,Ano), R -> {V,F}
+% Extensao do predicado listaContratosAcabadosAdjudicataria IdAdjudicante,data(Dia,Mes,Ano), R -> {V,F}
 % Devolve a lista de ids dos contratos que já terminaram a uma dada data relativos a uma entidade adjudicatária
 listaContratosAcabadosAdjudicataria(IdAda,DataReferencia,R):-
     solucoes((IdsContratos,PrazosContratos,DatasContratos),
