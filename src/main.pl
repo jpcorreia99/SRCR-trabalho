@@ -98,7 +98,9 @@ listaAdjudicantesAdjudicataria(IdAda,R) :-
 % O facto de um dos parametros ser uma data de comparação perimite flexibilidade
 % sendo possível saber a lista dos contratos ativos no momento da pesquisa ou num momento no passado
 listaContratosAtivosAdjudicante(IdAd,DataReferencia,R):-
-    solucoes((IdsContratos,PrazosContratos,DatasContratos),contrato(IdsContratos,IdAd,_,_,_,_,_,PrazosContratos,_,DatasContratos,_),ListaTriplosIdPrazoData),
+    solucoes((IdsContratos,PrazosContratos,DatasContratos),
+        contrato(IdsContratos,IdAd,_,_,_,_,_,PrazosContratos,_,DatasContratos,_),
+        ListaTriplosIdPrazoData),
     filtraListaTriplosIdPrazoDataAtivo(ListaTriplosIdPrazoData,DataReferencia,R).
 
 
@@ -106,7 +108,9 @@ listaContratosAtivosAdjudicante(IdAd,DataReferencia,R):-
 % Extensao do predicado listaContratosAtivosAdjudicataria IdAdjudicante,data(Dia,Mes,Ano), R -> {V,F}
 % Devolve a lista de ids dos contratos em que uma entidade adjudicatária está envolvida e que estão ativos numa certa data
 listaContratosAtivosAdjudicataria(IdAda,DataReferencia,R):-
-    solucoes((IdsContratos,PrazosContratos,DatasContratos),contrato(IdsContratos,_,IdAda,_,_,_,_,PrazosContratos,_,DatasContratos,_),ListaTriplosIdPrazoData),
+    solucoes((IdsContratos,PrazosContratos,DatasContratos),
+        contrato(IdsContratos,_,IdAda,_,_,_,_,PrazosContratos,_,DatasContratos,_),
+        ListaTriplosIdPrazoData),
     filtraListaTriplosIdPrazoDataAtivo(ListaTriplosIdPrazoData,DataReferencia,R).
 
 
@@ -116,7 +120,9 @@ listaContratosAtivosAdjudicataria(IdAda,DataReferencia,R):-
 % Devolve a lista de ids dos contratos que já terminaram a uma dada data relativos a uma entidade adjudicante
 % O predicado é cauteloso em não escolher tabmbém contratos que ainda não começaram
 listaContratosAcabadosAdjudicante(IdAd,DataReferencia,R):-
-    solucoes((IdsContratos,PrazosContratos,DatasContratos),contrato(IdsContratos,IdAd,_,_,_,_,_,PrazosContratos,_,DatasContratos,_),ListaTriplosIdPrazoData),
+    solucoes((IdsContratos,PrazosContratos,DatasContratos),
+        contrato(IdsContratos,IdAd,_,_,_,_,_,PrazosContratos,_,DatasContratos,_),
+        ListaTriplosIdPrazoData),
     filtraListaTriplosIdPrazoDataAcabado(ListaTriplosIdPrazoData,DataReferencia,R).
 
 
@@ -124,7 +130,9 @@ listaContratosAcabadosAdjudicante(IdAd,DataReferencia,R):-
 % Extensao do predicado listaContratosAtivosAdjudicataria IdAdjudicante,data(Dia,Mes,Ano), R -> {V,F}
 % Devolve a lista de ids dos contratos que já terminaram a uma dada data relativos a uma entidade adjudicatária
 listaContratosAcabadosAdjudicataria(IdAda,DataReferencia,R):-
-    solucoes((IdsContratos,PrazosContratos,DatasContratos),contrato(IdsContratos,_,IdAda,_,_,_,_,PrazosContratos,_,DatasContratos,_),ListaTriplosIdPrazoData),
+    solucoes((IdsContratos,PrazosContratos,DatasContratos),
+        contrato(IdsContratos,_,IdAda,_,_,_,_,PrazosContratos,_,DatasContratos,_),
+        ListaTriplosIdPrazoData),
     filtraListaTriplosIdPrazoDataAcabado(ListaTriplosIdPrazoData,DataReferencia,R).
 
 
