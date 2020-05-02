@@ -190,7 +190,7 @@ filtraListaTriplosIdPrazoDataAtivo([_|T],DataReferencia,R):-
 
 
 % Predicado auxiliar do predicado listaContratosAcabadosAdjudicante no ficheiro amin.pl
-% Dada uma lista de triplos, filtra os triplos em que o contrato ainda está ativo na data de referência 
+% Dada uma lista de triplos, filtra os triplos em que o contrato já está acabado na data de referência 
 %e cria uma lista de ids de contratos que satisfazem essa condição
 
 filtraListaTriplosIdPrazoDataAcabado([],_,[]).
