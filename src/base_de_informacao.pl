@@ -93,9 +93,9 @@ incertoMorada(adjudicante(101),_).
 
 % Conhecimento Imperfeito Impreciso
 % Não se sabe qual das moradas é
-excecao(adjudicante(200,'Salvador Eletrecista LDA',598765433, 'Pessoa coletiva','Rua Jose Alves')).
-excecao(adjudicante(200,'Salvador Eletrecista LDA',598765433,'Pessoa coletiva','Rua Andre Gomes')).
-impreciso(adjudicante(200)).
+%excecao(adjudicante(200,'Salvador Eletrecista LDA',598765433, 'Pessoa coletiva','Rua Jose Alves')).
+%excecao(adjudicante(200,'Salvador Eletrecista LDA',598765433,'Pessoa coletiva','Rua Andre Gomes')).
+%impreciso(adjudicante(200)).
 excecao(adjudicante(201,'Cadeiras Guerra',593245679, 'Pessoa coletiva','Rua Alvaro de Melo')).
 excecao(adjudicante(201,'Cadeiras Guerra',593245679,'Pessoa coletiva','Rua do Sol')).
 impreciso(adjudicante(201)).

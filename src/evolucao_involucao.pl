@@ -1,7 +1,7 @@
 :- set_prolog_flag( discontiguous_warnings,off ).
 :- set_prolog_flag( single_var_warnings,off ).
 
-:- style_check(-singleton).
+%:- style_check(-singleton).
 
 :- discontiguous remove_incerto/1.
 :- discontiguous remove_imperfeito/1.
@@ -188,8 +188,6 @@ evolucao_impreciso_morada(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)) :-
   insercao(impreciso(adjudicataria(Id))),
   evolucao_impreciso(adjudicataria(Id, Nome, NIF, TipoEntidade, Morada)).
 
-%/////////////////////////// ADICIONAR /////////////////////////////////////////////
-
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Evolução de conhecimento imperfeito interdito
 
@@ -264,7 +262,18 @@ involucao_incerto(contrato(IdContrato,Id_Adjudicante,IdAdjudicataria,TipoDeContr
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Involução de conhecimento imperfeito impreciso
 
-%///////////////////////////////  ADICIONAR  ////////////////////////////////////
+%Adjudicante
+
+%Remover conhecimento imperfeito na base de conhecimento: morada imprecisa
+involucao_impreciso(adjudicante(Id, Nome_interdito, NIF, TipoEntidade, Morada)) :-
+  involucao_im(adjudicante(Id, Nome_interdito, NIF, TipoEntidade, Morada)),
+  remocao(impreciso(adjudicante(Id))).
+
+%Adjudicataria
+%Remover conhecimento imperfeito na base de conhecimento: morada imprecisa
+involucao_impreciso(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Morada)) :-
+  involucao_im(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Morada)),
+  remocao(impreciso(adjudicataria(Id))).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Involução de conhecimento imperfeito interdito
@@ -305,7 +314,15 @@ remocao( Termo ) :-
 remocao( Termo ) :-
     assert( Termo ),!,fail.
 
+involucao_im(adjudicante(Id, Nome_interdito, NIF, TipoEntidade, Morada)) :-
+    solucoes( Invariante,-(adjudicante(Id, Nome_interdito, NIF, TipoEntidade, Morada))::Invariante,Lista ),
+    remocao(excecao(adjudicante(Id, Nome_interdito, NIF, TipoEntidade, Morada))),
+    teste( Lista ).
 
+involucao_im(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Morada)) :-
+    solucoes( Invariante,-(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Morada))::Invariante,Lista ),
+    remocao(excecao(adjudicataria(Id, Nome_interdito, NIF, TipoEntidade, Morada))),
+    teste( Lista ).
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 
 solucoes( X,Y,Z ) :-
