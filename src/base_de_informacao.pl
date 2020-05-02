@@ -28,7 +28,6 @@
 :- dynamic (-)/1.
 :- dynamic excecao/1.
 :- dynamic perfeito/1.
-:- dynamic incerto/1.
 :- dynamic impreciso/1.
 :- dynamic interdito/1.
 :- dynamic incertoMorada/2.
@@ -42,7 +41,7 @@
 
 :- discontiguous excecao/1.
 :- discontiguous perfeito/1.
-:- discontiguous incerto/1.
+:- discontiguous incertoMorada/2.
 :- discontiguous impreciso/1.
 :- discontiguous interdito/1.
 
@@ -86,11 +85,11 @@ perfeito(adjudicante(1002)).
 adjudicante(100,'Bruno Batista',511233450,'Pessoa coletiva',morada_desconhecida).
 excecao(adjudicante(IdAd,Nome,NIF,TipoEntidade,_)):-
     adjudicante(IdAd,Nome,NIF,TipoEntidade,morada_desconhecida).
-incerto(adjudicante(100)).
+incertoMorada(adjudicante(100),_).
 adjudicante(101,'Bruno Carvalho',511222343,'Pessoa coletiva',morada_desconhecida).
 excecao(adjudicante(IdAd,Nome,NIF,TipoEntidade,_)):-
     adjudicante(IdAd,Nome,NIF,TipoEntidade,morada_desconhecida).
-incerto(adjudicante(101)).
+incertoMorada(adjudicante(101),_).
 
 % Conhecimento Imperfeito Impreciso
 % Não se sabe qual das moradas é
@@ -165,11 +164,11 @@ interdito(adjudicataria(300)).
 % Extensão do predicado contrato #IdContrato, #IdAd, #IdAda, TipoDeContrato, TipoDeProcedimento, Descrição, Valor, Prazo, Local, Data -> {V,F,D}
 
 % Conhecimento Perfeito Positivo
-contrato(0,1,2,'Aquisicão de serviços','Consulta previa','Assessoria jurdica','Concerto', 400, 50,'Alto de Basto',data(14,02,2020),false).
+contrato(0,1,2,'Aquisicão de serviços','Consulta previa','Concerto', 400, 50,'Alto de Basto',data(14,02,2020),false).
 perfeito(contrato(0)).
-contrato(1,2,1,'Aquisicão de serviços','Consulta previa','Assessoria juridica','Concerto' ,500, 60,'Alto de Basto',data(15,02,2020),false).
+contrato(1,2,1,'Aquisicão de serviços','Dialogo concorrencial','Pintura de espaço' ,500, 60,'Alto de Basto',data(15,02,2020),false).
 perfeito(contrato(1)).
-contrato(2,2,2,'Aquisição de serviços','Consulta previa','Assessoria juridica','Concerto' ,600, 70,'Alto de Basto',data(16,02,2020),false).
+contrato(2,2,2,'Aquisição de serviços','Nani','Assessoria juridica',600, 70,'Alto de Basto',data(16,02,2020),false).
 perfeito(contrato(2)).
 contrato(3,1,3,'Aquisição de serviços','Consulta previa','Assessoria juridica', 'Concerto',700, 80,'Alto de Basto',data(17,02,2020),false).
 perfeito(contrato(3)).

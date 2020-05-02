@@ -277,7 +277,6 @@
 +contrato(IDC,_,_,_,_,_,_,_,_,_,_) :: (
     solucoes( (IDC),(contrato(IDC,_,_,_,_,_,_,_,_,_,_)),S1 ),
     comprimento(S1,R1),
-    write('COMPRIMENTO:'), write(R1),
     R1==1
 ).
 
