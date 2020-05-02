@@ -152,7 +152,7 @@ numero_dias(data(Dia,Mes,Ano),R):-
 soma_meses(0,0).
 soma_meses(Mes,R):-
     Meses = [31,28,31,30,31,30,31,31,30,31,30,31],
-    Indice is (Mes - 1), % os meses e o indice do array estão desfasados de 1 devido à natureza de indexação dos arrays
+    Indice is (Mes - 1),
     (nth0(Indice,Meses,NumeroDeDias)),
     soma_meses(Indice,SomaMesesAnteriores), % aproveita-se que Indice já é MEs -1
     R is (SomaMesesAnteriores + NumeroDeDias).
