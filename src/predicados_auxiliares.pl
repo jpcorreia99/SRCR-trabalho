@@ -65,13 +65,13 @@ somaCustosContratos([(data(_,_,Ano),_)|T],AnoDeReferencia,R):-
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Extensão do predicado NifCorrespondeTipoEntidadeAdjudicante: NifLista, TipoEntidade -> {V,F}
-% Apenas permite que certos tipos de entidades sejam entidadade adjudicantes 
+% Apenas permite que certos tipos de entidades sejam entidadade adjudicantes
 % artigo 2.º n.º 2, alíneas a), b) e d).
 % e artigo 7.º n.º 1.º
 
 nifCorrespondeTipoEntidadeAdjudicante([5|_],'Pessoa coletiva').
 
-nifCorrespondeTipoEntidadeAdjudicante([6|_],'Organismo de administração pública').
+nifCorrespondeTipoEntidadeAdjudicante([6|_],'Organismo de administracao publica').
 
 nifCorrespondeTipoEntidadeAdjudicante([9,9|_],'Sociedade civil').
 
@@ -80,20 +80,20 @@ nifCorrespondeTipoEntidadeAdjudicante([9,9|_],'Sociedade civil').
 %Extensão do predicado NifCorrespondeTipoEntidadeAdjudicatária: NifLista, TipoEntidade -> {V,F}
 % Um conjunto maior de entidades poderão ser entidades adjudicatária
 
-nifCorrespondeTipoEntidadeAdjudicataria([Primeiro_digito|_],'Pessoa singular'):- 
-    Primeiro_digito>= 1, 
+nifCorrespondeTipoEntidadeAdjudicataria([Primeiro_digito|_],'Pessoa singular'):-
+    Primeiro_digito>= 1,
     Primeiro_digito =< 3.
 
 nifCorrespondeTipoEntidadeAdjudicataria([5|_],'Pessoa coletiva').
 
-nifCorrespondeTipoEntidadeAdjudicataria([6|_],'Organismo de administração pública').
+nifCorrespondeTipoEntidadeAdjudicataria([6|_],'Organismo de administracao publica').
 
 nifCorrespondeTipoEntidadeAdjudicataria([7,2|_],'Fundo de investimento').
 
 nifCorrespondeTipoEntidadeAdjudicataria([7,7|_],'Sujeito passivo').
 
-nifCorrespondeTipoEntidadeAdjudicataria([Primeiro_digito,Segundo_digito|_],'Condomínio'):-
-    Primeiro_digito == 9 , 
+nifCorrespondeTipoEntidadeAdjudicataria([Primeiro_digito,Segundo_digito|_],'Condominio'):-
+    Primeiro_digito == 9 ,
     (Segundo_digito ==0 ; Segundo_digito == 1).
 
 nifCorrespondeTipoEntidadeAdjudicataria([9,9|_],'Sociedade civil').
@@ -172,7 +172,7 @@ contaAnosBissextos(data(_,Mes,Ano),R):-
 
 
 % Predicado auxiliar do predicado listaContratosAtivosAdjudicante no ficheiro amin.pl
-% Dada uma lista de triplos, filtra os triplos em que o contrato ainda está ativo na data de referência 
+% Dada uma lista de triplos, filtra os triplos em que o contrato ainda está ativo na data de referência
 %e cria uma lista de ids de contratos que satisfazem essa condição
 
 filtraListaTriplosIdPrazoDataAtivo([],_,[]).
@@ -190,7 +190,7 @@ filtraListaTriplosIdPrazoDataAtivo([_|T],DataReferencia,R):-
 
 
 % Predicado auxiliar do predicado listaContratosAcabadosAdjudicante no ficheiro amin.pl
-% Dada uma lista de triplos, filtra os triplos em que o contrato já está acabado na data de referência 
+% Dada uma lista de triplos, filtra os triplos em que o contrato já está acabado na data de referência
 %e cria uma lista de ids de contratos que satisfazem essa condição
 
 filtraListaTriplosIdPrazoDataAcabado([],_,[]).
@@ -211,7 +211,3 @@ filtraListaTriplosIdPrazoDataAcabado([_|T],DataReferencia,R):-
 
 %predicado que coloca um elemento na cabeça da lista
 prepend(Head, Tail, [Head| Tail]).
-
-
-
-

@@ -190,22 +190,18 @@ perfeito(contrato(10)).
 
 % Conhecimento Perfeito Negativo
 -contrato(1000,1,2,'Locacao de bens moveis', 'Ajuste direto','Arrendamento de espaço', 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020),false).
-perfeito(contrato(4)).
+perfeito(contrato(1000)).
+-contrato(1001,1,3,'Locacao de bens moveis', 'Ajuste direto','Arrendamento de espaço', 200, 40,'Avenida das flores',data(4,05,2020),false).
+perfeito(contrato(1001)).
 
 % Conhecimento Imperfeito Incerto
-% Não se sabe o Adjudicante
-contrato(5,1,1,'Locacao de bens moveis', 'Ajuste direto',desc, 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020),false).
+% Não se sabe a Descrição
+contrato(100,1,1,'Locacao de bens moveis', 'Ajuste direto',desc, 100, 30,'Cruzeiro de Felgueiras',data(2,02,2020),false).
 excecao(contrato(_, _, _, _, _, desc, _, _, _, _, _)).
-incertoDescricao(contrato(5),desc).
+incertoDescricao(contrato(100),desc).
 
 % Conhecimento Imperfeito Impreciso
 % Não se sabe em que data se realizou
-excecao(contrato(6,1,1,'Aquisicao de servicos','Consulta previa','Obras num pavilhao', 100, 100,'Alto de Basto',data(1,03,2020),false)).
-excecao(contrato(6,1,1,'Aquisicao de servicos','Consulta previa','Obras num pavilhao', 100, 100,'Alto de Basto',data(2,03,2020),false)).
-impreciso(contrato(6)).
-
-
-
-% ||||||||||||||||||||||||||||||||| TO DO |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-% RETIRAR ACENTOS
-% Retirar incerto ao inserir impreciso
+excecao(contrato(101,1,1,'Aquisicao de servicos','Consulta previa','Obras num pavilhao', 100, 100,'Alto de Basto',data(1,03,2020),false)).
+excecao(contrato(101,1,1,'Aquisicao de servicos','Consulta previa','Obras num pavilhao', 100, 100,'Alto de Basto',data(2,03,2020),false)).
+impreciso(contrato(101)).
