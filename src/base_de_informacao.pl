@@ -56,9 +56,8 @@ adjudicante(1,'Municipio do Porto',501306099 ,'Pessoa coletiva', 'R. Clube dos F
 perfeito(adjudicante(1)).
 adjudicante(2,'SERVICOS DE ACAO SOCIAL DA UNIVERSIDADE DO MINHO',680047360 , 'Pessoa coletiva', 'Largo do Paco, 4704-553 Braga').
 perfeito(adjudicante(2)).
-adjudicante(3,'Municipio de Braga',506901173,'Organismo de administracao publica','Praça do Município,  4700-435 Braga').
+adjudicante(3,'Municipio de Braga',506901173,'Pessoa coletiva','Praça do Município,  4700-435 Braga').
 perfeito(adjudicante(3)).
-adjudicataria(4,'Municipio de Lisboa',500051070,'Pessoa coletiva','Paços do Concelho 1100-038 Lisboa').
 
 % Conhecimento Perfeito Negativo
 -adjudicante(1000,'Rodrigo Guedes LDA',876543212, 'Pessoa coletiva','Rua 25 de Abril').
@@ -84,10 +83,13 @@ adjudicataria(1,'Municipio do Porto',501306099 ,'Pessoa coletiva','R. Clube dos 
 perfeito(adjudicataria(1)).
 adjudicataria(2,'SERVICOS DE ACAO SOCIAL DA UNIVERSIDADE DO MINHO',680047360,'Pessoa coletiva','Largo do Paco, 4704-553 Braga').
 perfeito(adjudicataria(2)).
-adjudicataria(3,'Municipio de Braga',506901173,'Organismo de administracao publica','Praça do Municipio  4700-435 Braga').
+adjudicataria(3,'Municipio de Braga',506901173,'Pessoa coletiva','Praça do Municipio  4700-435 Braga').
 perfeito(adjudicataria(3)).
 adjudicataria(4,'Ola John',211111112,'Pessoa singular','Av. Sao Goncalo 1028, Guimaraes').
 perfeito(adjudicataria(4)).
+adjudicataria(5,'Municipio de Lisboa',500051070,'Pessoa coletiva','Paços do Concelho 1100-038 Lisboa').
+perfeito(adjudicataria(5)).
+
 %
 
 % Conhecimento Perfeito Negativo

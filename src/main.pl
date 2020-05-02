@@ -16,6 +16,21 @@
 :- multifile (-)/1. % para aceitar as definições de (-) tanto neste dicheiro como na base de informação
 
 
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% Extensao do meta-predicado demo: Questao,Resposta -> {V,F}
+%                            Resposta = { verdadeiro,falso,desconhecido }
+
+demo( Questao,verdadeiro ) :-
+    Questao.
+demo( Questao,falso ) :-
+    -Questao.
+demo( Questao,desconhecido ) :-
+    nao( Questao ),
+    nao( -Questao ).
+
+
+
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Pressuposto do Mundo Fechado
 
@@ -57,7 +72,7 @@ valorContratosAdjudicante(IdAd,R) :-
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado valorContratosAdjudicante: IdAdjudicante,R -> {V,F}
-% Devolve a soma do valor dos contratos em que uma entidade adjudicante está envolvida
+% Devolve a soma do valor dos contratos em que uma entidade adjudicatária está envolvida
 valorContratosAdjudidicataria(IdAda,R) :-
     solucoes((Valores),contrato(_,_,IdAda,_,_,_,Valores,_,_,_,_),Lista),
     sum_list(Lista,R).
@@ -72,7 +87,7 @@ listaAdjudicatariasAdjudicante(IdAd,R) :-
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do predicado listaAdjudicantesAdjudicataria: IdAdjudicataria,R -> {V,F}
-% Devolve a lista de nomes de entidades adjudicantes com que a dada entidade adjudicataria esteve envolvida em contratos
+% Devolve a lista de nomes de entidades adjudicantes com que a dada entidade adjudicatária esteve envolvida em contratos
 listaAdjudicantesAdjudicataria(IdAda,R) :-
     solucoes((IdsAdjudicantes),contrato(_,IdsAdjudicantes,IdAda,_,_,_,_,_,_,_,_),R).
 
@@ -114,18 +129,6 @@ listaContratosAcabadosAdjudicataria(IdAda,DataReferencia,R):-
 
 
 
-
-%--------------------------------- - - - - - - - - - -  -  -  -  -   -
-% Extensao do meta-predicado demo: Questao,Resposta -> {V,F}
-%                            Resposta = { verdadeiro,falso,desconhecido }
-
-demo( Questao,verdadeiro ) :-
-    Questao.
-demo( Questao,falso ) :-
-    -Questao.
-demo( Questao,desconhecido ) :-
-    nao( Questao ),
-    nao( -Questao ).
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % Extensao do meta-predicado nao: Questao -> {V,F}
