@@ -1,4 +1,4 @@
-%Nifs usáveis
+%Nifs usáveis válidos 
 %876543212
 
 
