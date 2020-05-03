@@ -164,17 +164,17 @@ interdito(adjudicataria(300)).
 % Extensão do predicado contrato #IdContrato, #IdAd, #IdAda, TipoDeContrato, TipoDeProcedimento, Descrição, Valor, Prazo, Local, Data -> {V,F,D}
 
 % Conhecimento Perfeito Positivo
-contrato(0,1,2,'Aquisicão de serviços','Consulta previa','Concerto', 400, 50,'Alto de Basto',data(14,02,2020),false).
+contrato(0,1,2,'Aquisicao de servicos','Consulta previa','Concerto', 400, 50,'Alto de Basto',data(14,02,2020),false).
 perfeito(contrato(0)).
-contrato(1,2,1,'Aquisicão de serviços','Dialogo concorrencial','Pintura de espaço' ,500, 60,'Alto de Basto',data(15,02,2020),false).
+contrato(1,2,1,'Aquisicao de serviços','Dialogo concorrencial','Pintura de espaço' ,500, 60,'Alto de Basto',data(15,02,2020),false).
 perfeito(contrato(1)).
-contrato(2,2,2,'Aquisição de serviços','Nani','Assessoria juridica',600, 70,'Alto de Basto',data(16,02,2020),false).
+contrato(2,2,2,'Aquisicao de servicos','Nani','Assessoria juridica',600, 70,'Alto de Basto',data(16,02,2020),false).
 perfeito(contrato(2)).
-contrato(3,1,3,'Aquisição de serviços','Consulta previa','Assessoria juridica', 'Concerto',700, 80,'Alto de Basto',data(17,02,2020),false).
+contrato(3,1,3,'Aquisicao de servicos','Consulta previa','Assessoria juridica', 'Concerto',700, 80,'Alto de Basto',data(17,02,2020),false).
 perfeito(contrato(3)).
-contrato(4,1,3,'Aquisicao de serviços','Procedimento de negociacao','Concerto', 800, 90,'Alto de Basto',data(18,02,2020),false).
+contrato(4,1,3,'Aquisicao de servicos','Procedimento de negociacao','Concerto', 800, 90,'Alto de Basto',data(18,02,2020),false).
 perfeito(contrato(4)).
-contrato(5,7,5,'Aquisicao de servicos', 'Consulta previa', 'Acabamentos', 1000, 100, 'Adega Trincao', data(12,05,2020),false).
+contrato(5,7,5,'Aquisicao de serviços', 'Consulta previa', 'Acabamentos', 1000, 100, 'Adega Trincao', data(12,05,2020),false).
 perfeito(contrato(5)).
 contrato(6,6,1,'Aquisicao de bens moveis', 'Parceria para a inovacao', 'Concerto',500, 90, 'Porto', data(11,04,2020),false).
 perfeito(contrato(6)).
