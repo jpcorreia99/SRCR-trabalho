@@ -25,10 +25,15 @@ mesma coisa que o adjudicante invertendo o 5
 4. Um contrato não pode ter a mesma entidade como adjudicante e adjudicatária
 5. O procedimento deve ser dos tipos 'Ajuste direto','Consulta prévia','Concurso público'
 [6]. Se o contrato não for subsidiado a entidade adjudicante apenas pode pertencer a um conjunto especificado pelos artigos abaixo, caso seja subsidiado pode ser muitos mais
-[7]. Se for de adjustr direto o cursto deve ser <5000 e o prazo <365, pertencendo ao tipoDeContrato 'Aquisição de bens móveis','Locação de bens móveis','Aquisição de serviços' 
+[7]. Se for de adjuste direto o cursto deve ser <5000 e o prazo <365, pertencendo ao tipoDeContrato 'Aquisição de bens móveis','Locação de bens móveis','Aquisição de serviços' 
 8.Uma entidade adjudicante não pode convidar a mesma empresa para celebrar um contrato com prestações de serviço do mesmo tipo ou idênticas às de contratos que já lhe foram atribuídos, no ano económico em curso e nos dois anos económicos anteriores, sempre que O preço contratual acumulado dos contratos já celebrados (não incluindo o contrato que se pretende celebrar) seja igual ou superior a 75.000 euros.
 
 não há -(contrato) por razões óbvias
+
+
+Invariantes conhecimento imperfeito:
+    - não permitir a inserção de conhecimento relativo
+    - impede a inserção de conhecimento imperfeito que "involua" o conhecimento imperfeito
 
 
 Notas:
@@ -59,3 +64,30 @@ Ainda Pessoas coletivas
 
 artigo 275.º, 
 Permite mais adjudicantes desde que o contrato tenha sido patrocinado em 50% por outra entidade
+
+
+Sistema de inferencia:
+MECANICA DE DATAS CRIADA DE RAIZ
+1- numero de contratos em que uma entidade está envolvida
+2- valor dos contratos em quen está envolvida
+3- lista de entidades com que celebrou contratos
+4- contratos ativos
+5 - contratos passados //listaContratosAcabadosAdjudicante(1,data(11,06,2020),L).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+evolucao_perfeito(adjudicataria(11,'Pedro Dias Parente',233333339,'Pessoa singular','rua arriz')).
+listaContratosAtivosAdjudicataria(2,data(15,02,2020),R).
